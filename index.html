@@ -11,41 +11,48 @@
     <div class="container">
         <header>
             <h1>⚡ LeanSync</h1>
-            <p>Adaptive Calibration, Global Cuisine & Custom Workout Architecture</p>
+            <p>Adaptive Calibration, Calorie Tracking & Routine Builder</p>
         </header>
 
-        <!-- AUTOMATED COACHING ENGINE -->
+        <!-- AUTOMATED COACHING CARD -->
         <section id="coachingCard" class="card hidden coaching-box">
             <h2>🤖 AI Recomp Coach Feedback</h2>
             <p id="coachingFeedback">Analyzing your logs...</p>
         </section>
 
-        <!-- SETUP SECTION -->
+        <!-- 1. PROFILE SETUP -->
         <section class="card">
-            <h2>1. Profile Setup & Target Adjustments</h2>
+            <h2>1. Profile Setup & Goal Targets</h2>
             <form id="profileForm">
-                <div class="grid-3" style="margin-bottom: 20px;">
+                <div class="grid-2" style="margin-bottom: 16px;">
                     <label>Preferred Unit System:
-                        <select id="unitSystem" onchange="updateUnitLabels()">
+                        <select id="unitSystem" onchange="updateUnitLabels(); calculateRecomp();">
                             <option value="imperial">Imperial (lbs, inches)</option>
                             <option value="metric">Metric (kg, cm)</option>
                         </select>
                     </label>
+                    <label>Primary Fitness Goal:
+                        <select id="fitnessGoal" onchange="calculateRecomp()">
+                            <option value="maintain" selected>⚡ Body Recomposition (Maintain)</option>
+                            <option value="cut">🔥 Fat Loss (Cut)</option>
+                            <option value="bulk">💪 Lean Muscle Mass Gaining (Bulk)</option>
+                        </select>
+                    </label>
                 </div>
                 <div class="grid-3">
-                    <label id="labelWeight">Weight (lbs): <input type="number" id="weight" required value="180"></label>
-                    <label id="labelHeight">Height (inches): <input type="number" id="height" required value="70"></label>
-                    <label>Age: <input type="number" id="age" required value="25"></label>
+                    <label id="labelWeight">Weight (lbs): <input type="number" id="weight" oninput="calculateRecomp()" required value="180"></label>
+                    <label id="labelHeight">Height (inches): <input type="number" id="height" oninput="calculateRecomp()" required value="70"></label>
+                    <label>Age: <input type="number" id="age" oninput="calculateRecomp()" required value="25"></label>
                 </div>
                 <div class="grid-2">
                     <label>Gender: 
-                        <select id="gender">
+                        <select id="gender" onchange="calculateRecomp()">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>
                     </label>
                     <label>Activity Level: 
-                        <select id="activity">
+                        <select id="activity" onchange="calculateRecomp()">
                             <option value="sedentary">Sedentary</option>
                             <option value="light">Light</option>
                             <option value="moderate" selected>Moderate</option>
@@ -53,21 +60,20 @@
                         </select>
                     </label>
                 </div>
-                <button type="button" onclick="calculateRecomp()">Calculate Recomp Plan</button>
             </form>
 
             <div id="recompTargets" class="hidden target-box">
-                <h3>Your Calculated Base Targets</h3>
+                <h3>Your Calculated Goal Targets</h3>
                 <div class="grid-2">
                     <div>
-                        <h4>🏋️ TRAINING DAY (High Carbs)</h4>
+                        <h4>🏋️ TRAINING DAY</h4>
                         <p>⚡ Calories: <span id="trainCals">0</span> kcal</p>
                         <p>🥩 Protein: <span id="trainProtein">0</span>g</p>
                         <p>🍚 Carbs: <span id="trainCarbs">0</span>g</p>
                         <p>🥑 Fats: <span id="trainFats">0</span>g</p>
                     </div>
                     <div>
-                        <h4>🛌 REST DAY (Low Carbs / High Fat)</h4>
+                        <h4>🛌 REST DAY</h4>
                         <p>⚡ Calories: <span id="restCals">0</span> kcal</p>
                         <p>🥩 Protein: <span id="restProtein">0</span>g</p>
                         <p>🍚 Carbs: <span id="restCarbs">0</span>g</p>
@@ -77,99 +83,100 @@
             </div>
         </section>
 
-        <!-- ADVANCED LOGGING SECTION (TABBED WORKSPACE) -->
+        <!-- 2. INTERNATIONAL FOOD SEARCH & CALORIE TRACKER -->
         <section class="card">
-            <div class="tab-header">
-                <button type="button" class="tab-btn active" id="tabBtnFood" onclick="switchLogTab('food')">🍎 Global Calorie Counter</button>
-                <button type="button" class="tab-btn" id="tabBtnWorkout" onclick="switchLogTab('workout')">🏋️ Custom Workout Builder</button>
+            <h2>2. Food Search & Calorie Counter</h2>
+            <div class="search-box-container">
+                <label>Search Global Foods (e.g., Chicken, Sushi, Tacos, Paneer):
+                    <input type="text" id="foodSearchInput" oninput="searchFoodDatabase()" placeholder="Type to search database...">
+                </label>
+                <div id="searchResultsDropdown" class="search-results hidden"></div>
+            </div>
+            
+            <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                <h4>Or Log Custom Food Macros:</h4>
+                <div class="grid-4">
+                    <label>Name: <input type="text" id="customFoodName" placeholder="E.g., Protein Shake"></label>
+                    <label>Protein (g): <input type="number" id="customFoodProtein" value="0"></label>
+                    <label>Carbs (g): <input type="number" id="customFoodCarbs" value="0"></label>
+                    <label>Fats (g): <input type="number" id="customFoodFats" value="0"></label>
+                </div>
+                <button type="button" onclick="addCustomFoodMacros()">Add to Daily Intake</button>
             </div>
 
-            <!-- FOOD INTERACTIVE ENGINE -->
-            <div id="tabContainerFood" class="tab-content">
-                <h3 style="margin-top:15px;">Search International Cuisines & Foods</h3>
-                <div class="search-box-wrapper">
-                    <input type="text" id="foodSearchInput" placeholder="Type an item (e.g., Basmati Rice, Chicken breast, Arepa, Paneer)...">
-                    <button type="button" class="search-btn" onclick="searchGlobalFood()">Search</button>
-                </div>
-                <div id="foodSearchResults" class="search-results-box hidden"></div>
-
-                <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
-                
-                <h4>Daily Macro Intake Entry Log</h4>
-                <form id="logForm">
-                    <div class="grid-2">
-                        <label id="labelLogWeight">Scale Weight (lbs): <input type="number" step="0.1" id="logWeight" required></label>
-                        <label>Day Type: 
-                            <select id="logDayType">
-                                <option value="training">🏋️ Training Day</option>
-                                <option value="rest">🛌 Rest Day</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="grid-3">
-                        <label>Protein (g): <input type="number" id="logProtein" value="0" required></label>
-                        <label>Carbs (g): <input type="number" id="logCarbs" value="0" required></label>
-                        <label>Fats (g): <input type="number" id="logFats" value="0" required></label>
-                    </div>
-                    <button type="button" onclick="logDailyData()">Save Daily Food Entry</button>
-                </form>
-            </div>
-
-            <!-- WORKOUT INTERACTIVE ENGINE -->
-            <div id="tabContainerWorkout" class="tab-content hidden">
-                <h3 style="margin-top:15px;">Design Custom Resistance Routine</h3>
-                <form id="workoutBuilderForm">
-                    <div class="grid-2">
-                        <label>Exercise Name: <input type="text" id="workName" placeholder="e.g., Incline Dumbbell Press" required></label>
-                        <label>Target Set Metric Type:
-                            <select id="workType">
-                                <option value="Squat">Squat Variant</option>
-                                <option value="Bench">Bench Variant</option>
-                                <option value="Deadlift">Deadlift Variant</option>
-                                <option value="Other">Accessory Lift</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="grid-4">
-                        <label>Sets: <input type="number" id="workSets" value="3" required></label>
-                        <label>Reps: <input type="number" id="workReps" value="10" required></label>
-                        <label id="labelWorkWeight">Weight (lbs): <input type="number" id="workWeight" value="135" required></label>
-                        <label>Rest (secs): <input type="number" id="workRest" value="90" required></label>
-                    </div>
-                    <button type="button" onclick="saveCustomExercise()">Add Exercise to Today's Tracker</button>
-                </form>
-
-                <!-- LIVE REST TIMER RUNNER -->
-                <div id="timerWidget" class="timer-box hidden">
-                    <span id="timerTitle">⏳ Rest Interval Active:</span>
-                    <span id="timerDisplay" style="font-weight: 800; color: var(--accent-rest);">90s</span>
-                </div>
-
-                <div class="logged-routine-box" style="margin-top:20px;">
-                    <h4>Today's Program Exercises Created</h4>
-                    <ul id="liveRoutineList" class="routine-list"></ul>
-                </div>
+            <div id="todaysFoodLog" class="target-box style-box" style="margin-top: 20px;">
+                <h3>Today's Consumed Tracking</h3>
+                <p>🥩 Total Protein: <span id="totalLoggedProtein">0</span>g</p>
+                <p>🍚 Total Carbs: <span id="totalLoggedCarbs">0</span>g</p>
+                <p>🥑 Total Fats: <span id="totalLoggedFats">0</span>g</p>
+                <p style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px;">⚡ Total Energy Eaten: <span id="totalLoggedCalories">0</span> kcal</p>
             </div>
         </section>
 
-        <!-- ANALYTICS VISUAL DASHBOARD -->
+        <!-- 3. WORKOUT ROUTINE BUILDER WITH CALORIE BURN METRICS -->
         <section class="card">
-            <h2>3. Recomp Analytics Dashboard</h2>
+            <h2>3. Custom Workout Builder & Burn Calculator</h2>
+            <div class="grid-2">
+                <label>Exercise Type: 
+                    <select id="workoutType">
+                        <option value="6.0">🏋️ Heavy Weight Lifting (Compound Movements)</option>
+                        <option value="3.5">💪 Light Weight Training (Isolation Movements)</option>
+                        <option value="8.0">🏃 High Intensity Cardio / Rowing</option>
+                        <option value="4.0">🚴 Moderate Aerobic Training / Cycling</option>
+                    </select>
+                </label>
+                <label>Exercise Name: <input type="text" id="workoutName" placeholder="Squat, Bench Press, Run..."></label>
+            </div>
+            <div class="grid-4">
+                <label>Sets: <input type="number" id="workoutSets" value="3"></label>
+                <label>Reps: <input type="number" id="workoutReps" value="10"></label>
+                <label id="labelLiftWeight">Weight (lbs): <input type="number" id="workoutWeight" value="135"></label>
+                <label>Duration (mins): <input type="number" id="workoutDuration" value="15"></label>
+            </div>
+            <button type="button" onclick="addExerciseToWorkout()">Add Exercise & Calculate Burn</button>
+
+            <div id="routineDisplayBox" class="target-box style-box" style="margin-top: 20px;">
+                <h3>Current Workout Routine Metrics</h3>
+                <p style="font-weight: bold; color: #10b981; margin-bottom: 12px;">🔥 Total Routine Burn: <span id="totalWorkoutBurn">0</span> kcal</p>
+                <div id="routineList"></div>
+            </div>
+        </section>
+
+        <!-- 4. SAVE COMPLETED LOG ENTRY -->
+        <section class="card">
+            <h2>4. Submit & Save Today's Log</h2>
+            <form id="logForm">
+                <div class="grid-2">
+                    <label id="labelLogWeight">Scale Weight (lbs): <input type="number" step="0.1" id="logWeight" required></label>
+                    <label>Day Type: 
+                        <select id="logDayType">
+                            <option value="training">Training Day</option>
+                            <option value="rest">Rest Day</option>
+                        </select>
+                    </label>
+                </div>
+                <button type="button" onclick="logDailyData()">Save Daily Entry & Reset Tracker</button>
+            </form>
+        </section>
+
+        <!-- 5. RECOMP ANALYTICS DASHBOARD -->
+        <section class="card">
+            <h2>5. Recomp Analytics Dashboard</h2>
             <div class="grid-2">
                 <div>
                     <h4 class="center-text">7-Day Weight Moving Average</h4>
                     <canvas id="weightChart"></canvas>
                 </div>
                 <div>
-                    <h4 class="center-text">Strength Progression Trends</h4>
+                    <h4 class="center-text">Strength & Workout Metrics</h4>
                     <canvas id="strengthChart"></canvas>
                 </div>
             </div>
         </section>
 
-        <!-- HISTORY RECOMP LOG -->
+        <!-- 6. HISTORY RECOMP LOG -->
         <section class="card">
-            <h2>4. History Log & Averages</h2>
+            <h2>6. History Log & Averages</h2>
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -178,16 +185,10 @@
                             <th id="thWeight">Weight (lbs)</th>
                             <th id="thAvgWeight">7-Day Avg (lbs)</th>
                             <th>Type</th>
-                            <th>Calories</th>
-                            <th id="thLifts">S / B / D (lbs)</th>
+                            <th>Net Calories Eaten</th>
+                            <th>Burned</th>
                         </tr>
                     </thead>
                     <tbody id="historyTableBody"></tbody>
                 </table>
             </div>
-            <button class="danger-btn" onclick="clearData()">Clear All Local Storage Data</button>
-        </section>
-    </div>
-    <script src="app.js"></script>
-</body>
-</html>

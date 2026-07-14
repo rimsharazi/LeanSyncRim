@@ -1,5 +1,3 @@
-/* --- MODERN DARK DASHBOARD LAYOUT (COMPLIANT FIXED CSS) --- */
-
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: #0f172a;
@@ -59,13 +57,6 @@ header p {
     color: #f8fafc;
 }
 
-.subtitle {
-    font-size: 0.9rem;
-    color: #94a3b8;
-    margin-top: -15px;
-    margin-bottom: 20px;
-}
-
 /* Structural Responsive Grids */
 .grid-2 { 
     display: grid; 
@@ -85,7 +76,7 @@ header p {
     gap: 12px; 
 }
 
-/* Accessible Interactive Form Labels */
+/* Interactive Form Elements */
 label {
     display: flex;
     flex-direction: column;
@@ -115,7 +106,7 @@ input:focus, select:focus {
     background-color: #0f172a;
 }
 
-/* Interactive Action Buttons */
+/* Action Buttons */
 button {
     background-color: #38bdf8;
     color: #0f172a;
@@ -149,7 +140,7 @@ button:hover {
     background-color: rgba(244, 63, 94, 0.1);
 }
 
-/* Real-Time Food Search Container Elements */
+/* Food Dropdown Elements */
 .search-box-container {
     position: relative;
 }
@@ -181,7 +172,7 @@ button:hover {
     background-color: #334155;
 }
 
-/* UI Boxes & Feedback Targets */
+/* Coaching Widget & Target Panels */
 .target-box {
     background-color: #0f172a;
     border-width: 1px;
@@ -235,7 +226,7 @@ canvas {
     margin-top: 10px;
 }
 
-/* Tabular Log Frameworks */
+/* History Log Tables */
 .table-wrapper {
     overflow-x: auto;
     background-color: #0f172a;

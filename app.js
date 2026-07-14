@@ -3,106 +3,121 @@ const LOGS_KEY = 'recomp_logs';
 let weightChart = null;
 let strengthChart = null;
 
+let dailyProtein = 0;
+let dailyCarbs = 0;
+let dailyFats = 0;
+let dailyCalories = 0;
+let dailyBurnedCals = 0;
+
+const internationalFoodDatabase = [
+    { name: "Chicken Breast (100g Cooked)", p: 31, c: 0, f: 3.6 },
+    { name: "White Rice (1 Cup)", p: 4.3, c: 53, f: 0.4 },
+    { name: "Egg (Large Whole)", p: 6.3, c: 0.4, f: 4.8 },
+    { name: "Salmon Fillet (100g)", p: 22, c: 0, f: 13 },
+    { name: "Avocado (Medium)", p: 2.9, c: 12, f: 21 },
+    { name: "Sushi Salmon Roll (6 pieces)", p: 9, c: 32, f: 4.5 },
+    { name: "Mexican Street Beef Taco", p: 12, c: 18, f: 7 },
+    { name: "Italian Pasta Carbonara (Plate)", p: 25, c: 74, f: 28 },
+    { name: "Indian Paneer Tikka Masala (Serving)", p: 14, c: 12, f: 22 },
+    { name: "Greek Yogurt 0% Fat (200g)", p: 20, c: 7, f: 0 },
+    { name: "Japanese Ramen Noodles (Bowl)", p: 11, c: 65, f: 14 },
+    { name: "Protein Powder Whey (1 Scoop)", p: 24, c: 2, f: 1.5 }
+];
+
 window.onload = function() {
     loadProfile();
     renderLogs();
     updateUnitLabels();
+    calculateRecomp();
 };
 
 function updateUnitLabels() {
     const system = document.getElementById('unitSystem').value;
     const isImperial = system === 'imperial';
 
-    // Update Input UI Labels dynamically
-    document.getElementById('labelWeight').innerHTML = `Weight (${isImperial ? 'lbs' : 'kg'}): <input type="number" step="0.1" id="weight" required value="${isImperial ? '180' : '80'}">`;
-    document.getElementById('labelHeight').innerHTML = `Height (${isImperial ? 'inches' : 'cm'}): <input type="number" id="height" required value="${isImperial ? '70' : '175'}">`;
-    document.getElementById('labelLogWeight').innerHTML = `Scale Weight (${isImperial ? 'lbs' : 'kg'}): <input type="number" step="0.1" id="logWeight" required>`;
-    
-    document.getElementById('labelSquat').innerHTML = `Squat (${isImperial ? 'lbs' : 'kg'}): <input type="number" id="logSquat" value="0">`;
-    document.getElementById('labelBench').innerHTML = `Bench (${isImperial ? 'lbs' : 'kg'}): <input type="number" id="logBench" value="0">`;
-    document.getElementById('labelDeadlift').innerHTML = `Deadlift (${isImperial ? 'lbs' : 'kg'}): <input type="number" id="logDeadlift" value="0">`;
+    const wVal = document.getElementById('weight') ? document.getElementById('weight').value : (isImperial ? '180' : '80');
+    const hVal = document.getElementById('height') ? document.getElementById('height').value : (isImperial ? '70' : '175');
 
-    // Update History Table Header Text
+    document.getElementById('labelWeight').innerHTML = `Weight (${isImperial ? 'lbs' : 'kg'}): <input type="number" step="0.1" id="weight" oninput="calculateRecomp()" required value="${wVal}">`;
+    document.getElementById('labelHeight').innerHTML = `Height (${isImperial ? 'inches' : 'cm'}): <input type="number" id="height" oninput="calculateRecomp()" required value="${hVal}">`;
+    document.getElementById('labelLogWeight').innerHTML = `Scale Weight (${isImperial ? 'lbs' : 'kg'}): <input type="number" step="0.1" id="logWeight" required>`;
+    document.getElementById('labelLiftWeight').innerHTML = `Weight (${isImperial ? 'lbs' : 'kg'}): <input type="number" id="workoutWeight" value="${isImperial ? '135' : '60'}">`;
+
     document.getElementById('thWeight').innerText = `Weight (${isImperial ? 'lbs' : 'kg'})`;
     document.getElementById('thAvgWeight').innerText = `7-Day Avg (${isImperial ? 'lbs' : 'kg'})`;
-    document.getElementById('thLifts').innerText = `S / B / D (${isImperial ? 'lbs' : 'kg'})`;
     
-    // Rerender existing tables to update visual labels
     const logs = JSON.parse(localStorage.getItem(LOGS_KEY)) || [];
     if (logs.length > 0) renderLogs();
 }
 
 function calculateRecomp() {
     const system = document.getElementById('unitSystem').value;
+    const goal = document.getElementById('fitnessGoal').value;
     const weightInput = parseFloat(document.getElementById('weight').value);
     const heightInput = parseFloat(document.getElementById('height').value);
     const age = parseInt(document.getElementById('age').value);
     const gender = document.getElementById('gender').value;
     const activity = document.getElementById('activity').value;
 
-    if (!weightInput || !heightInput || !age) {
-        return alert("Please fill out all setup fields!");
-    }
+    if (!weightInput || !heightInput || !age) return;
 
     let weightKg = 0;
     let heightCm = 0;
     let weightLbs = 0;
 
-    // --- AUDITED UNIT CONVERSION SYSTEM ---
     if (system === 'imperial') {
-        weightKg = weightInput * 0.45359237; // Highly precise lbs to kg conversion
-        heightCm = heightInput * 2.54;       // Inches to cm
+        weightKg = weightInput * 0.45359237;
+        heightCm = heightInput * 2.54;
         weightLbs = weightInput;
     } else {
         weightKg = weightInput;
-        heightCm = heightInput;              // Already in cm
-        weightLbs = weightInput * 2.20462262; // kg to lbs for protein rules
+        heightCm = heightInput;
+        weightLbs = weightInput * 2.20462262;
     }
 
-    // --- MIFFLIN-ST JEOR FORMULA ---
     let bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age);
-    if (gender === 'male') {
-        bmr += 5;
-    } else {
-        bmr -= 161;
-    }
+    if (gender === 'male') { bmr += 5; } else { bmr -= 161; }
 
-    // --- ACTIVITY MULTIPLIERS ---
-    const multipliers = { 
-        sedentary: 1.2, 
-        light: 1.375, 
-        moderate: 1.55, 
-        very: 1.725 
-    };
+    const multipliers = { sedentary: 1.2, light: 1.375, moderate: 1.55, very: 1.725 };
     const tdee = bmr * (multipliers[activity] || 1.375);
 
-    // --- MACRO SPLIT CALCULATION ENGINE ---
-    // Training Day: Fueled at full TDEE maintenance
-    const trainCals = Math.round(tdee);
-    const trainProtein = Math.round(weightLbs * 1.0); // 1g per lb of bodyweight
-    const trainFats = Math.round(weightLbs * 0.3);     // 0.3g per lb of bodyweight
-    const trainRemainingCals = trainCals - ((trainProtein * 4) + (trainFats * 9));
-    const trainCarbs = Math.max(0, Math.round(trainRemainingCals / 4));
+    let trainOffset = 0;
+    let restOffset = 0;
+    let proteinMultiplier = 1.0;
 
-    // Rest Day: Fueled at a clean fat loss deficit (-400 kcal)
-    const restCals = Math.round(tdee - 400);
-    const restProtein = Math.round(weightLbs * 1.0);   // Keep protein high to prevent breakdown
-    const restFats = Math.round(weightLbs * 0.35);    // Slightly higher fats on rest days
-    const restRemainingCals = restCals - ((restProtein * 4) + (restFats * 9));
-    const restCarbs = Math.max(0, Math.round(restRemainingCals / 4));
+    if (goal === 'cut') {
+        trainOffset = -500;
+        restOffset = -600;  
+        proteinMultiplier = 1.15;
+    } else if (goal === 'bulk') {
+        trainOffset = 300;
+        restOffset = 100;   
+        proteinMultiplier = 0.95;
+    } else {
+        trainOffset = 0;    
+        restOffset = -300;  
+        proteinMultiplier = 1.05;
+    }
 
-    // --- SAVE AND RENDER CONFIGURATION ---
+    const trainCals = Math.round(tdee + trainOffset);
+    const trainProtein = Math.round(weightLbs * proteinMultiplier);
+    const trainFats = Math.round(weightLbs * 0.3);
+    const trainCarbs = Math.max(0, Math.round((trainCals - ((trainProtein * 4) + (trainFats * 9))) / 4));
+
+    const restCals = Math.round(tdee + restOffset);
+    const restProtein = Math.round(weightLbs * proteinMultiplier);
+    const restFats = Math.round(weightLbs * 0.35);
+    const restCarbs = Math.max(0, Math.round((restCals - ((restProtein * 4) + (restFats * 9))) / 4));
+
     const profile = { 
-        system, weightInput, heightInput, age, gender, activity, 
-        trainCals, trainProtein, trainCarbs, trainFats,
-        restCals, restProtein, restCarbs, restFats
+        system, goal, weightInput, heightInput, age, gender, activity, 
+        trainCals, trainProtein, trainCarbs, trainFats, restCals, restProtein, restCarbs, restFats
     };
     
     localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
     displayTargets(profile);
     runCoachingEngine();
 }
-
 
 function displayTargets(profile) {
     document.getElementById('trainCals').innerText = profile.trainCals;
@@ -123,132 +138,90 @@ function loadProfile() {
     if(saved) {
         const profile = JSON.parse(saved);
         document.getElementById('unitSystem').value = profile.system;
-        // Trigger manual layout updates to map inputs safely
+        if(profile.goal) document.getElementById('fitnessGoal').value = profile.goal;
         updateUnitLabels();
         document.getElementById('weight').value = profile.weightInput;
         document.getElementById('height').value = profile.heightInput;
         document.getElementById('age').value = profile.age;
         document.getElementById('gender').value = profile.gender;
         document.getElementById('activity').value = profile.activity;
-        displayTargets(profile);
     }
 }
 
-function logDailyData() {
-    const w = parseFloat(document.getElementById('logWeight').value);
-    const type = document.getElementById('logDayType').value;
-    const p = parseInt(document.getElementById('logProtein').value);
-    const c = parseInt(document.getElementById('logCarbs').value);
-    const f = parseInt(document.getElementById('logFats').value);
-    const squat = parseInt(document.getElementById('logSquat').value) || 0;
-    const bench = parseInt(document.getElementById('logBench').value) || 0;
-    const deadlift = parseInt(document.getElementById('logDeadlift').value) || 0;
-    
-    if(!w || !p || !c || !f) return alert("Please fill out metrics parameters!");
+function searchFoodDatabase() {
+    const query = document.getElementById('foodSearchInput').value.toLowerCase();
+    const dropdown = document.getElementById('searchResultsDropdown');
+    dropdown.innerHTML = "";
 
-    const cals = (p * 4) + (c * 4) + (f * 9);
-    const today = new Date().toLocaleDateString(undefined, {month: 'numeric', day: 'numeric'});
-
-    let logs = JSON.parse(localStorage.getItem(LOGS_KEY)) || [];
-    logs.push({ date: today, weight: w, type: type, calories: cals, squat, bench, deadlift });
-    
-    localStorage.setItem(LOGS_KEY, JSON.stringify(logs));
-    
-    // Clear inputs safely while preserving native DOM variables
-    document.getElementById('logWeight').value = "";
-    document.getElementById('logProtein').value = "";
-    document.getElementById('logCarbs').value = "";
-    document.getElementById('logFats').value = "";
-    document.getElementById('logSquat').value = "0";
-    document.getElementById('logBench').value = "0";
-    document.getElementById('logDeadlift').value = "0";
-
-    renderLogs();
-}
-
-function renderLogs() {
-    const logs = JSON.parse(localStorage.getItem(LOGS_KEY)) || [];
-    const system = document.getElementById('unitSystem').value;
-    const labelSuffix = system === 'imperial' ? 'lbs' : 'kg';
-    const tbody = document.getElementById('historyTableBody');
-    tbody.innerHTML = "";
-
-    const labels = [];
-    const avgWeightData = [];
-    const squatData = [], benchData = [], deadliftData = [];
-
-    logs.forEach((log, index) => {
-        let sum = 0, count = 0;
-        for (let i = index; i >= 0 && count < 7; i--) {
-            sum += logs[i].weight;
-            count++;
-        }
-        const avg = (sum / count).toFixed(1);
-
-        tbody.innerHTML += `<tr>
-            <td>${log.date}</td>
-            <td>${log.weight} ${labelSuffix}</td>
-            <td><strong>${avg} ${labelSuffix}</strong></td>
-            <td>${log.type === 'training' ? '🏋️' : '🛌'}</td>
-            <td>${log.calories}</td>
-            <td>${log.squat}/${log.bench}/${log.deadlift}</td>
-        </tr>`;
-
-        labels.push(log.date);
-        avgWeightData.push(parseFloat(avg));
-        squatData.push(log.squat);
-        benchData.push(log.bench);
-        deadliftData.push(log.deadlift);
-    });
-
-    updateCharts(labels.slice(-7), avgWeightData.slice(-7), squatData.slice(-7), benchData.slice(-7), deadliftData.slice(-7));
-    runCoachingEngine();
-}
-
-function updateCharts(labels, wData, sData, bData, dData) {
-    const system = document.getElementById('unitSystem').value;
-    const unitLabel = system === 'imperial' ? 'lbs' : 'kg';
-    
-    const ctxW = document.getElementById('weightChart').getContext('2d');
-    if(weightChart) weightChart.destroy();
-    weightChart = new Chart(ctxW, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{ label: `7-Day Weight Avg (${unitLabel})`, data: wData, borderColor: '#38bdf8', tension: 0.2, fill: false }]
-        },
-        options: { responsive: true }
-    });
-
-    const ctxS = document.getElementById('strengthChart').getContext('2d');
-    if(strengthChart) strengthChart.destroy();
-    strengthChart = new Chart(ctxS, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [
-                { label: `Squat (${unitLabel})`, data: sData, borderColor: '#10b981', tension: 0.1 },
-                { label: `Bench (${unitLabel})`, data: bData, borderColor: '#ef4444', tension: 0.1 },
-                { label: `Deadlift (${unitLabel})`, data: dData, borderColor: '#f59e0b', tension: 0.1 }
-            ]
-        },
-        options: { responsive: true }
-    });
-}
-
-function runCoachingEngine() {
-    const logs = JSON.parse(localStorage.getItem(LOGS_KEY)) || [];
-    const coachingCard = document.getElementById('coachingCard');
-    const feedbackText = document.getElementById('coachingFeedback');
-    const system = document.getElementById('unitSystem').value;
-    const unit = system === 'imperial' ? 'lbs' : 'kg';
-
-    if (logs.length < 7) {
-        coachingCard.classList.add('hidden');
+    if (!query) {
+        dropdown.classList.add('hidden');
         return;
     }
 
-    coachingCard.classList.remove('hidden');
+    const matches = internationalFoodDatabase.filter(food => food.name.toLowerCase().includes(query));
 
-    let currentWeekSum = 0, prevWeekSum = 0;
-    const len = logs.length;}
+    if (matches.length === 0) {
+        dropdown.innerHTML = `<div class="search-item">No matches found. Build via Custom inputs.</div>`;
+    } else {
+        matches.forEach(food => {
+            const div = document.createElement('div');
+            div.className = "search-item";
+            div.innerHTML = `✨ <strong>Add:</strong> ${food.name} <span style="color:#94a3b8; font-size:12px;">(P:${food.p}g C:${food.c}g F:${food.f}g)</span>`;
+            div.onclick = function() {
+                addTrackedFood(food.name, food.p, food.c, food.f);
+                document.getElementById('foodSearchInput').value = "";
+                dropdown.classList.add('hidden');
+            };
+            dropdown.appendChild(div);
+        });
+    }
+    dropdown.classList.remove('hidden');
+}
+
+function addCustomFoodMacros() {
+    const name = document.getElementById('customFoodName').value || "Custom Food Entry";
+    const p = parseFloat(document.getElementById('customFoodProtein').value) || 0;
+    const c = parseFloat(document.getElementById('customFoodCarbs').value) || 0;
+    const f = parseFloat(document.getElementById('customFoodFats').value) || 0;
+
+    addTrackedFood(name, p, c, f);
+    
+    document.getElementById('customFoodName').value = "";
+    document.getElementById('customFoodProtein').value = "0";
+    document.getElementById('customFoodCarbs').value = "0";
+    document.getElementById('customFoodFats').value = "0";
+}
+
+function addTrackedFood(name, p, c, f) {
+    dailyProtein += p;
+    dailyCarbs += c;
+    dailyFats += f;
+    dailyCalories += (p * 4) + (c * 4) + (f * 9);
+
+    document.getElementById('totalLoggedProtein').innerText = Math.round(dailyProtein);
+    document.getElementById('totalLoggedCarbs').innerText = Math.round(dailyCarbs);
+    document.getElementById('totalLoggedFats').innerText = Math.round(dailyFats);
+    document.getElementById('totalLoggedCalories').innerText = Math.round(dailyCalories);
+}
+
+function addExerciseToWorkout() {
+    const metRate = parseFloat(document.getElementById('workoutType').value);
+    const name = document.getElementById('workoutName').value || "Exercise Session";
+    const sets = parseInt(document.getElementById('workoutSets').value) || 3;
+    const reps = parseInt(document.getElementById('workoutReps').value) || 10;
+    const duration = parseFloat(document.getElementById('workoutDuration').value) || 15;
+
+    const system = document.getElementById('unitSystem').value;
+    const profileWeight = parseFloat(document.getElementById('weight').value) || 150;
+    const massKg = system === 'imperial' ? (profileWeight * 0.45359237) : profileWeight;
+
+    const computedBurn = Math.round(metRate * 3.5 * (massKg / 200) * duration);
+    dailyBurnedCals += computedBurn;
+
+    document.getElementById('totalWorkoutBurn').innerText = dailyBurnedCals;
+
+    const routineList = document.getElementById('routineList');
+    const div = document.createElement('div');
+    div.style.padding = "10px 0";
+    div.style.borderBottom = "1px solid rgba(255,255,255,0.05)";
+}
