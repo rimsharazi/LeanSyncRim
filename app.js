@@ -40,36 +40,58 @@ function calculateRecomp() {
     const gender = document.getElementById('gender').value;
     const activity = document.getElementById('activity').value;
 
-    let weightKg = weightInput;
-    let heightCm = heightInput;
-    let weightLbs = weightInput;
-
-    // Standardize variables for mathematical equations
-    if (system === 'imperial') {
-        weightKg = weightInput / 2.20462;
-        heightCm = heightInput * 2.54;
-    } else {
-        weightLbs = weightInput * 2.20462;
+    if (!weightInput || !heightInput || !age) {
+        return alert("Please fill out all setup fields!");
     }
 
-    // Mifflin-St Jeor Formula implementation
+    let weightKg = 0;
+    let heightCm = 0;
+    let weightLbs = 0;
+
+    // --- AUDITED UNIT CONVERSION SYSTEM ---
+    if (system === 'imperial') {
+        weightKg = weightInput * 0.45359237; // Highly precise lbs to kg conversion
+        heightCm = heightInput * 2.54;       // Inches to cm
+        weightLbs = weightInput;
+    } else {
+        weightKg = weightInput;
+        heightCm = heightInput;              // Already in cm
+        weightLbs = weightInput * 2.20462262; // kg to lbs for protein rules
+    }
+
+    // --- MIFFLIN-ST JEOR FORMULA ---
     let bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age);
-    bmr = (gender === 'male') ? bmr + 5 : bmr - 161;
+    if (gender === 'male') {
+        bmr += 5;
+    } else {
+        bmr -= 161;
+    }
 
-    const multipliers = { sedentary: 1.2, light: 1.375, moderate: 1.55, very: 1.725 };
-    const tdee = bmr * multipliers[activity];
+    // --- ACTIVITY MULTIPLIERS ---
+    const multipliers = { 
+        sedentary: 1.2, 
+        light: 1.375, 
+        moderate: 1.55, 
+        very: 1.725 
+    };
+    const tdee = bmr * (multipliers[activity] || 1.375);
 
-    // --- CYCLING ENGINE CALCULATION ---
+    // --- MACRO SPLIT CALCULATION ENGINE ---
+    // Training Day: Fueled at full TDEE maintenance
     const trainCals = Math.round(tdee);
-    const trainProtein = Math.round(weightLbs * 1.1); // Protein targets are derived from body weight scale mapping metrics
-    const trainFats = Math.round(weightLbs * 0.3);
-    const trainCarbs = Math.max(0, Math.round((trainCals - ((trainProtein * 4) + (trainFats * 9))) / 4));
+    const trainProtein = Math.round(weightLbs * 1.0); // 1g per lb of bodyweight
+    const trainFats = Math.round(weightLbs * 0.3);     // 0.3g per lb of bodyweight
+    const trainRemainingCals = trainCals - ((trainProtein * 4) + (trainFats * 9));
+    const trainCarbs = Math.max(0, Math.round(trainRemainingCals / 4));
 
+    // Rest Day: Fueled at a clean fat loss deficit (-400 kcal)
     const restCals = Math.round(tdee - 400);
-    const restProtein = Math.round(weightLbs * 1.1);
-    const restFats = Math.round(weightLbs * 0.4);
-    const restCarbs = Math.max(0, Math.round((restCals - ((restProtein * 4) + (restFats * 9))) / 4));
+    const restProtein = Math.round(weightLbs * 1.0);   // Keep protein high to prevent breakdown
+    const restFats = Math.round(weightLbs * 0.35);    // Slightly higher fats on rest days
+    const restRemainingCals = restCals - ((restProtein * 4) + (restFats * 9));
+    const restCarbs = Math.max(0, Math.round(restRemainingCals / 4));
 
+    // --- SAVE AND RENDER CONFIGURATION ---
     const profile = { 
         system, weightInput, heightInput, age, gender, activity, 
         trainCals, trainProtein, trainCarbs, trainFats,
@@ -80,6 +102,7 @@ function calculateRecomp() {
     displayTargets(profile);
     runCoachingEngine();
 }
+
 
 function displayTargets(profile) {
     document.getElementById('trainCals').innerText = profile.trainCals;
