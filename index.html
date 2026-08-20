@@ -1,194 +1,4988 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeanSync</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://jsdelivr.net"></script>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<meta name="theme-color" content="#0b0d12">
+
+<meta
+    name="description"
+    content="LeanSyncRim — your personal training, nutrition and accountability coach."
+>
+
+<title>LeanSyncRim — Personal Coach</title>
+
+<style>
+
+:root {
+    --bg: #080a0f;
+    --bg2: #0e1118;
+    --card: #131720;
+    --card2: #181d27;
+
+    --text: #f5f7fa;
+    --muted: #8f98a8;
+
+    --accent: #84cc16;
+    --accent2: #a3e635;
+
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #22c55e;
+    --blue: #3b82f6;
+
+    --border: #272d39;
+
+    --radius: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(132,204,22,0.08),
+            transparent 35%
+        ),
+        var(--bg);
+
+    color: var(--text);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+#auth-screen {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+
+    background: rgba(19,23,32,0.95);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 22px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.45);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-icon {
+    font-size: 3rem;
+}
+
+.logo h1 {
+    margin: 8px 0 5px;
+
+    font-size: 2rem;
+
+    letter-spacing: -0.04em;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.logo p {
+    margin: 0;
+
+    color: var(--muted);
+}
+
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    margin-bottom: 20px;
+
+    background: var(--bg);
+
+    padding: 4px;
+
+    border-radius: 10px;
+}
+
+.auth-tab {
+    border: 0;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    padding: 10px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+}
+
+.auth-tab.active {
+    background: var(--accent);
+
+    color: #071000;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+#app {
+    min-height: 100vh;
+}
+
+header {
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+
+    background:
+        rgba(8,10,15,0.92);
+
+    backdrop-filter:
+        blur(16px);
+
+    border-bottom:
+        1px solid
+        var(--border);
+}
+
+.header-inner {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding:
+        14px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.brand-icon {
+    font-size: 1.5rem;
+}
+
+.brand-text strong {
+    display: block;
+
+    font-size: 1rem;
+}
+
+.brand-text small {
+    color: var(--muted);
+
+    font-size: 0.72rem;
+}
+
+.header-actions {
+    display: flex;
+
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 10px;
+
+    background:
+        var(--card);
+
+    color:
+        var(--text);
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   NAV
+========================================================= */
+
+nav {
+    position: sticky;
+    top: 69px;
+
+    z-index: 90;
+
+    display: flex;
+
+    overflow-x: auto;
+
+    background:
+        rgba(14,17,24,0.96);
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+    scrollbar-width: none;
+}
+
+nav::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-btn {
+    flex: 0 0 auto;
+
+    border: 0;
+
+    border-bottom:
+        3px solid
+        transparent;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    padding:
+        13px 17px;
+
+    cursor: pointer;
+
+    font-size: 0.84rem;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.nav-btn.active {
+    color: var(--accent);
+
+    border-bottom-color:
+        var(--accent);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding:
+        22px 18px 100px;
+}
+
+.tab {
+    display: none;
+}
+
+.tab.active {
+    display: block;
+}
+
+.section-title {
+    margin-bottom: 20px;
+}
+
+.section-title h2 {
+    margin: 0;
+
+    font-size: 1.7rem;
+
+    letter-spacing: -0.03em;
+}
+
+.section-title p {
+    margin: 5px 0 0;
+
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(24,29,39,0.98),
+            rgba(16,19,27,0.98)
+        );
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius);
+
+    padding: 20px;
+
+    margin-bottom: 16px;
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.hero {
+    display: grid;
+
+    grid-template-columns:
+        1.5fr 1fr;
+
+    gap: 16px;
+}
+
+.hero-card {
+    min-height: 230px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
+.hero-card h1 {
+    font-size:
+        clamp(
+            2rem,
+            5vw,
+            3.5rem
+        );
+
+    margin: 5px 0;
+
+    letter-spacing: -0.06em;
+}
+
+.hero-card h1 span {
+    color: var(--accent);
+}
+
+.coach-message {
+    color: var(--muted);
+
+    line-height: 1.6;
+}
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+.stat {
+    background: var(--bg2);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 13px;
+
+    padding: 16px;
+}
+
+.stat-label {
+    color: var(--muted);
+
+    font-size: 0.75rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+}
+
+.stat-value {
+    margin-top: 5px;
+
+    font-size: 1.7rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   CALORIES
+========================================================= */
+
+.calorie-ring {
+    width: 190px;
+    height: 190px;
+
+    margin: 10px auto 20px;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+        conic-gradient(
+            var(--accent)
+            var(--calorie-progress, 0%),
+            #252b35 0
+        );
+
+    position: relative;
+}
+
+.calorie-ring::after {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    background:
+        var(--card);
+}
+
+.calorie-inner {
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+}
+
+.calorie-number {
+    font-size: 2rem;
+
+    font-weight: 900;
+}
+
+.calorie-label {
+    color: var(--muted);
+
+    font-size: 0.75rem;
+}
+
+.macro-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+}
+
+.macro {
+    text-align: center;
+
+    background:
+        var(--bg2);
+
+    padding: 13px;
+
+    border-radius: 10px;
+}
+
+.macro strong {
+    display: block;
+
+    font-size: 1.2rem;
+}
+
+.macro span {
+    color: var(--muted);
+
+    font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   FORMS
+========================================================= */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 14px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+
+    color: #dce1e8;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+
+    padding:
+        12px 13px;
+
+    background:
+        var(--bg);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        10px;
+
+    color:
+        var(--text);
+
+    outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color:
+        var(--accent);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(132,204,22,0.08);
+}
+
+textarea {
+    resize: vertical;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn {
+    border: 0;
+
+    border-radius: 10px;
+
+    padding:
+        11px 17px;
+
+    background:
+        var(--accent);
+
+    color:
+        #081000;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s,
+        opacity .15s;
+}
+
+.btn:hover {
+    opacity: .9;
+}
+
+.btn:active {
+    transform:
+        translateY(1px);
+}
+
+.btn-secondary {
+    background:
+        var(--card2);
+
+    color:
+        var(--text);
+
+    border:
+        1px solid
+        var(--border);
+}
+
+.btn-danger {
+    background:
+        rgba(239,68,68,.12);
+
+    color:
+        #fca5a5;
+
+    border:
+        1px solid
+        rgba(239,68,68,.3);
+}
+
+
+/* =========================================================
+   WORKOUT
+========================================================= */
+
+.workout-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 14px;
+}
+
+.exercise {
+    background:
+        var(--bg2);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 12px;
+
+    padding: 15px;
+
+    margin-bottom: 10px;
+}
+
+.exercise-header {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap: 10px;
+}
+
+.exercise-name {
+    font-weight: 800;
+}
+
+.exercise-target {
+    color:
+        var(--muted);
+
+    font-size:
+        0.78rem;
+
+    margin-top: 4px;
+}
+
+.exercise-fields {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 7px;
+
+    margin-top: 12px;
+}
+
+.exercise-fields input {
+    padding: 8px;
+}
+
+
+/* =========================================================
+   FOOD LOG
+========================================================= */
+
+.food-item {
+    display: flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap: 12px;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid
+        var(--border);
+}
+
+.food-item:last-child {
+    border-bottom: 0;
+}
+
+.food-name {
+    font-weight: 700;
+}
+
+.food-meta {
+    color:
+        var(--muted);
+
+    font-size:
+        .75rem;
+
+    margin-top: 3px;
+}
+
+.food-calories {
+    font-weight: 900;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress {
+    height: 10px;
+
+    border-radius: 999px;
+
+    background:
+        #252b35;
+
+    overflow: hidden;
+
+    margin:
+        10px 0;
+}
+
+.progress-bar {
+    height: 100%;
+
+    width: 0%;
+
+    background:
+        var(--accent);
+
+    transition:
+        width .3s;
+}
+
+.progress-bar.warning {
+    background:
+        var(--warning);
+}
+
+.progress-bar.danger {
+    background:
+        var(--danger);
+}
+
+
+/* =========================================================
+   COACH
+========================================================= */
+
+.coach-box {
+    border:
+        1px solid
+        rgba(132,204,22,.25);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(132,204,22,.08),
+            rgba(132,204,22,.02)
+        );
+
+    border-radius:
+        14px;
+
+    padding: 20px;
+}
+
+.coach-icon {
+    font-size: 2rem;
+}
+
+.coach-text {
+    font-size: 1.05rem;
+
+    line-height: 1.6;
+
+    margin-top: 10px;
+}
+
+.alert {
+    padding:
+        13px 15px;
+
+    border-radius:
+        10px;
+
+    margin-bottom: 12px;
+
+    font-size: .85rem;
+
+    font-weight: 700;
+}
+
+.alert.warning {
+    background:
+        rgba(245,158,11,.1);
+
+    color:
+        #fbbf24;
+
+    border:
+        1px solid
+        rgba(245,158,11,.25);
+}
+
+.alert.danger {
+    background:
+        rgba(239,68,68,.1);
+
+    color:
+        #fca5a5;
+
+    border:
+        1px solid
+        rgba(239,68,68,.25);
+}
+
+.alert.success {
+    background:
+        rgba(34,197,94,.1);
+
+    color:
+        #86efac;
+
+    border:
+        1px solid
+        rgba(34,197,94,.25);
+}
+
+
+/* =========================================================
+   RECIPE CARDS
+========================================================= */
+
+.recipe-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+.recipe {
+    background:
+        var(--bg2);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        12px;
+
+    padding: 15px;
+}
+
+.recipe h4 {
+    margin:
+        0 0 8px;
+}
+
+.recipe p {
+    color:
+        var(--muted);
+
+    font-size:
+        .8rem;
+
+    line-height:
+        1.5;
+}
+
+.recipe-calories {
+    color:
+        var(--accent);
+
+    font-weight:
+        900;
+}
+
+
+/* =========================================================
+   RESTAURANTS
+========================================================= */
+
+.search-row {
+    display: flex;
+
+    gap: 8px;
+}
+
+.search-row input {
+    flex: 1;
+}
+
+.restaurant-result {
+    padding:
+        14px 0;
+
+    border-bottom:
+        1px solid
+        var(--border);
+}
+
+.restaurant-result:last-child {
+    border-bottom: 0;
+}
+
+.restaurant-result strong {
+    display: block;
+}
+
+.restaurant-result small {
+    display: block;
+
+    color:
+        var(--muted);
+
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   WATER
+========================================================= */
+
+.water-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(8, 1fr);
+
+    gap: 8px;
+}
+
+.water-btn {
+    aspect-ratio: 1;
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        var(--bg2);
+
+    border-radius:
+        10px;
+
+    cursor:
+        pointer;
+
+    font-size:
+        1.1rem;
+}
+
+.water-btn.active {
+    background:
+        rgba(59,130,246,.18);
+
+    border-color:
+        var(--blue);
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+.settings-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+#status {
+    position: fixed;
+
+    right: 15px;
+    bottom: 15px;
+
+    max-width:
+        340px;
+
+    padding:
+        13px 16px;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        10px;
+
+    z-index:
+        9999;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.4);
+
+    display:
+        none;
+}
+
+#status.show {
+    display: block;
+}
+
+#status.error {
+    border-color:
+        var(--danger);
+
+    color:
+        #fecaca;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:800px) {
+
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .workout-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .recipe-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:600px) {
+
+    main {
+        padding:
+            17px 13px 90px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .macro-grid {
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .recipe-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .water-grid {
+        grid-template-columns:
+            repeat(4,1fr);
+    }
+
+    .search-row {
+        flex-direction:
+            column;
+    }
+
+    .auth-card {
+        padding: 22px;
+    }
+}
+
+</style>
+
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <h1>⚡ LeanSync</h1>
-            <p>Adaptive Calibration, Calorie Tracking & Routine Builder</p>
-        </header>
 
-        <!-- AUTOMATED COACHING CARD -->
-        <section id="coachingCard" class="card hidden coaching-box">
-            <h2>🤖 AI Recomp Coach Feedback</h2>
-            <p id="coachingFeedback">Analyzing your logs...</p>
-        </section>
 
-        <!-- 1. PROFILE SETUP -->
-        <section class="card">
-            <h2>1. Profile Setup & Goal Targets</h2>
-            <form id="profileForm">
-                <div class="grid-2" style="margin-bottom: 16px;">
-                    <label>Preferred Unit System:
-                        <select id="unitSystem" onchange="updateUnitLabels(); calculateRecomp();">
-                            <option value="imperial">Imperial (lbs, inches)</option>
-                            <option value="metric">Metric (kg, cm)</option>
-                        </select>
-                    </label>
-                    <label>Primary Fitness Goal:
-                        <select id="fitnessGoal" onchange="calculateRecomp()">
-                            <option value="maintain" selected>⚡ Body Recomposition (Maintain)</option>
-                            <option value="cut">🔥 Fat Loss (Cut)</option>
-                            <option value="bulk">💪 Lean Muscle Mass Gaining (Bulk)</option>
-                        </select>
-                    </label>
-                </div>
-                <div class="grid-3">
-                    <label id="labelWeight">Weight (lbs): <input type="number" id="weight" oninput="calculateRecomp()" required value="180"></label>
-                    <label id="labelHeight">Height (inches): <input type="number" id="height" oninput="calculateRecomp()" required value="70"></label>
-                    <label>Age: <input type="number" id="age" oninput="calculateRecomp()" required value="25"></label>
-                </div>
-                <div class="grid-2">
-                    <label>Gender: 
-                        <select id="gender" onchange="calculateRecomp()">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                    </label>
-                    <label>Activity Level: 
-                        <select id="activity" onchange="calculateRecomp()">
-                            <option value="sedentary">Sedentary</option>
-                            <option value="light">Light</option>
-                            <option value="moderate" selected>Moderate</option>
-                            <option value="very">Very Active</option>
-                        </select>
-                    </label>
-                </div>
-            </form>
+<!-- =========================================================
+     AUTH SCREEN
+========================================================= -->
 
-            <div id="recompTargets" class="hidden target-box">
-                <h3>Your Calculated Goal Targets</h3>
-                <div class="grid-2">
-                    <div>
-                        <h4>🏋️ TRAINING DAY</h4>
-                        <p>⚡ Calories: <span id="trainCals">0</span> kcal</p>
-                        <p>🥩 Protein: <span id="trainProtein">0</span>g</p>
-                        <p>🍚 Carbs: <span id="trainCarbs">0</span>g</p>
-                        <p>🥑 Fats: <span id="trainFats">0</span>g</p>
-                    </div>
-                    <div>
-                        <h4>🛌 REST DAY</h4>
-                        <p>⚡ Calories: <span id="restCals">0</span> kcal</p>
-                        <p>🥩 Protein: <span id="restProtein">0</span>g</p>
-                        <p>🍚 Carbs: <span id="restCarbs">0</span>g</p>
-                        <p>🥑 Fats: <span id="restFats">0</span>g</p>
-                    </div>
-                </div>
+<div id="auth-screen">
+
+    <div class="auth-card">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🏋️
             </div>
-        </section>
 
-        <!-- 2. INTERNATIONAL FOOD SEARCH & CALORIE TRACKER -->
-        <section class="card">
-            <h2>2. Food Search & Calorie Counter</h2>
-            <div class="search-box-container">
-                <label>Search Global Foods (e.g., Chicken, Sushi, Tacos, Paneer):
-                    <input type="text" id="foodSearchInput" oninput="searchFoodDatabase()" placeholder="Type to search database...">
+            <h1>
+                Lean<span>Sync</span>Rim
+            </h1>
+
+            <p>
+                Your personal coach.
+            </p>
+
+        </div>
+
+
+        <div class="auth-tabs">
+
+            <button
+                class="auth-tab active"
+                id="login-tab"
+                onclick="showAuth('login')">
+
+                Login
+
+            </button>
+
+            <button
+                class="auth-tab"
+                id="signup-tab"
+                onclick="showAuth('signup')">
+
+                Create Account
+
+            </button>
+
+        </div>
+
+
+        <form
+            id="auth-form"
+            onsubmit="handleAuth(event)"
+        >
+
+            <div
+                class="form-group"
+                id="name-group"
+                style="display:none;"
+            >
+
+                <label>
+                    Name
                 </label>
-                <div id="searchResultsDropdown" class="search-results hidden"></div>
+
+                <input
+                    id="auth-name"
+                    type="text"
+                    placeholder="Your name"
+                >
+
             </div>
-            
-            <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
-                <h4>Or Log Custom Food Macros:</h4>
-                <div class="grid-4">
-                    <label>Name: <input type="text" id="customFoodName" placeholder="E.g., Protein Shake"></label>
-                    <label>Protein (g): <input type="number" id="customFoodProtein" value="0"></label>
-                    <label>Carbs (g): <input type="number" id="customFoodCarbs" value="0"></label>
-                    <label>Fats (g): <input type="number" id="customFoodFats" value="0"></label>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    id="auth-email"
+                    type="email"
+                    required
+                    placeholder="you@email.com"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    id="auth-password"
+                    type="password"
+                    minlength="6"
+                    required
+                    placeholder="At least 6 characters"
+                >
+
+            </div>
+
+
+            <button
+                class="btn"
+                style="width:100%;"
+                type="submit"
+                id="auth-submit"
+            >
+
+                Login
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     APPLICATION
+========================================================= -->
+
+<div id="app" class="hidden">
+
+
+<header>
+
+    <div class="header-inner">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏋️
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    LeanSyncRim
+                </strong>
+
+                <small id="user-email">
+                    Personal Coach
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <button
+                class="icon-btn"
+                onclick="requestNotifications()"
+                title="Notifications"
+            >
+                🔔
+            </button>
+
+            <button
+                class="icon-btn"
+                onclick="logout()"
+                title="Logout"
+            >
+                🚪
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<nav>
+
+    <button
+        class="nav-btn active"
+        onclick="switchTab('dashboard')"
+        id="nav-dashboard"
+    >
+        🏠 Dashboard
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="switchTab('workout')"
+        id="nav-workout"
+    >
+        🏋️ Workout
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="switchTab('nutrition')"
+        id="nav-nutrition"
+    >
+        🍽️ Nutrition
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="switchTab('restaurants')"
+        id="nav-restaurants"
+    >
+        🍔 Restaurants
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="switchTab('recipes')"
+        id="nav-recipes"
+    >
+        🥗 Recipes
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="switchTab('coach')"
+        id="nav-coach"
+    >
+        😈 Coach
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="switchTab('settings')"
+        id="nav-settings"
+    >
+        ⚙️ Settings
+    </button>
+
+</nav>
+
+
+<main>
+
+
+<!-- =========================================================
+     DASHBOARD
+========================================================= -->
+
+<section
+    id="tab-dashboard"
+    class="tab active"
+>
+
+    <div class="section-title">
+
+        <h2>
+            Good morning. Let's work.
+        </h2>
+
+        <p id="dashboard-date">
+        </p>
+
+    </div>
+
+
+    <div class="hero">
+
+        <div class="card hero-card">
+
+            <div>
+
+                <small
+                    style="color:var(--muted);"
+                >
+                    TODAY'S COACH
+                </small>
+
+                <h1>
+                    No excuses.<br>
+                    <span>Get it done.</span>
+                </h1>
+
+                <div
+                    class="coach-message"
+                    id="dashboard-message"
+                >
+                    Loading your accountability report...
                 </div>
-                <button type="button" onclick="addCustomFoodMacros()">Add to Daily Intake</button>
+
             </div>
 
-            <div id="todaysFoodLog" class="target-box style-box" style="margin-top: 20px;">
-                <h3>Today's Consumed Tracking</h3>
-                <p>🥩 Total Protein: <span id="totalLoggedProtein">0</span>g</p>
-                <p>🍚 Total Carbs: <span id="totalLoggedCarbs">0</span>g</p>
-                <p>🥑 Total Fats: <span id="totalLoggedFats">0</span>g</p>
-                <p style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px;">⚡ Total Energy Eaten: <span id="totalLoggedCalories">0</span> kcal</p>
-            </div>
-        </section>
 
-        <!-- 3. WORKOUT ROUTINE BUILDER WITH CALORIE BURN METRICS -->
-        <section class="card">
-            <h2>3. Custom Workout Builder & Burn Calculator</h2>
-            <div class="grid-2">
-                <label>Exercise Type: 
-                    <select id="workoutType">
-                        <option value="6.0">🏋️ Heavy Weight Lifting (Compound Movements)</option>
-                        <option value="3.5">💪 Light Weight Training (Isolation Movements)</option>
-                        <option value="8.0">🏃 High Intensity Cardio / Rowing</option>
-                        <option value="4.0">🚴 Moderate Aerobic Training / Cycling</option>
+            <button
+                class="btn"
+                onclick="switchTab('workout')"
+            >
+                Start Today's Workout
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🔥 Today's Calories
+            </h3>
+
+
+            <div
+                class="calorie-ring"
+                id="dashboard-ring"
+            >
+
+                <div class="calorie-inner">
+
+                    <div
+                        class="calorie-number"
+                        id="dashboard-calories"
+                    >
+                        0
+                    </div>
+
+                    <div class="calorie-label">
+                        calories
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    text-align:center;
+                    color:var(--muted);
+                "
+            >
+
+                Target:
+                <strong
+                    id="dashboard-target"
+                    style="color:var(--text);"
+                >
+                    1600
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Calories
+            </div>
+
+            <div
+                class="stat-value"
+                id="stat-calories"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Protein
+            </div>
+
+            <div
+                class="stat-value"
+                id="stat-protein"
+            >
+                0g
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Water
+            </div>
+
+            <div
+                class="stat-value"
+                id="stat-water"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Workout
+            </div>
+
+            <div
+                class="stat-value"
+                id="stat-workout"
+            >
+                ❌
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="dashboard-alerts"
+        style="margin-top:16px;"
+    >
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     WORKOUT
+========================================================= -->
+
+<section
+    id="tab-workout"
+    class="tab"
+>
+
+    <div class="section-title">
+
+        <h2>
+            🏋️ Today's Training
+        </h2>
+
+        <p>
+            Log everything. Sets, reps, weight. No ghosting.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <div>
+
+                <h3 id="today-workout-name">
+                    Today's Workout
+                </h3>
+
+                <span
+                    id="today-workout-description"
+                    style="color:var(--muted);"
+                >
+                    Loading...
+                </span>
+
+            </div>
+
+
+            <button
+                class="btn"
+                onclick="completeWorkout()"
+            >
+                ✅ Complete Workout
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Exercise Log
+        </h3>
+
+        <div id="exercise-list">
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Add Exercise
+        </h3>
+
+        <form onsubmit="addCustomExercise(event)">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>
+                        Exercise
+                    </label>
+
+                    <input
+                        id="exercise-name"
+                        required
+                        placeholder="Bench Press"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Sets × Reps
+                    </label>
+
+                    <input
+                        id="exercise-target"
+                        placeholder="4 × 8"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="btn"
+                type="submit"
+            >
+                Add Exercise
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NUTRITION
+========================================================= -->
+
+<section
+    id="tab-nutrition"
+    class="tab"
+>
+
+    <div class="section-title">
+
+        <h2>
+            🍽️ Nutrition
+        </h2>
+
+        <p>
+            Everything you eat goes here. Yes, even the "little bite."
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="calorie-ring" id="nutrition-ring">
+
+            <div class="calorie-inner">
+
+                <div
+                    class="calorie-number"
+                    id="nutrition-calories"
+                >
+                    0
+                </div>
+
+                <div class="calorie-label">
+                    / <span id="nutrition-target">1600</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                id="calorie-progress"
+            >
+            </div>
+
+        </div>
+
+
+        <div
+            id="calorie-status"
+            style="
+                text-align:center;
+                color:var(--muted);
+                margin-top:8px;
+            "
+        >
+        </div>
+
+
+        <div class="macro-grid">
+
+            <div class="macro">
+
+                <strong id="protein-total">
+                    0g
+                </strong>
+
+                <span>
+                    Protein
+                </span>
+
+            </div>
+
+
+            <div class="macro">
+
+                <strong id="carbs-total">
+                    0g
+                </strong>
+
+                <span>
+                    Carbs
+                </span>
+
+            </div>
+
+
+            <div class="macro">
+
+                <strong id="fat-total">
+                    0g
+                </strong>
+
+                <span>
+                    Fat
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            ➕ Log Food
+        </h3>
+
+
+        <form onsubmit="addFood(event)">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>
+                        Food / Meal
+                    </label>
+
+                    <input
+                        id="food-name"
+                        required
+                        placeholder="Chicken breast"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Calories
+                    </label>
+
+                    <input
+                        id="food-calories"
+                        type="number"
+                        min="0"
+                        required
+                        placeholder="250"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Protein (g)
+                    </label>
+
+                    <input
+                        id="food-protein"
+                        type="number"
+                        min="0"
+                        value="0"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Carbs (g)
+                    </label>
+
+                    <input
+                        id="food-carbs"
+                        type="number"
+                        min="0"
+                        value="0"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Fat (g)
+                    </label>
+
+                    <input
+                        id="food-fat"
+                        type="number"
+                        min="0"
+                        value="0"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Meal
+                    </label>
+
+                    <select id="food-meal">
+
+                        <option>
+                            Breakfast
+                        </option>
+
+                        <option>
+                            Lunch
+                        </option>
+
+                        <option>
+                            Dinner
+                        </option>
+
+                        <option>
+                            Snack
+                        </option>
+
                     </select>
-                </label>
-                <label>Exercise Name: <input type="text" id="workoutName" placeholder="Squat, Bench Press, Run..."></label>
-            </div>
-            <div class="grid-4">
-                <label>Sets: <input type="number" id="workoutSets" value="3"></label>
-                <label>Reps: <input type="number" id="workoutReps" value="10"></label>
-                <label id="labelLiftWeight">Weight (lbs): <input type="number" id="workoutWeight" value="135"></label>
-                <label>Duration (mins): <input type="number" id="workoutDuration" value="15"></label>
-            </div>
-            <button type="button" onclick="addExerciseToWorkout()">Add Exercise & Calculate Burn</button>
 
-            <div id="routineDisplayBox" class="target-box style-box" style="margin-top: 20px;">
-                <h3>Current Workout Routine Metrics</h3>
-                <p style="font-weight: bold; color: #10b981; margin-bottom: 12px;">🔥 Total Routine Burn: <span id="totalWorkoutBurn">0</span> kcal</p>
-                <div id="routineList"></div>
-            </div>
-        </section>
+                </div>
 
-        <!-- 4. SAVE COMPLETED LOG ENTRY -->
-        <section class="card">
-            <h2>4. Submit & Save Today's Log</h2>
-            <form id="logForm">
-                <div class="grid-2">
-                    <label id="labelLogWeight">Scale Weight (lbs): <input type="number" step="0.1" id="logWeight" required></label>
-                    <label>Day Type: 
-                        <select id="logDayType">
-                            <option value="training">Training Day</option>
-                            <option value="rest">Rest Day</option>
-                        </select>
+            </div>
+
+
+            <button
+                class="btn"
+                type="submit"
+            >
+                Log Food
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Today's Food Log
+        </h3>
+
+        <div id="food-log">
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            💧 Water
+        </h3>
+
+        <p
+            style="color:var(--muted);"
+        >
+            Tap a glass every time you drink one.
+        </p>
+
+        <div
+            class="water-grid"
+            id="water-grid"
+        >
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RESTAURANTS
+========================================================= -->
+
+<section
+    id="tab-restaurants"
+    class="tab"
+>
+
+    <div class="section-title">
+
+        <h2>
+            🍔 Restaurant Finder
+        </h2>
+
+        <p>
+            Search food and add nutrition to today's log.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="alert warning">
+
+            ⚠️ Restaurant nutrition requires a menu/nutrition
+            data provider. The interface is ready for your API.
+
+        </div>
+
+
+        <div class="search-row">
+
+            <input
+                id="restaurant-search"
+                placeholder="Search restaurant or menu item..."
+            >
+
+            <button
+                class="btn"
+                onclick="searchRestaurant()"
+            >
+                Search
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="card"
+        id="restaurant-results"
+    >
+
+        <div
+            class="empty-message"
+            style="color:var(--muted);"
+        >
+            Search for a restaurant or menu item.
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            How automatic calories will work
+        </h3>
+
+        <p
+            style="
+                color:var(--muted);
+                line-height:1.6;
+            "
+        >
+
+            Restaurant →
+            menu item →
+            nutrition data →
+            calories/macros →
+            one-click addition to today's food log.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RECIPES
+========================================================= -->
+
+<section
+    id="tab-recipes"
+    class="tab"
+>
+
+    <div class="section-title">
+
+        <h2>
+            🥗 Healthy Recipes
+        </h2>
+
+        <p>
+            Quick meals that actually fit the plan.
+        </p>
+
+    </div>
+
+
+    <div
+        class="recipe-grid"
+        id="recipe-grid"
+    >
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     COACH
+========================================================= -->
+
+<section
+    id="tab-coach"
+    class="tab"
+>
+
+    <div class="section-title">
+
+        <h2>
+            😈 Accountability Coach
+        </h2>
+
+        <p>
+            You asked for motivation. You are getting motivation.
+        </p>
+
+    </div>
+
+
+    <div class="coach-box">
+
+        <div class="coach-icon">
+            😈
+        </div>
+
+        <div
+            class="coach-text"
+            id="coach-main-message"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div
+        style="margin-top:16px;"
+        id="coach-alerts"
+    >
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🔔 Notifications
+        </h3>
+
+        <p
+            style="color:var(--muted);"
+        >
+            Enable notifications so the coach can remind you
+            when you are ignoring your plan.
+        </p>
+
+
+        <button
+            class="btn"
+            onclick="requestNotifications()"
+        >
+            Enable Notifications
+        </button>
+
+
+        <div
+            id="notification-status"
+            style="
+                color:var(--muted);
+                margin-top:10px;
+                font-size:.8rem;
+            "
+        >
+            Notifications not enabled.
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Coach Settings
+        </h3>
+
+
+        <div class="form-group">
+
+            <label>
+                Motivation Level
+            </label>
+
+            <select id="coach-level">
+
+                <option value="gentle">
+                    Gentle
+                </option>
+
+                <option
+                    value="direct"
+                    selected
+                >
+                    Direct
+                </option>
+
+                <option value="aggressive">
+                    Aggressive
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="btn"
+            onclick="saveCoachSettings()"
+        >
+            Save Coach Style
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SETTINGS
+========================================================= -->
+
+<section
+    id="tab-settings"
+    class="tab"
+>
+
+    <div class="section-title">
+
+        <h2>
+            ⚙️ Your Plan
+        </h2>
+
+        <p>
+            Customize the targets the coach uses.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <form onsubmit="saveSettings(event)">
+
+            <div class="settings-grid">
+
+                <div class="form-group">
+
+                    <label>
+                        Daily Calorie Target
                     </label>
-                </div>
-                <button type="button" onclick="logDailyData()">Save Daily Entry & Reset Tracker</button>
-            </form>
-        </section>
 
-        <!-- 5. RECOMP ANALYTICS DASHBOARD -->
-        <section class="card">
-            <h2>5. Recomp Analytics Dashboard</h2>
-            <div class="grid-2">
-                <div>
-                    <h4 class="center-text">7-Day Weight Moving Average</h4>
-                    <canvas id="weightChart"></canvas>
-                </div>
-                <div>
-                    <h4 class="center-text">Strength & Workout Metrics</h4>
-                    <canvas id="strengthChart"></canvas>
-                </div>
-            </div>
-        </section>
+                    <input
+                        id="setting-calories"
+                        type="number"
+                        min="500"
+                        max="10000"
+                        value="1600"
+                        required
+                    >
 
-        <!-- 6. HISTORY RECOMP LOG -->
-        <section class="card">
-            <h2>6. History Log & Averages</h2>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th id="thWeight">Weight (lbs)</th>
-                            <th id="thAvgWeight">7-Day Avg (lbs)</th>
-                            <th>Type</th>
-                            <th>Net Calories Eaten</th>
-                            <th>Burned</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historyTableBody"></tbody>
-                </table>
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Protein Target (g)
+                    </label>
+
+                    <input
+                        id="setting-protein"
+                        type="number"
+                        min="0"
+                        value="120"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Water Goal (glasses)
+                    </label>
+
+                    <input
+                        id="setting-water"
+                        type="number"
+                        min="1"
+                        value="8"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Today's Workout
+                    </label>
+
+                    <select id="setting-workout">
+
+                        <option value="Rest">
+                            Rest Day
+                        </option>
+
+                        <option value="Upper Body">
+                            Upper Body
+                        </option>
+
+                        <option value="Lower Body">
+                            Lower Body
+                        </option>
+
+                        <option value="Push">
+                            Push
+                        </option>
+
+                        <option value="Pull">
+                            Pull
+                        </option>
+
+                        <option value="Full Body">
+                            Full Body
+                        </option>
+
+                        <option value="Custom">
+                            Custom
+                        </option>
+
+                    </select>
+
+                </div>
+
             </div>
+
+
+            <button
+                class="btn"
+                type="submit"
+            >
+                Save Plan
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🔔 Reminder Settings
+        </h3>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>
+                    Workout Reminder Time
+                </label>
+
+                <input
+                    id="setting-workout-time"
+                    type="time"
+                    value="18:00"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Calorie Check Time
+                </label>
+
+                <input
+                    id="setting-calorie-time"
+                    type="time"
+                    value="20:00"
+                >
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="btn"
+            onclick="saveReminderSettings()"
+        >
+            Save Reminder Times
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Account
+        </h3>
+
+        <button
+            class="btn btn-danger"
+            onclick="logout()"
+        >
+            Log Out
+        </button>
+
+    </div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<div id="status"></div>
+
+
+<!-- =========================================================
+     FIREBASE
+========================================================= -->
+
+<script type="module">
+
+import {
+    initializeApp
+} from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    updateProfile
+} from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    deleteDoc,
+    updateDoc,
+    doc,
+    query,
+    where,
+    orderBy,
+    onSnapshot,
+    getDocs,
+    setDoc,
+    getDoc
+} from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyAbkBGJnV6FHdd5GuvN-8RhQRQJkP1TfnA",
+
+    authDomain:
+        "leansyncrim.firebaseapp.com",
+
+    projectId:
+        "leansyncrim",
+
+    storageBucket:
+        "leansyncrim.firebasestorage.app",
+
+    messagingSenderId:
+        "91361714814",
+
+    appId:
+        "1:91361714814:web:f855ffa33e9c2d02a62e2f"
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
+
+let currentUser = null;
+
+let currentSettings = {
+
+    calories: 1600,
+
+    protein: 120,
+
+    water: 8,
+
+    workout: "Rest",
+
+    workoutTime: "18:00",
+
+    calorieTime: "20:00",
+
+    coachLevel: "direct"
+
+};
+
+
+let todayFood = [];
+
+let todayWorkoutCompleted = false;
+
+let todayWater = 0;
+
+let unsubscribeFunctions = [];
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function todayKey() {
+
+    const d = new Date();
+
+    return d.toISOString().split("T")[0];
+
+}
+
+
+function showStatus(message, error = false) {
+
+    const el =
+        document.getElementById("status");
+
+    el.textContent =
+        message;
+
+    el.classList.toggle(
+        "error",
+        error
+    );
+
+    el.classList.add("show");
+
+    setTimeout(() => {
+
+        el.classList.remove("show");
+
+    }, 4500);
+
+}
+
+
+function escapeHtml(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   AUTH UI
+========================================================= */
+
+let authMode = "login";
+
+
+window.showAuth = function(mode) {
+
+    authMode = mode;
+
+    document
+        .getElementById("login-tab")
+        .classList.toggle(
+            "active",
+            mode === "login"
+        );
+
+    document
+        .getElementById("signup-tab")
+        .classList.toggle(
+            "active",
+            mode === "signup"
+        );
+
+
+    document
+        .getElementById("name-group")
+        .style.display =
+            mode === "signup"
+                ? "block"
+                : "none";
+
+
+    document
+        .getElementById("auth-submit")
+        .textContent =
+            mode === "signup"
+                ? "Create Account"
+                : "Login";
+
+};
+
+
+window.handleAuth = async function(event) {
+
+    event.preventDefault();
+
+    const email =
+        document
+            .getElementById("auth-email")
+            .value
+            .trim();
+
+    const password =
+        document
+            .getElementById("auth-password")
+            .value;
+
+    try {
+
+        if (authMode === "signup") {
+
+            const name =
+                document
+                    .getElementById("auth-name")
+                    .value
+                    .trim();
+
+
+            const result =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            if (name) {
+
+                await updateProfile(
+                    result.user,
+                    {
+                        displayName: name
+                    }
+                );
+
+            }
+
+            showStatus(
+                "Account created."
+            );
+
+        } else {
+
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+            showStatus(
+                "Welcome back."
+            );
+
+        }
+
+    } catch(error) {
+
+        console.error(error);
+
+        showStatus(
+            friendlyAuthError(error),
+            true
+        );
+
+    }
+
+};
+
+
+function friendlyAuthError(error) {
+
+    if (
+        error.code ===
+        "auth/email-already-in-use"
+    ) {
+        return "That email already has an account.";
+    }
+
+    if (
+        error.code ===
+        "auth/invalid-credential"
+    ) {
+        return "Email or password is incorrect.";
+    }
+
+    if (
+        error.code ===
+        "auth/weak-password"
+    ) {
+        return "Password needs to be at least 6 characters.";
+    }
+
+    return error.message ||
+        "Authentication failed.";
+
+}
+
+
+window.logout = async function() {
+
+    await signOut(auth);
+
+};
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        currentUser = user;
+
+        if (user) {
+
+            document
+                .getElementById("auth-screen")
+                .classList.add("hidden");
+
+            document
+                .getElementById("app")
+                .classList.remove("hidden");
+
+
+            document
+                .getElementById("user-email")
+                .textContent =
+                    user.displayName ||
+                    user.email;
+
+
+            await loadSettings();
+
+            setupRealtimeData();
+
+            renderDashboard();
+
+            loadRecipes();
+
+            startReminderEngine();
+
+        } else {
+
+            document
+                .getElementById("auth-screen")
+                .classList.remove("hidden");
+
+            document
+                .getElementById("app")
+                .classList.add("hidden");
+
+            cleanupListeners();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   USER PATH
+========================================================= */
+
+function userCollection(name) {
+
+    return collection(
+        db,
+        "users",
+        currentUser.uid,
+        name
+    );
+
+}
+
+
+function userDoc(name, id) {
+
+    return doc(
+        db,
+        "users",
+        currentUser.uid,
+        name,
+        id
+    );
+
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+async function loadSettings() {
+
+    try {
+
+        const ref =
+            doc(
+                db,
+                "users",
+                currentUser.uid,
+                "settings",
+                "profile"
+            );
+
+
+        const snapshot =
+            await getDoc(ref);
+
+
+        if (snapshot.exists()) {
+
+            currentSettings = {
+                ...currentSettings,
+                ...snapshot.data()
+            };
+
+        }
+
+
+        document
+            .getElementById("setting-calories")
+            .value =
+                currentSettings.calories;
+
+        document
+            .getElementById("setting-protein")
+            .value =
+                currentSettings.protein;
+
+        document
+            .getElementById("setting-water")
+            .value =
+                currentSettings.water;
+
+        document
+            .getElementById("setting-workout")
+            .value =
+                currentSettings.workout;
+
+        document
+            .getElementById("setting-workout-time")
+            .value =
+                currentSettings.workoutTime;
+
+        document
+            .getElementById("setting-calorie-time")
+            .value =
+                currentSettings.calorieTime;
+
+        document
+            .getElementById("coach-level")
+            .value =
+                currentSettings.coachLevel;
+
+    } catch(error) {
+
+        console.error(
+            "Settings error:",
+            error
+        );
+
+    }
+
+}
+
+
+window.saveSettings = async function(event) {
+
+    event.preventDefault();
+
+    currentSettings.calories =
+        Number(
+            document
+                .getElementById("setting-calories")
+                .value
+        );
+
+    currentSettings.protein =
+        Number(
+            document
+                .getElementById("setting-protein")
+                .value
+        );
+
+    currentSettings.water =
+        Number(
+            document
+                .getElementById("setting-water")
+                .value
+        );
+
+    currentSettings.workout =
+        document
+            .getElementById("setting-workout")
+            .value;
+
+
+    await setDoc(
+
+        doc(
+            db,
+            "users",
+            currentUser.uid,
+            "settings",
+            "profile"
+        ),
+
+        currentSettings,
+
+        {
+            merge: true
+        }
+
+    );
+
+
+    renderDashboard();
+
+    showStatus(
+        "Plan saved."
+    );
+
+};
+
+
+window.saveReminderSettings = async function() {
+
+    currentSettings.workoutTime =
+        document
+            .getElementById("setting-workout-time")
+            .value;
+
+    currentSettings.calorieTime =
+        document
+            .getElementById("setting-calorie-time")
+            .value;
+
+
+    await setDoc(
+
+        doc(
+            db,
+            "users",
+            currentUser.uid,
+            "settings",
+            "profile"
+        ),
+
+        currentSettings,
+
+        {
+            merge: true
+        }
+
+    );
+
+
+    showStatus(
+        "Reminder settings saved."
+    );
+
+};
+
+
+window.saveCoachSettings = async function() {
+
+    currentSettings.coachLevel =
+        document
+            .getElementById("coach-level")
+            .value;
+
+
+    await setDoc(
+
+        doc(
+            db,
+            "users",
+            currentUser.uid,
+            "settings",
+            "profile"
+        ),
+
+        {
+            coachLevel:
+                currentSettings.coachLevel
+        },
+
+        {
+            merge: true
+        }
+
+    );
+
+
+    renderCoach();
+
+    showStatus(
+        "Coach settings saved."
+    );
+
+};
+
+
+/* =========================================================
+   TAB SYSTEM
+========================================================= */
+
+const validTabs = [
+    "dashboard",
+    "workout",
+    "nutrition",
+    "restaurants",
+    "recipes",
+    "coach",
+    "settings"
+];
+
+
+window.switchTab = function(tab) {
+
+    if (
+        !validTabs.includes(tab)
+    ) {
+        return;
+    }
+
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(
+            el =>
+                el.classList.remove("active")
+        );
+
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(
+            el =>
+                el.classList.remove("active")
+        );
+
+
+    document
+        .getElementById(
+            `tab-${tab}`
+        )
+        .classList.add("active");
+
+
+    document
+        .getElementById(
+            `nav-${tab}`
+        )
+        .classList.add("active");
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+};
+
+
+/* =========================================================
+   REALTIME DATA
+========================================================= */
+
+function cleanupListeners() {
+
+    unsubscribeFunctions.forEach(
+        unsubscribe =>
+            unsubscribe()
+    );
+
+    unsubscribeFunctions = [];
+
+}
+
+
+function setupRealtimeData() {
+
+    cleanupListeners();
+
+
+    /* FOOD */
+
+    const foodQuery =
+        query(
+            userCollection("food"),
+            where(
+                "date",
+                "==",
+                todayKey()
+            )
+        );
+
+
+    const foodUnsubscribe =
+        onSnapshot(
+            foodQuery,
+            snapshot => {
+
+                todayFood =
+                    snapshot.docs.map(
+                        d => ({
+                            id: d.id,
+                            ...d.data()
+                        })
+                    );
+
+                renderNutrition();
+
+                renderDashboard();
+
+            }
+        );
+
+
+    unsubscribeFunctions.push(
+        foodUnsubscribe
+    );
+
+
+    /* WORKOUT */
+
+    const workoutQuery =
+        query(
+            userCollection("workouts"),
+            where(
+                "date",
+                "==",
+                todayKey()
+            )
+        );
+
+
+    const workoutUnsubscribe =
+        onSnapshot(
+            workoutQuery,
+            snapshot => {
+
+                todayWorkoutCompleted =
+                    snapshot.docs.some(
+                        d =>
+                            d.data().completed === true
+                    );
+
+                renderWorkout();
+
+                renderDashboard();
+
+            }
+        );
+
+
+    unsubscribeFunctions.push(
+        workoutUnsubscribe
+    );
+
+
+    /* WATER */
+
+    const waterRef =
+        doc(
+            db,
+            "users",
+            currentUser.uid,
+            "water",
+            todayKey()
+        );
+
+
+    const waterUnsubscribe =
+        onSnapshot(
+            waterRef,
+            snapshot => {
+
+                todayWater =
+                    snapshot.exists()
+                        ? Number(
+                            snapshot.data().glasses || 0
+                        )
+                        : 0;
+
+                renderWater();
+
+                renderDashboard();
+
+            }
+        );
+
+
+    unsubscribeFunctions.push(
+        waterUnsubscribe
+    );
+
+}
+
+
+/* =========================================================
+   NUTRITION
+========================================================= */
+
+window.addFood = async function(event) {
+
+    event.preventDefault();
+
+
+    const name =
+        document
+            .getElementById("food-name")
+            .value
+            .trim();
+
+    const calories =
+        Number(
+            document
+                .getElementById("food-calories")
+                .value
+        );
+
+    const protein =
+        Number(
+            document
+                .getElementById("food-protein")
+                .value
+        );
+
+    const carbs =
+        Number(
+            document
+                .getElementById("food-carbs")
+                .value
+        );
+
+    const fat =
+        Number(
+            document
+                .getElementById("food-fat")
+                .value
+        );
+
+    const meal =
+        document
+            .getElementById("food-meal")
+            .value;
+
+
+    await addDoc(
+
+        userCollection("food"),
+
+        {
+            name,
+            calories,
+            protein,
+            carbs,
+            fat,
+            meal,
+            date: todayKey(),
+            timestamp: Date.now()
+        }
+
+    );
+
+
+    document
+        .getElementById("food-name")
+        .value = "";
+
+    document
+        .getElementById("food-calories")
+        .value = "";
+
+    document
+        .getElementById("food-protein")
+        .value = "0";
+
+    document
+        .getElementById("food-carbs")
+        .value = "0";
+
+    document
+        .getElementById("food-fat")
+        .value = "0";
+
+
+    showStatus(
+        "Food logged."
+    );
+
+};
+
+
+window.deleteFood = async function(id) {
+
+    if (
+        !confirm(
+            "Delete this food entry?"
+        )
+    ) {
+        return;
+    }
+
+
+    await deleteDoc(
+        userDoc(
+            "food",
+            id
+        )
+    );
+
+};
+
+
+function renderNutrition() {
+
+    const calories =
+        todayFood.reduce(
+            (sum, item) =>
+                sum + Number(item.calories || 0),
+            0
+        );
+
+
+    const protein =
+        todayFood.reduce(
+            (sum, item) =>
+                sum + Number(item.protein || 0),
+            0
+        );
+
+
+    const carbs =
+        todayFood.reduce(
+            (sum, item) =>
+                sum + Number(item.carbs || 0),
+            0
+        );
+
+
+    const fat =
+        todayFood.reduce(
+            (sum, item) =>
+                sum + Number(item.fat || 0),
+            0
+        );
+
+
+    const target =
+        Number(
+            currentSettings.calories
+        );
+
+
+    const percentage =
+        Math.min(
+            100,
+            (calories / target) * 100
+        );
+
+
+    document
+        .getElementById("nutrition-calories")
+        .textContent =
+            calories;
+
+
+    document
+        .getElementById("nutrition-target")
+        .textContent =
+            target;
+
+
+    document
+        .getElementById("protein-total")
+        .textContent =
+            `${Math.round(protein)}g`;
+
+
+    document
+        .getElementById("carbs-total")
+        .textContent =
+            `${Math.round(carbs)}g`;
+
+
+    document
+        .getElementById("fat-total")
+        .textContent =
+            `${Math.round(fat)}g`;
+
+
+    const progress =
+        document
+            .getElementById("calorie-progress");
+
+
+    progress.style.width =
+        `${percentage}%`;
+
+
+    progress.classList.remove(
+        "warning",
+        "danger"
+    );
+
+
+    if (
+        calories >= target
+    ) {
+
+        progress.classList.add(
+            "danger"
+        );
+
+    } else if (
+        calories >= target * .85
+    ) {
+
+        progress.classList.add(
+            "warning"
+        );
+
+    }
+
+
+    document
+        .getElementById("nutrition-ring")
+        .style.setProperty(
+            "--calorie-progress",
+            `${percentage}%`
+        );
+
+
+    let status = "";
+
+
+    if (
+        calories > target
+    ) {
+
+        status =
+            `🚨 ${calories - target} calories over target.`;
+
+    } else {
+
+        status =
+            `${target - calories} calories remaining.`;
+
+    }
+
+
+    document
+        .getElementById("calorie-status")
+        .textContent =
+            status;
+
+
+    const foodLog =
+        document
+            .getElementById("food-log");
+
+
+    if (
+        todayFood.length === 0
+    ) {
+
+        foodLog.innerHTML =
+            `<p style="color:var(--muted);">
+                Nothing logged yet.
+            </p>`;
+
+        return;
+
+    }
+
+
+    foodLog.innerHTML =
+        todayFood
+            .sort(
+                (a,b) =>
+                    (b.timestamp || 0) -
+                    (a.timestamp || 0)
+            )
+            .map(
+                item => `
+
+                    <div class="food-item">
+
+                        <div>
+
+                            <div class="food-name">
+                                ${escapeHtml(item.name)}
+                            </div>
+
+                            <div class="food-meta">
+                                ${escapeHtml(item.meal)}
+                                ·
+                                ${item.protein || 0}g protein
+                                ·
+                                ${item.carbs || 0}g carbs
+                                ·
+                                ${item.fat || 0}g fat
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <div class="food-calories">
+                                ${item.calories} kcal
+                            </div>
+
+                            <button
+                                class="btn btn-danger"
+                                style="
+                                    padding:5px 8px;
+                                    margin-top:5px;
+                                "
+                                onclick="deleteFood('${item.id}')"
+                            >
+                                🗑️
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   WATER
+========================================================= */
+
+function renderWater() {
+
+    const container =
+        document
+            .getElementById("water-grid");
+
+
+    const goal =
+        Number(
+            currentSettings.water
+        );
+
+
+    const count =
+        Math.max(
+            8,
+            goal
+        );
+
+
+    container.innerHTML = "";
+
+
+    for (
+        let i = 1;
+        i <= count;
+        i++
+    ) {
+
+        container.innerHTML += `
+
+            <button
+                class="water-btn ${i <= todayWater ? "active" : ""}"
+                onclick="setWater(${i})"
+                title="${i} glasses"
+            >
+                💧
+            </button>
+
+        `;
+
+    }
+
+}
+
+
+window.setWater = async function(value) {
+
+    todayWater =
+        value;
+
+
+    await setDoc(
+
+        doc(
+            db,
+            "users",
+            currentUser.uid,
+            "water",
+            todayKey()
+        ),
+
+        {
+            glasses:
+                value,
+
+            date:
+                todayKey(),
+
+            timestamp:
+                Date.now()
+        }
+
+    );
+
+};
+
+
+/* =========================================================
+   WORKOUT
+========================================================= */
+
+const defaultExercises = {
+
+    "Upper Body": [
+        ["Bench Press","4 × 8"],
+        ["Rows","4 × 10"],
+        ["Shoulder Press","3 × 10"],
+        ["Lat Pulldown","3 × 10"]
+    ],
+
+    "Lower Body": [
+        ["Squat","4 × 8"],
+        ["Romanian Deadlift","3 × 10"],
+        ["Leg Press","3 × 12"],
+        ["Calf Raises","4 × 15"]
+    ],
+
+    "Push": [
+        ["Bench Press","4 × 8"],
+        ["Incline Press","3 × 10"],
+        ["Shoulder Press","3 × 10"],
+        ["Triceps Pushdown","3 × 12"]
+    ],
+
+    "Pull": [
+        ["Deadlift","3 × 5"],
+        ["Pull Ups","3 × 8"],
+        ["Rows","3 × 10"],
+        ["Curls","3 × 12"]
+    ],
+
+    "Full Body": [
+        ["Squat","3 × 8"],
+        ["Bench Press","3 × 8"],
+        ["Rows","3 × 10"],
+        ["Romanian Deadlift","3 × 10"]
+    ],
+
+    "Rest": [],
+
+    "Custom": []
+
+};
+
+
+function renderWorkout() {
+
+    const workout =
+        currentSettings.workout;
+
+
+    document
+        .getElementById("today-workout-name")
+        .textContent =
+            workout === "Rest"
+                ? "😴 Rest Day"
+                : workout;
+
+
+    document
+        .getElementById("today-workout-description")
+        .textContent =
+            workout === "Rest"
+                ? "Recovery is part of the plan."
+                : "Log your work. Then earn your dinner.";
+
+
+    const exercises =
+        defaultExercises[workout] ||
+        [];
+
+
+    const container =
+        document
+            .getElementById("exercise-list");
+
+
+    if (
+        exercises.length === 0
+    ) {
+
+        container.innerHTML =
+            `<div class="alert success">
+                No scheduled exercises today.
+            </div>`;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        exercises
+            .map(
+                ([name,target],index) => `
+
+                    <div class="exercise">
+
+                        <div class="exercise-header">
+
+                            <div>
+
+                                <div class="exercise-name">
+                                    ${escapeHtml(name)}
+                                </div>
+
+                                <div class="exercise-target">
+                                    Target: ${escapeHtml(target)}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="exercise-fields">
+
+                            <input
+                                type="number"
+                                min="0"
+                                placeholder="Weight"
+                                id="ex-weight-${index}"
+                            >
+
+                            <input
+                                type="number"
+                                min="0"
+                                placeholder="Reps"
+                                id="ex-reps-${index}"
+                            >
+
+                            <input
+                                type="number"
+                                min="0"
+                                placeholder="Sets"
+                                id="ex-sets-${index}"
+                            >
+
+                        </div>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+}
+
+
+window.addCustomExercise = function(event) {
+
+    event.preventDefault();
+
+
+    const name =
+        document
+            .getElementById("exercise-name")
+            .value
+            .trim();
+
+
+    const target =
+        document
+            .getElementById("exercise-target")
+            .value
+            .trim();
+
+
+    if (
+        !name
+    ) {
+        return;
+    }
+
+
+    if (
+        !defaultExercises.Custom
+    ) {
+        defaultExercises.Custom = [];
+    }
+
+
+    defaultExercises.Custom.push(
+        [
+            name,
+            target || "Custom"
+        ]
+    );
+
+
+    currentSettings.workout =
+        "Custom";
+
+
+    document
+        .getElementById("exercise-name")
+        .value = "";
+
+    document
+        .getElementById("exercise-target")
+        .value = "";
+
+
+    renderWorkout();
+
+
+    showStatus(
+        "Exercise added."
+    );
+
+};
+
+
+window.completeWorkout = async function() {
+
+    if (
+        currentSettings.workout ===
+        "Rest"
+    ) {
+
+        showStatus(
+            "It's a rest day. Recover.",
+        );
+
+        return;
+
+    }
+
+
+    await addDoc(
+
+        userCollection("workouts"),
+
+        {
+            date:
+                todayKey(),
+
+            workout:
+                currentSettings.workout,
+
+            completed:
+                true,
+
+            timestamp:
+                Date.now()
+        }
+
+    );
+
+
+    todayWorkoutCompleted =
+        true;
+
+
+    renderDashboard();
+
+    renderCoach();
+
+    showStatus(
+        "Workout logged. Good."
+    );
+
+
+    notify(
+        "Workout Complete 💪",
+        "You actually did it. Respect."
+    );
+
+};
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard() {
+
+    const calories =
+        todayFood.reduce(
+            (sum,item) =>
+                sum + Number(item.calories || 0),
+            0
+        );
+
+
+    const protein =
+        todayFood.reduce(
+            (sum,item) =>
+                sum + Number(item.protein || 0),
+            0
+        );
+
+
+    const target =
+        Number(
+            currentSettings.calories
+        );
+
+
+    const percentage =
+        Math.min(
+            100,
+            (calories / target) * 100
+        );
+
+
+    document
+        .getElementById("dashboard-calories")
+        .textContent =
+            calories;
+
+
+    document
+        .getElementById("dashboard-target")
+        .textContent =
+            target;
+
+
+    document
+        .getElementById("dashboard-ring")
+        .style.setProperty(
+            "--calorie-progress",
+            `${percentage}%`
+        );
+
+
+    document
+        .getElementById("stat-calories")
+        .textContent =
+            calories;
+
+
+    document
+        .getElementById("stat-protein")
+        .textContent =
+            `${Math.round(protein)}g`;
+
+
+    document
+        .getElementById("stat-water")
+        .textContent =
+            `${todayWater}/${currentSettings.water}`;
+
+
+    document
+        .getElementById("stat-workout")
+        .textContent =
+            todayWorkoutCompleted
+                ? "✅"
+                : "❌";
+
+
+    document
+        .getElementById("dashboard-date")
+        .textContent =
+            new Date()
+                .toLocaleDateString(
+                    undefined,
+                    {
+                        weekday:"long",
+                        month:"long",
+                        day:"numeric"
+                    }
+                );
+
+
+    renderDashboardAlerts();
+
+    renderCoach();
+
+}
+
+
+/* =========================================================
+   DASHBOARD ALERTS
+========================================================= */
+
+function renderDashboardAlerts() {
+
+    const container =
+        document
+            .getElementById("dashboard-alerts");
+
+
+    const calories =
+        todayFood.reduce(
+            (sum,item) =>
+                sum + Number(item.calories || 0),
+            0
+        );
+
+
+    const target =
+        Number(
+            currentSettings.calories
+        );
+
+
+    let html = "";
+
+
+    if (
+        calories > target
+    ) {
+
+        html += `
+
+            <div class="alert danger">
+
+                🚨 You are
+                ${calories - target}
+                calories over target.
+
+                Log everything honestly.
+
+            </div>
+
+        `;
+
+    } else if (
+        calories >= target * .9
+    ) {
+
+        html += `
+
+            <div class="alert warning">
+
+                ⚠️ You are at
+                ${Math.round(
+                    (calories / target) * 100
+                )}%
+                of your calorie target.
+
+                Choose the rest of today's food carefully.
+
+            </div>
+
+        `;
+
+    }
+
+
+    if (
+        currentSettings.workout !== "Rest" &&
+        !todayWorkoutCompleted
+    ) {
+
+        html += `
+
+            <div class="alert warning">
+
+                🏋️ Today's workout is still incomplete.
+
+                You know what you need to do.
+
+            </div>
+
+        `;
+
+    }
+
+
+    if (
+        todayWater <
+        currentSettings.water
+    ) {
+
+        html += `
+
+            <div class="alert warning">
+
+                💧 You still have
+                ${currentSettings.water - todayWater}
+                glasses of water to go.
+
+            </div>
+
+        `;
+
+    }
+
+
+    if (!html) {
+
+        html =
+            `<div class="alert success">
+                🔥 You're on track. Keep going.
+            </div>`;
+
+    }
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   COACH
+========================================================= */
+
+function renderCoach() {
+
+    const message =
+        generateCoachMessage();
+
+
+    document
+        .getElementById("dashboard-message")
+        .textContent =
+            message;
+
+
+    document
+        .getElementById("coach-main-message")
+        .textContent =
+            message;
+
+
+    const alerts =
+        document
+            .getElementById("coach-alerts");
+
+
+    let html = "";
+
+
+    const calories =
+        todayFood.reduce(
+            (sum,item) =>
+                sum + Number(item.calories || 0),
+            0
+        );
+
+
+    if (
+        calories >
+        currentSettings.calories
+    ) {
+
+        html += `
+
+            <div class="alert danger">
+
+                🍔 CALORIE ALERT:
+                You went over your target.
+                Log it. Own it. Move on.
+
+            </div>
+
+        `;
+
+    }
+
+
+    if (
+        currentSettings.workout !== "Rest" &&
+        !todayWorkoutCompleted
+    ) {
+
+        html += `
+
+            <div class="alert warning">
+
+                😈 WORKOUT ALERT:
+                You haven't completed today's workout.
+
+                Stop negotiating with yourself.
+
+            </div>
+
+        `;
+
+    }
+
+
+    if (
+        todayWater <
+        currentSettings.water
+    ) {
+
+        html += `
+
+            <div class="alert warning">
+
+                💧 WATER ALERT:
+                Drink some water.
+
+            </div>
+
+        `;
+
+    }
+
+
+    alerts.innerHTML =
+        html;
+
+}
+
+
+function generateCoachMessage() {
+
+    const level =
+        currentSettings.coachLevel;
+
+
+    if (
+        currentSettings.workout !== "Rest" &&
+        !todayWorkoutCompleted
+    ) {
+
+        if (
+            level === "gentle"
+        ) {
+
+            return "Your workout is waiting. You have plenty of time to get it done.";
+
+        }
+
+
+        if (
+            level === "aggressive"
+        ) {
+
+            return "You scheduled the workout. Now do the damn workout. Stop negotiating.";
+
+        }
+
+
+        return "You scheduled a workout. Go train.";
+
+    }
+
+
+    const calories =
+        todayFood.reduce(
+            (sum,item) =>
+                sum + Number(item.calories || 0),
+            0
+        );
+
+
+    if (
+        calories >
+        currentSettings.calories
+    ) {
+
+        return "You went over your calorie target. Don't panic. Log it accurately and get back on plan.";
+
+    }
+
+
+    if (
+        todayWorkoutCompleted
+    ) {
+
+        return "Workout complete. Good. Now keep the nutrition under control.";
+
+    }
+
+
+    return "You've got a plan. Follow it.";
+
+}
+
+
+/* =========================================================
+   RECIPES
+========================================================= */
+
+function loadRecipes() {
+
+    const recipes = [
+
+        {
+            name:
+                "High-Protein Chicken Bowl",
+
+            calories:
+                450,
+
+            protein:
+                48,
+
+            description:
+                "Chicken breast, rice, vegetables and Greek yogurt sauce."
+        },
+
+
+        {
+            name:
+                "Egg & Potato Breakfast",
+
+            calories:
+                380,
+
+            protein:
+                25,
+
+            description:
+                "Eggs, roasted potato and vegetables."
+        },
+
+
+        {
+            name:
+                "Greek Yogurt Berry Bowl",
+
+            calories:
+                280,
+
+            protein:
+                28,
+
+            description:
+                "Greek yogurt, berries and a small amount of chia."
+        },
+
+
+        {
+            name:
+                "Spicy Chicken Wrap",
+
+            calories:
+                420,
+
+            protein:
+                42,
+
+            description:
+                "Grilled chicken, vegetables and a light spicy sauce."
+        },
+
+
+        {
+            name:
+                "Tuna Potato Bowl",
+
+            calories:
+                400,
+
+            protein:
+                38,
+
+            description:
+                "Tuna, potato, cucumber, tomato and yogurt dressing."
+        },
+
+
+        {
+            name:
+                "Protein Smoothie",
+
+            calories:
+                300,
+
+            protein:
+                35,
+
+            description:
+                "Protein shake, frozen berries and Greek yogurt."
+        }
+
+    ];
+
+
+    document
+        .getElementById("recipe-grid")
+        .innerHTML =
+
+        recipes
+            .map(
+                recipe => `
+
+                    <div class="recipe">
+
+                        <h4>
+                            ${escapeHtml(recipe.name)}
+                        </h4>
+
+                        <div class="recipe-calories">
+                            ${recipe.calories} kcal
+                        </div>
+
+                        <p>
+                            ${escapeHtml(recipe.description)}
+                        </p>
+
+                        <small>
+                            ${recipe.protein}g protein
+                        </small>
+
+                        <br><br>
+
+                        <button
+                            class="btn"
+                            onclick='addRecipeToFood(${JSON.stringify(recipe)})'
+                        >
+                            Add to Food Log
+                        </button>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+}
+
+
+window.addRecipeToFood = async function(recipe) {
+
+    await addDoc(
+
+        userCollection("food"),
+
+        {
+            name:
+                recipe.name,
+
+            calories:
+                recipe.calories,
+
+            protein:
+                recipe.protein,
+
+            carbs:
+                0,
+
+            fat:
+                0,
+
+            meal:
+                "Recipe",
+
+            date:
+                todayKey(),
+
+            timestamp:
+                Date.now()
+        }
+
+    );
+
+
+    showStatus(
+        `${recipe.name} added.`
+    );
+
+};
+
+
+/* =========================================================
+   RESTAURANT SEARCH
+========================================================= */
+
+window.searchRestaurant = function() {
+
+    const query =
+        document
+            .getElementById("restaurant-search")
+            .value
+            .trim();
+
+
+    const results =
+        document
+            .getElementById("restaurant-results");
+
+
+    if (!query) {
+
+        results.innerHTML =
+            `<div class="alert warning">
+                Enter a restaurant or food item.
+            </div>`;
+
+        return;
+
+    }
+
+
+    /*
+     * This is intentionally not pretending to have
+     * restaurant menu nutrition data without an API.
+     *
+     * Connect a menu/nutrition API here.
+     */
+
+
+    results.innerHTML = `
+
+        <div class="restaurant-result">
+
+            <strong>
+                🔎 ${escapeHtml(query)}
+            </strong>
+
+            <small>
+                Restaurant/menu API connection required
+                for automatic nutrition lookup.
+            </small>
+
+        </div>
+
+
+        <div class="alert warning">
+
+            To make this automatically retrieve
+            restaurant menu items and calories,
+            connect a restaurant/menu nutrition API
+            to this search function.
+
+        </div>
+
+    `;
+
+};
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+window.requestNotifications = async function() {
+
+    if (
+        !("Notification" in window)
+    ) {
+
+        showStatus(
+            "This browser does not support notifications.",
+            true
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const permission =
+            await Notification.requestPermission();
+
+
+        if (
+            permission === "granted"
+        ) {
+
+            document
+                .getElementById("notification-status")
+                .textContent =
+                    "🔔 Notifications enabled.";
+
+
+            notify(
+                "LeanSyncRim Activated",
+                "Your coach is watching."
+            );
+
+
+            showStatus(
+                "Notifications enabled."
+            );
+
+        } else {
+
+            document
+                .getElementById("notification-status")
+                .textContent =
+                    "Notifications were not allowed.";
+
+        }
+
+    } catch(error) {
+
+        console.error(error);
+
+    }
+
+};
+
+
+function notify(title, body) {
+
+    if (
+        !("Notification" in window)
+    ) {
+        return;
+    }
+
+
+    if (
+        Notification.permission !==
+        "granted"
+    ) {
+        return;
+    }
+
+
+    new Notification(
+        title,
+        {
+            body,
+            icon:
+                "./icon-192.png"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   REMINDER ENGINE
+========================================================= */
+
+let lastReminderDate = "";
+
+
+function startReminderEngine() {
+
+    checkReminders();
+
+    setInterval(
+        checkReminders,
+        60000
+    );
+
+}
+
+
+function checkReminders() {
+
+    if (!currentUser) {
+        return;
+    }
+
+
+    const now =
+        new Date();
+
+
+    const hour =
+        String(
+            now.getHours()
+        ).padStart(2,"0");
+
+
+    const minute =
+        String(
+            now.getMinutes()
+        ).padStart(2,"0");
+
+
+    const currentTime =
+        `${hour}:${minute}`;
+
+
+    const key =
+        `${todayKey()}-${currentTime}`;
+
+
+    if (
+        lastReminderDate === key
+    ) {
+        return;
+    }
+
+
+    if (
+        currentSettings.workout !== "Rest" &&
+        !todayWorkoutCompleted &&
+        currentTime ===
+            currentSettings.workoutTime
+    ) {
+
+        notify(
+            "🏋️ Workout Reminder",
+            getWorkoutReminder()
+        );
+
+        lastReminderDate =
+            key;
+
+        return;
+
+    }
+
+
+    const calories =
+        todayFood.reduce(
+            (sum,item) =>
+                sum + Number(item.calories || 0),
+            0
+        );
+
+
+    if (
+        currentTime ===
+            currentSettings.calorieTime
+    ) {
+
+        if (
+            calories >
+            currentSettings.calories
+        ) {
+
+            notify(
+                "🚨 Calorie Alert",
+                `You're ${calories - currentSettings.calories} calories over target.`
+            );
+
+        } else {
+
+            notify(
+                "🍽️ Calorie Check",
+                `${calories} calories logged. ${currentSettings.calories - calories} remaining.`
+            );
+
+        }
+
+
+        lastReminderDate =
+            key;
+
+    }
+
+}
+
+
+function getWorkoutReminder() {
+
+    if (
+        currentSettings.coachLevel ===
+        "aggressive"
+    ) {
+
+        return "You scheduled this workout. Stop finding excuses and go train.";
+
+    }
+
+
+    if (
+        currentSettings.coachLevel ===
+        "gentle"
+    ) {
+
+        return "Your workout is ready whenever you are. You've got this.";
+
+    }
+
+
+    return "You scheduled a workout. Time to train.";
+
+}
+
+
+/* =========================================================
+   SERVICE WORKER REGISTRATION
+========================================================= */
+
+if (
+    "serviceWorker" in navigator
+) {
+
+    window.addEventListener(
+        "load",
+        async () => {
+
+            try {
+
+                await navigator
+                    .serviceWorker
+                    .register(
+                        "./firebase-messaging-sw.js"
+                    );
+
+                console.log(
+                    "Notification service worker registered."
+                );
+
+            } catch(error) {
+
+                console.warn(
+                    "Service worker registration failed.",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+}
+
+</script>
+
+</body>
+</html>
