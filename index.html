@@ -1,43 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+<meta name="theme-color" content="#0b0f0d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<meta name="theme-color" content="#0b0d12">
-
-<meta
-    name="description"
-    content="LeanSyncRim — your personal training, nutrition and accountability coach."
->
-
-<title>LeanSyncRim — Personal Coach</title>
+<title>Lean Sync — Personal Coach</title>
 
 <style>
 
 :root {
-    --bg: #080a0f;
-    --bg2: #0e1118;
-    --card: #131720;
-    --card2: #181d27;
+    --bg: #090d0b;
+    --panel: #111713;
+    --panel2: #171e19;
+    --border: #29332c;
 
-    --text: #f5f7fa;
-    --muted: #8f98a8;
+    --text: #f4f7f4;
+    --muted: #89958c;
 
-    --accent: #84cc16;
-    --accent2: #a3e635;
+    --green: #76e39a;
+    --green-dark: #183c25;
 
-    --danger: #ef4444;
-    --warning: #f59e0b;
-    --success: #22c55e;
-    --blue: #3b82f6;
-
-    --border: #272d39;
+    --yellow: #f5d76e;
+    --red: #ff7070;
+    --blue: #79bfff;
 
     --radius: 16px;
 }
@@ -52,7 +41,15 @@ html {
 
 body {
     margin: 0;
-    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(118,227,154,.08),
+            transparent 35%
+        ),
+        var(--bg);
+
+    color: var(--text);
 
     font-family:
         Inter,
@@ -62,15 +59,7 @@ body {
         "Segoe UI",
         sans-serif;
 
-    background:
-        radial-gradient(
-            circle at top right,
-            rgba(132,204,22,0.08),
-            transparent 35%
-        ),
-        var(--bg);
-
-    color: var(--text);
+    min-height: 100vh;
 }
 
 button,
@@ -81,7 +70,7 @@ textarea {
 }
 
 button {
-    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
 }
 
 .hidden {
@@ -90,7 +79,7 @@ button {
 
 
 /* =========================================================
-   AUTH
+   LOGIN
 ========================================================= */
 
 #auth-screen {
@@ -100,87 +89,154 @@ button {
     align-items: center;
     justify-content: center;
 
-    padding: 20px;
+    padding: 24px;
 }
 
 .auth-card {
     width: 100%;
     max-width: 430px;
 
-    background: rgba(19,23,32,0.95);
+    background: rgba(17,23,19,.96);
 
-    border:
-        1px solid
-        var(--border);
+    border: 1px solid var(--border);
 
-    border-radius: 22px;
+    border-radius: 24px;
 
     padding: 30px;
 
     box-shadow:
-        0 30px 80px rgba(0,0,0,0.45);
+        0 30px 80px rgba(0,0,0,.45);
 }
 
 .logo {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.logo-icon {
-    font-size: 3rem;
-}
-
-.logo h1 {
-    margin: 8px 0 5px;
-
     font-size: 2rem;
+    font-weight: 900;
 
-    letter-spacing: -0.04em;
+    letter-spacing: -1px;
+
+    margin-bottom: 6px;
 }
 
 .logo span {
-    color: var(--accent);
+    color: var(--green);
 }
 
-.logo p {
-    margin: 0;
-
+.auth-subtitle {
     color: var(--muted);
+    margin-bottom: 28px;
 }
 
-.auth-tabs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.form-group {
+    margin-bottom: 16px;
+}
 
-    margin-bottom: 20px;
+label {
+    display: block;
 
-    background: var(--bg);
+    font-size: .85rem;
+    font-weight: 700;
 
-    padding: 4px;
+    margin-bottom: 7px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+
+    background: #0c110e;
+
+    border: 1px solid var(--border);
+
+    color: var(--text);
 
     border-radius: 10px;
+
+    padding: 12px 13px;
+
+    outline: none;
 }
 
-.auth-tab {
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 3px rgba(118,227,154,.08);
+}
+
+textarea {
+    resize: vertical;
+}
+
+.primary-btn {
+    width: 100%;
+
     border: 0;
 
-    background: transparent;
+    border-radius: 11px;
+
+    padding: 13px;
+
+    background: var(--green);
+
+    color: #08100b;
+
+    font-weight: 900;
+
+    transition:
+        transform .15s,
+        opacity .15s;
+}
+
+.primary-btn:hover {
+    opacity: .9;
+}
+
+.primary-btn:active {
+    transform: translateY(1px);
+}
+
+.secondary-btn {
+    border: 1px solid var(--border);
+
+    background: var(--panel2);
+
+    color: var(--text);
+
+    border-radius: 10px;
+
+    padding: 10px 14px;
+
+    font-weight: 700;
+}
+
+.auth-switch {
+    margin-top: 18px;
+
+    text-align: center;
 
     color: var(--muted);
 
-    padding: 10px;
-
-    border-radius: 7px;
-
-    cursor: pointer;
+    font-size: .9rem;
 }
 
-.auth-tab.active {
-    background: var(--accent);
+.auth-switch button {
+    border: 0;
+    background: none;
 
-    color: #071000;
+    color: var(--green);
 
     font-weight: 800;
+}
+
+#error-message {
+    color: var(--red);
+
+    margin-top: 14px;
+
+    font-size: .85rem;
 }
 
 
@@ -198,24 +254,21 @@ header {
 
     z-index: 100;
 
-    background:
-        rgba(8,10,15,0.92);
+    backdrop-filter: blur(18px);
 
-    backdrop-filter:
-        blur(16px);
+    background: rgba(9,13,11,.88);
 
-    border-bottom:
-        1px solid
-        var(--border);
+    border-bottom: 1px solid var(--border);
 }
 
 .header-inner {
-    max-width: 1200px;
+    max-width: 1150px;
 
     margin: auto;
 
     padding:
-        14px 18px;
+        16px
+        20px;
 
     display: flex;
 
@@ -227,52 +280,37 @@ header {
 }
 
 .brand {
+    font-weight: 900;
+    font-size: 1.25rem;
+}
+
+.brand span {
+    color: var(--green);
+}
+
+.user-area {
     display: flex;
-
     align-items: center;
-
     gap: 10px;
 }
 
-.brand-icon {
-    font-size: 1.5rem;
+.user-email {
+    color: var(--muted);
+    font-size: .78rem;
 }
 
-.brand-text strong {
-    display: block;
+.logout-btn {
+    background: none;
 
-    font-size: 1rem;
-}
+    border: 1px solid var(--border);
 
-.brand-text small {
     color: var(--muted);
 
-    font-size: 0.72rem;
-}
+    border-radius: 8px;
 
-.header-actions {
-    display: flex;
+    padding: 7px 10px;
 
-    gap: 8px;
-}
-
-.icon-btn {
-    width: 40px;
-    height: 40px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius: 10px;
-
-    background:
-        var(--card);
-
-    color:
-        var(--text);
-
-    cursor: pointer;
+    font-size: .75rem;
 }
 
 
@@ -282,20 +320,16 @@ header {
 
 nav {
     position: sticky;
-    top: 69px;
+
+    top: 65px;
 
     z-index: 90;
 
-    display: flex;
+    background: rgba(9,13,11,.94);
+
+    border-bottom: 1px solid var(--border);
 
     overflow-x: auto;
-
-    background:
-        rgba(14,17,24,0.96);
-
-    border-bottom:
-        1px solid
-        var(--border);
 
     scrollbar-width: none;
 }
@@ -304,36 +338,36 @@ nav::-webkit-scrollbar {
     display: none;
 }
 
+.nav-inner {
+    max-width: 1150px;
+
+    margin: auto;
+
+    display: flex;
+}
+
 .nav-btn {
     flex: 0 0 auto;
 
+    background: none;
+
     border: 0;
 
-    border-bottom:
-        3px solid
-        transparent;
-
-    background: transparent;
+    border-bottom: 3px solid transparent;
 
     color: var(--muted);
 
-    padding:
-        13px 17px;
+    padding: 13px 16px;
 
-    cursor: pointer;
+    font-weight: 800;
 
-    font-size: 0.84rem;
-
-    font-weight: 700;
-
-    white-space: nowrap;
+    font-size: .83rem;
 }
 
 .nav-btn.active {
-    color: var(--accent);
+    color: var(--green);
 
-    border-bottom-color:
-        var(--accent);
+    border-bottom-color: var(--green);
 }
 
 
@@ -344,36 +378,48 @@ nav::-webkit-scrollbar {
 main {
     width: 100%;
 
-    max-width: 1200px;
+    max-width: 1150px;
 
     margin: auto;
 
     padding:
-        22px 18px 100px;
+        25px
+        20px
+        80px;
 }
 
-.tab {
+.panel {
     display: none;
 }
 
-.tab.active {
+.panel.active {
     display: block;
 }
 
-.section-title {
-    margin-bottom: 20px;
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    margin-bottom: 25px;
 }
 
-.section-title h2 {
+.hero h1 {
     margin: 0;
 
-    font-size: 1.7rem;
+    font-size:
+        clamp(
+            2rem,
+            5vw,
+            3.4rem
+        );
 
-    letter-spacing: -0.03em;
+    letter-spacing: -2px;
 }
 
-.section-title p {
-    margin: 5px 0 0;
+.hero p {
+    margin: 8px 0 0;
 
     color: var(--muted);
 }
@@ -384,91 +430,140 @@ main {
 ========================================================= */
 
 .card {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(24,29,39,0.98),
-            rgba(16,19,27,0.98)
-        );
+    background: var(--panel);
 
-    border:
-        1px solid
-        var(--border);
+    border: 1px solid var(--border);
 
-    border-radius:
-        var(--radius);
+    border-radius: var(--radius);
 
     padding: 20px;
 
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
 
-.card h3 {
-    margin-top: 0;
+.card-title {
+    margin: 0 0 16px;
+
+    font-size: 1.05rem;
 }
 
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-.hero {
+.grid {
     display: grid;
-
-    grid-template-columns:
-        1.5fr 1fr;
 
     gap: 16px;
 }
 
-.hero-card {
-    min-height: 230px;
+.grid-2 {
+    grid-template-columns:
+        repeat(2, minmax(0,1fr));
+}
 
+.grid-3 {
+    grid-template-columns:
+        repeat(3, minmax(0,1fr));
+}
+
+.grid-4 {
+    grid-template-columns:
+        repeat(4, minmax(0,1fr));
+}
+
+
+/* =========================================================
+   CALORIE DISPLAY
+========================================================= */
+
+.calorie-card {
+    position: relative;
+
+    overflow: hidden;
+}
+
+.calorie-top {
     display: flex;
 
-    flex-direction: column;
+    align-items: flex-start;
 
     justify-content: space-between;
+
+    gap: 20px;
 }
 
-.hero-card h1 {
-    font-size:
-        clamp(
-            2rem,
-            5vw,
-            3.5rem
-        );
+.calorie-number {
+    font-size: 3.5rem;
 
-    margin: 5px 0;
+    font-weight: 950;
 
-    letter-spacing: -0.06em;
+    line-height: 1;
+
+    letter-spacing: -3px;
 }
 
-.hero-card h1 span {
-    color: var(--accent);
-}
+.calorie-number small {
+    font-size: 1rem;
 
-.coach-message {
     color: var(--muted);
 
-    line-height: 1.6;
+    letter-spacing: 0;
 }
 
-.stats-grid {
-    display: grid;
+.calorie-target {
+    color: var(--muted);
 
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 12px;
+    margin-top: 7px;
 }
+
+.progress {
+    height: 12px;
+
+    border-radius: 999px;
+
+    background: #202820;
+
+    overflow: hidden;
+
+    margin-top: 20px;
+}
+
+.progress-bar {
+    height: 100%;
+
+    width: 0%;
+
+    background: var(--green);
+
+    border-radius: inherit;
+
+    transition:
+        width .4s ease,
+        background .3s ease;
+}
+
+.progress-bar.warning {
+    background: var(--yellow);
+}
+
+.progress-bar.danger {
+    background: var(--red);
+}
+
+.remaining {
+    margin-top: 10px;
+
+    color: var(--muted);
+
+    font-size: .85rem;
+}
+
+
+/* =========================================================
+   STAT CARDS
+========================================================= */
 
 .stat {
-    background: var(--bg2);
+    background: var(--panel2);
 
-    border:
-        1px solid
-        var(--border);
+    border: 1px solid var(--border);
 
     border-radius: 13px;
 
@@ -478,185 +573,19 @@ main {
 .stat-label {
     color: var(--muted);
 
-    font-size: 0.75rem;
+    font-size: .78rem;
 
     text-transform: uppercase;
 
-    letter-spacing: 0.08em;
+    letter-spacing: .08em;
 }
 
 .stat-value {
-    margin-top: 5px;
-
-    font-size: 1.7rem;
-
-    font-weight: 800;
-}
-
-
-/* =========================================================
-   CALORIES
-========================================================= */
-
-.calorie-ring {
-    width: 190px;
-    height: 190px;
-
-    margin: 10px auto 20px;
-
-    border-radius: 50%;
-
-    display: grid;
-
-    place-items: center;
-
-    background:
-        conic-gradient(
-            var(--accent)
-            var(--calorie-progress, 0%),
-            #252b35 0
-        );
-
-    position: relative;
-}
-
-.calorie-ring::after {
-    content: "";
-
-    position: absolute;
-
-    width: 150px;
-    height: 150px;
-
-    border-radius: 50%;
-
-    background:
-        var(--card);
-}
-
-.calorie-inner {
-    position: relative;
-
-    z-index: 2;
-
-    text-align: center;
-}
-
-.calorie-number {
-    font-size: 2rem;
+    font-size: 1.55rem;
 
     font-weight: 900;
-}
 
-.calorie-label {
-    color: var(--muted);
-
-    font-size: 0.75rem;
-}
-
-.macro-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 10px;
-}
-
-.macro {
-    text-align: center;
-
-    background:
-        var(--bg2);
-
-    padding: 13px;
-
-    border-radius: 10px;
-}
-
-.macro strong {
-    display: block;
-
-    font-size: 1.2rem;
-}
-
-.macro span {
-    color: var(--muted);
-
-    font-size: 0.75rem;
-}
-
-
-/* =========================================================
-   FORMS
-========================================================= */
-
-.form-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 14px;
-}
-
-.form-group {
-    margin-bottom: 14px;
-}
-
-.form-group.full {
-    grid-column: 1 / -1;
-}
-
-label {
-    display: block;
-
-    margin-bottom: 6px;
-
-    font-size: 0.82rem;
-
-    font-weight: 700;
-
-    color: #dce1e8;
-}
-
-input,
-select,
-textarea {
-    width: 100%;
-
-    padding:
-        12px 13px;
-
-    background:
-        var(--bg);
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        10px;
-
-    color:
-        var(--text);
-
-    outline: none;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color:
-        var(--accent);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(132,204,22,0.08);
-}
-
-textarea {
-    resize: vertical;
+    margin-top: 5px;
 }
 
 
@@ -669,55 +598,86 @@ textarea {
 
     border-radius: 10px;
 
-    padding:
-        11px 17px;
+    padding: 11px 15px;
 
-    background:
-        var(--accent);
+    font-weight: 800;
 
-    color:
-        #081000;
+    background: var(--green);
 
-    font-weight: 900;
-
-    cursor: pointer;
-
-    transition:
-        transform .15s,
-        opacity .15s;
-}
-
-.btn:hover {
-    opacity: .9;
-}
-
-.btn:active {
-    transform:
-        translateY(1px);
-}
-
-.btn-secondary {
-    background:
-        var(--card2);
-
-    color:
-        var(--text);
-
-    border:
-        1px solid
-        var(--border);
+    color: #07100a;
 }
 
 .btn-danger {
-    background:
-        rgba(239,68,68,.12);
+    background: var(--red);
 
-    color:
-        #fca5a5;
+    color: #200707;
+}
 
-    border:
-        1px solid
-        rgba(239,68,68,.3);
+.btn-secondary {
+    background: var(--panel2);
+
+    border: 1px solid var(--border);
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   LISTS
+========================================================= */
+
+.list {
+    list-style: none;
+
+    padding: 0;
+
+    margin: 0;
+}
+
+.list-item {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
+    background: rgba(255,255,255,.015);
+
+    margin-bottom: 9px;
+}
+
+.item-info {
+    min-width: 0;
+}
+
+.item-name {
+    font-weight: 800;
+}
+
+.item-meta {
+    color: var(--muted);
+
+    font-size: .8rem;
+
+    margin-top: 4px;
+}
+
+.delete {
+    border: 0;
+
+    background: none;
+
+    color: var(--muted);
+
+    font-size: 1rem;
 }
 
 
@@ -725,157 +685,36 @@ textarea {
    WORKOUT
 ========================================================= */
 
-.workout-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 14px;
-}
-
 .exercise {
-    background:
-        var(--bg2);
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius: 12px;
-
-    padding: 15px;
-
-    margin-bottom: 10px;
-}
-
-.exercise-header {
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-
-    gap: 10px;
-}
-
-.exercise-name {
-    font-weight: 800;
-}
-
-.exercise-target {
-    color:
-        var(--muted);
-
-    font-size:
-        0.78rem;
-
-    margin-top: 4px;
-}
-
-.exercise-fields {
     display: grid;
 
     grid-template-columns:
-        repeat(3,1fr);
+        minmax(0,1.5fr)
+        80px
+        80px
+        90px
+        40px;
 
-    gap: 7px;
+    gap: 8px;
 
-    margin-top: 12px;
+    align-items: center;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid var(--border);
 }
 
-.exercise-fields input {
-    padding: 8px;
-}
-
-
-/* =========================================================
-   FOOD LOG
-========================================================= */
-
-.food-item {
-    display: flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    gap: 12px;
-
-    padding: 13px 0;
-
-    border-bottom:
-        1px solid
-        var(--border);
-}
-
-.food-item:last-child {
+.exercise:last-child {
     border-bottom: 0;
 }
 
-.food-name {
-    font-weight: 700;
+.exercise input {
+    padding: 9px;
 }
 
-.food-meta {
-    color:
-        var(--muted);
-
-    font-size:
-        .75rem;
-
-    margin-top: 3px;
-}
-
-.food-calories {
-    font-weight: 900;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-.progress {
-    height: 10px;
-
-    border-radius: 999px;
-
-    background:
-        #252b35;
-
-    overflow: hidden;
-
-    margin:
-        10px 0;
-}
-
-.progress-bar {
-    height: 100%;
-
-    width: 0%;
-
-    background:
-        var(--accent);
-
-    transition:
-        width .3s;
-}
-
-.progress-bar.warning {
-    background:
-        var(--warning);
-}
-
-.progress-bar.danger {
-    background:
-        var(--danger);
+.exercise-check {
+    width: 20px;
+    height: 20px;
 }
 
 
@@ -884,356 +723,184 @@ textarea {
 ========================================================= */
 
 .coach-box {
-    border:
-        1px solid
-        rgba(132,204,22,.25);
+    border: 1px solid var(--green-dark);
 
     background:
         linear-gradient(
             135deg,
-            rgba(132,204,22,.08),
-            rgba(132,204,22,.02)
+            rgba(118,227,154,.08),
+            rgba(118,227,154,.02)
         );
 
-    border-radius:
-        14px;
+    border-radius: 16px;
 
     padding: 20px;
 }
 
-.coach-icon {
-    font-size: 2rem;
+.coach-label {
+    color: var(--green);
+
+    font-size: .75rem;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+    letter-spacing: .12em;
 }
 
-.coach-text {
-    font-size: 1.05rem;
+.coach-message {
+    font-size: 1.15rem;
 
-    line-height: 1.6;
+    font-weight: 800;
 
-    margin-top: 10px;
-}
+    line-height: 1.45;
 
-.alert {
-    padding:
-        13px 15px;
-
-    border-radius:
-        10px;
-
-    margin-bottom: 12px;
-
-    font-size: .85rem;
-
-    font-weight: 700;
-}
-
-.alert.warning {
-    background:
-        rgba(245,158,11,.1);
-
-    color:
-        #fbbf24;
-
-    border:
-        1px solid
-        rgba(245,158,11,.25);
-}
-
-.alert.danger {
-    background:
-        rgba(239,68,68,.1);
-
-    color:
-        #fca5a5;
-
-    border:
-        1px solid
-        rgba(239,68,68,.25);
-}
-
-.alert.success {
-    background:
-        rgba(34,197,94,.1);
-
-    color:
-        #86efac;
-
-    border:
-        1px solid
-        rgba(34,197,94,.25);
+    margin-top: 8px;
 }
 
 
 /* =========================================================
-   RECIPE CARDS
+   NOTIFICATION STATUS
 ========================================================= */
 
-.recipe-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 12px;
-}
-
-.recipe {
-    background:
-        var(--bg2);
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        12px;
-
+.notification-status {
     padding: 15px;
+
+    border-radius: 11px;
+
+    background: var(--panel2);
+
+    border: 1px solid var(--border);
+
+    margin-bottom: 15px;
 }
 
-.recipe h4 {
-    margin:
-        0 0 8px;
+.status-good {
+    color: var(--green);
 }
 
-.recipe p {
-    color:
-        var(--muted);
-
-    font-size:
-        .8rem;
-
-    line-height:
-        1.5;
-}
-
-.recipe-calories {
-    color:
-        var(--accent);
-
-    font-weight:
-        900;
+.status-bad {
+    color: var(--red);
 }
 
 
 /* =========================================================
-   RESTAURANTS
+   TOAST
 ========================================================= */
 
-.search-row {
-    display: flex;
-
-    gap: 8px;
-}
-
-.search-row input {
-    flex: 1;
-}
-
-.restaurant-result {
-    padding:
-        14px 0;
-
-    border-bottom:
-        1px solid
-        var(--border);
-}
-
-.restaurant-result:last-child {
-    border-bottom: 0;
-}
-
-.restaurant-result strong {
-    display: block;
-}
-
-.restaurant-result small {
-    display: block;
-
-    color:
-        var(--muted);
-
-    margin-top: 4px;
-}
-
-
-/* =========================================================
-   WATER
-========================================================= */
-
-.water-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(8, 1fr);
-
-    gap: 8px;
-}
-
-.water-btn {
-    aspect-ratio: 1;
-
-    border:
-        1px solid
-        var(--border);
-
-    background:
-        var(--bg2);
-
-    border-radius:
-        10px;
-
-    cursor:
-        pointer;
-
-    font-size:
-        1.1rem;
-}
-
-.water-btn.active {
-    background:
-        rgba(59,130,246,.18);
-
-    border-color:
-        var(--blue);
-}
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-.settings-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap: 14px;
-}
-
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-#status {
+#toast {
     position: fixed;
 
-    right: 15px;
-    bottom: 15px;
+    left: 50%;
 
-    max-width:
-        340px;
+    bottom: 25px;
 
-    padding:
-        13px 16px;
+    transform:
+        translateX(-50%)
+        translateY(100px);
 
-    background:
-        var(--card);
+    z-index: 9999;
 
-    border:
-        1px solid
-        var(--border);
+    background: #1a211c;
 
-    border-radius:
-        10px;
+    border: 1px solid var(--border);
 
-    z-index:
-        9999;
+    border-radius: 12px;
+
+    padding: 13px 18px;
 
     box-shadow:
-        0 15px 40px
-        rgba(0,0,0,.4);
+        0 15px 50px rgba(0,0,0,.45);
 
-    display:
-        none;
+    transition:
+        transform .3s ease;
+
+    max-width: 90%;
 }
 
-#status.show {
-    display: block;
-}
-
-#status.error {
-    border-color:
-        var(--danger);
-
-    color:
-        #fecaca;
+#toast.show {
+    transform:
+        translateX(-50%)
+        translateY(0);
 }
 
 
 /* =========================================================
-   MOBILE
+   RESPONSIVE
 ========================================================= */
 
 @media(max-width:800px) {
 
-    .hero {
-        grid-template-columns: 1fr;
-    }
-
-    .stats-grid {
+    .grid-3,
+    .grid-4 {
         grid-template-columns:
-            repeat(2,1fr);
+            repeat(2, minmax(0,1fr));
     }
 
-    .workout-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .recipe-grid {
+    .exercise {
         grid-template-columns:
-            repeat(2,1fr);
+            minmax(0,1fr)
+            70px
+            70px
+            70px
+            35px;
     }
 
-    .settings-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 @media(max-width:600px) {
 
     main {
         padding:
-            17px 13px 90px;
+            20px
+            14px
+            70px;
     }
 
-    .form-grid {
+    .header-inner {
+        padding:
+            13px
+            14px;
+    }
+
+    .user-email {
+        display: none;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
         grid-template-columns: 1fr;
     }
 
-    .form-group.full {
-        grid-column: auto;
+    .calorie-number {
+        font-size: 2.8rem;
     }
 
-    .macro-grid {
+    .card {
+        padding: 16px;
+    }
+
+    .exercise {
         grid-template-columns:
-            repeat(3,1fr);
+            minmax(0,1fr)
+            60px
+            60px
+            60px
+            30px;
+
+        font-size: .8rem;
     }
 
-    .recipe-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .water-grid {
-        grid-template-columns:
-            repeat(4,1fr);
-    }
-
-    .search-row {
-        flex-direction:
-            column;
-    }
-
-    .auth-card {
-        padding: 22px;
+    .exercise input {
+        padding: 8px 5px;
     }
 }
 
 </style>
-
 </head>
+
 
 <body>
 
@@ -1242,77 +909,24 @@ textarea {
      AUTH SCREEN
 ========================================================= -->
 
-<div id="auth-screen">
+<section id="auth-screen">
 
     <div class="auth-card">
 
         <div class="logo">
+            Lean <span>Sync</span>
+        </div>
 
-            <div class="logo-icon">
-                🏋️
-            </div>
-
-            <h1>
-                Lean<span>Sync</span>Rim
-            </h1>
-
-            <p>
-                Your personal coach.
-            </p>
-
+        <div class="auth-subtitle">
+            Your personal trainer, nutrition coach and accountability system.
         </div>
 
 
-        <div class="auth-tabs">
-
-            <button
-                class="auth-tab active"
-                id="login-tab"
-                onclick="showAuth('login')">
-
-                Login
-
-            </button>
-
-            <button
-                class="auth-tab"
-                id="signup-tab"
-                onclick="showAuth('signup')">
-
-                Create Account
-
-            </button>
-
-        </div>
-
-
-        <form
-            id="auth-form"
-            onsubmit="handleAuth(event)"
-        >
-
-            <div
-                class="form-group"
-                id="name-group"
-                style="display:none;"
-            >
-
-                <label>
-                    Name
-                </label>
-
-                <input
-                    id="auth-name"
-                    type="text"
-                    placeholder="Your name"
-                >
-
-            </div>
-
+        <form id="auth-form">
 
             <div class="form-group">
 
-                <label>
+                <label for="auth-email">
                     Email
                 </label>
 
@@ -1320,52 +934,75 @@ textarea {
                     id="auth-email"
                     type="email"
                     required
-                    placeholder="you@email.com"
-                >
+                    autocomplete="email"
+                    placeholder="you@example.com">
 
             </div>
 
 
             <div class="form-group">
 
-                <label>
+                <label for="auth-password">
                     Password
                 </label>
 
                 <input
                     id="auth-password"
                     type="password"
-                    minlength="6"
                     required
-                    placeholder="At least 6 characters"
-                >
+                    minlength="6"
+                    autocomplete="current-password"
+                    placeholder="Minimum 6 characters">
 
             </div>
 
 
             <button
-                class="btn"
-                style="width:100%;"
-                type="submit"
+                class="primary-btn"
                 id="auth-submit"
-            >
+                type="submit">
 
-                Login
+                Sign In
 
             </button>
 
         </form>
 
+
+        <div
+            id="error-message"
+            class="hidden">
+        </div>
+
+
+        <div class="auth-switch">
+
+            <span id="auth-switch-text">
+                Don't have an account?
+            </span>
+
+            <button
+                type="button"
+                id="auth-switch-button">
+
+                Create one
+
+            </button>
+
+        </div>
+
     </div>
 
-</div>
+</section>
 
 
 <!-- =========================================================
-     APPLICATION
+     MAIN APP
 ========================================================= -->
 
-<div id="app" class="hidden">
+<div
+    id="app"
+    class="hidden">
 
 
 <header>
@@ -1373,42 +1010,23 @@ textarea {
     <div class="header-inner">
 
         <div class="brand">
-
-            <div class="brand-icon">
-                🏋️
-            </div>
-
-            <div class="brand-text">
-
-                <strong>
-                    LeanSyncRim
-                </strong>
-
-                <small id="user-email">
-                    Personal Coach
-                </small>
-
-            </div>
-
+            Lean <span>Sync</span>
         </div>
 
 
-        <div class="header-actions">
+        <div class="user-area">
+
+            <span
+                id="user-email"
+                class="user-email">
+            </span>
 
             <button
-                class="icon-btn"
-                onclick="requestNotifications()"
-                title="Notifications"
-            >
-                🔔
-            </button>
+                id="logout-btn"
+                class="logout-btn">
 
-            <button
-                class="icon-btn"
-                onclick="logout()"
-                title="Logout"
-            >
-                🚪
+                Log out
+
             </button>
 
         </div>
@@ -1420,61 +1038,73 @@ textarea {
 
 <nav>
 
-    <button
-        class="nav-btn active"
-        onclick="switchTab('dashboard')"
-        id="nav-dashboard"
-    >
-        🏠 Dashboard
-    </button>
+    <div class="nav-inner">
 
-    <button
-        class="nav-btn"
-        onclick="switchTab('workout')"
-        id="nav-workout"
-    >
-        🏋️ Workout
-    </button>
+        <button
+            class="nav-btn active"
+            data-panel="dashboard">
 
-    <button
-        class="nav-btn"
-        onclick="switchTab('nutrition')"
-        id="nav-nutrition"
-    >
-        🍽️ Nutrition
-    </button>
+            🏠 Dashboard
 
-    <button
-        class="nav-btn"
-        onclick="switchTab('restaurants')"
-        id="nav-restaurants"
-    >
-        🍔 Restaurants
-    </button>
+        </button>
 
-    <button
-        class="nav-btn"
-        onclick="switchTab('recipes')"
-        id="nav-recipes"
-    >
-        🥗 Recipes
-    </button>
+        <button
+            class="nav-btn"
+            data-panel="workout">
 
-    <button
-        class="nav-btn"
-        onclick="switchTab('coach')"
-        id="nav-coach"
-    >
-        😈 Coach
-    </button>
+            🏋️ Workout
 
-    <button
-        class="nav-btn"
-        onclick="switchTab('settings')"
-        id="nav-settings"
-    >
-        ⚙️ Settings
-    </button>
+        </button>
+
+        <button
+            class="nav-btn"
+            data-panel="meals">
+
+            🍽️ Meals
+
+        </button>
+
+        <button
+            class="nav-btn"
+            data-panel="recipes">
+
+            🥗 Recipes
+
+        </button>
+
+        <button
+            class="nav-btn"
+            data-panel="restaurants">
+
+            🍔 Restaurants
+
+        </button>
+
+        <button
+            class="nav-btn"
+            data-panel="schedule">
+
+            📅 Schedule
+
+        </button>
+
+        <button
+            class="nav-btn"
+            data-panel="coach">
+
+            🔔 Coach
+
+        </button>
+
+        <button
+            class="nav-btn"
+            data-panel="settings">
+
+            ⚙️ Settings
+
+        </button>
+
+    </div>
 
 </nav>
 
@@ -1487,103 +1117,50 @@ textarea {
 ========================================================= -->
 
 <section
-    id="tab-dashboard"
-    class="tab active"
->
-
-    <div class="section-title">
-
-        <h2>
-            Good morning. Let's work.
-        </h2>
-
-        <p id="dashboard-date">
-        </p>
-
-    </div>
+    id="panel-dashboard"
+    class="panel active">
 
 
-    <div class="hero">
+<div class="hero">
 
-        <div class="card hero-card">
+    <h1>
+        Good morning.
+    </h1>
 
-            <div>
+    <p id="today-display"></p>
 
-                <small
-                    style="color:var(--muted);"
-                >
-                    TODAY'S COACH
+</div>
+
+
+<div class="card calorie-card">
+
+    <div class="calorie-top">
+
+        <div>
+
+            <div class="stat-label">
+                Today's calories
+            </div>
+
+            <div class="calorie-number">
+
+                <span id="calories-total">
+                    0
+                </span>
+
+                <small>
+                    kcal
                 </small>
 
-                <h1>
-                    No excuses.<br>
-                    <span>Get it done.</span>
-                </h1>
-
-                <div
-                    class="coach-message"
-                    id="dashboard-message"
-                >
-                    Loading your accountability report...
-                </div>
-
             </div>
 
-
-            <button
-                class="btn"
-                onclick="switchTab('workout')"
-            >
-                Start Today's Workout
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>
-                🔥 Today's Calories
-            </h3>
-
-
-            <div
-                class="calorie-ring"
-                id="dashboard-ring"
-            >
-
-                <div class="calorie-inner">
-
-                    <div
-                        class="calorie-number"
-                        id="dashboard-calories"
-                    >
-                        0
-                    </div>
-
-                    <div class="calorie-label">
-                        calories
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div
-                style="
-                    text-align:center;
-                    color:var(--muted);
-                "
-            >
+            <div class="calorie-target">
 
                 Target:
-                <strong
-                    id="dashboard-target"
-                    style="color:var(--text);"
-                >
+                <strong id="calorie-target-display">
                     1600
                 </strong>
+                kcal
 
             </div>
 
@@ -1592,79 +1169,131 @@ textarea {
     </div>
 
 
-    <div class="stats-grid">
+    <div class="progress">
 
-        <div class="stat">
-
-            <div class="stat-label">
-                Calories
-            </div>
-
-            <div
-                class="stat-value"
-                id="stat-calories"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                Protein
-            </div>
-
-            <div
-                class="stat-value"
-                id="stat-protein"
-            >
-                0g
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                Water
-            </div>
-
-            <div
-                class="stat-value"
-                id="stat-water"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                Workout
-            </div>
-
-            <div
-                class="stat-value"
-                id="stat-workout"
-            >
-                ❌
-            </div>
-
+        <div
+            id="calorie-progress"
+            class="progress-bar">
         </div>
 
     </div>
 
 
     <div
-        id="dashboard-alerts"
-        style="margin-top:16px;"
-    >
+        id="calorie-remaining"
+        class="remaining">
+
+        1600 calories remaining.
+
     </div>
+
+</div>
+
+
+<div class="grid grid-4">
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Protein
+        </div>
+
+        <div class="stat-value">
+            <span id="protein-total">
+                0
+            </span>
+            g
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Carbs
+        </div>
+
+        <div class="stat-value">
+            <span id="carbs-total">
+                0
+            </span>
+            g
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Fat
+        </div>
+
+        <div class="stat-value">
+            <span id="fat-total">
+                0
+            </span>
+            g
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Workout
+        </div>
+
+        <div
+            id="workout-status"
+            class="stat-value">
+
+            Not logged
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="coach-box">
+
+    <div class="coach-label">
+        Your Coach
+    </div>
+
+    <div
+        id="coach-message"
+        class="coach-message">
+
+        Let's get to work.
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <h2 class="card-title">
+        Today's Meals
+    </h2>
+
+    <ul
+        id="dashboard-meals"
+        class="list">
+
+        <li class="item-meta">
+            No meals logged yet.
+        </li>
+
+    </ul>
+
+</div>
+
 
 </section>
 
@@ -1674,18 +1303,17 @@ textarea {
 ========================================================= -->
 
 <section
-    id="tab-workout"
-    class="tab"
->
+    id="panel-workout"
+    class="panel">
 
-    <div class="section-title">
+    <div class="hero">
 
-        <h2>
-            🏋️ Today's Training
-        </h2>
+        <h1>
+            Today's Training
+        </h1>
 
-        <p>
-            Log everything. Sets, reps, weight. No ghosting.
+        <p id="today-workout-name">
+            Training session
         </p>
 
     </div>
@@ -1693,65 +1321,14 @@ textarea {
 
     <div class="card">
 
-        <div
-            style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                gap:10px;
-                flex-wrap:wrap;
-            "
-        >
-
-            <div>
-
-                <h3 id="today-workout-name">
-                    Today's Workout
-                </h3>
-
-                <span
-                    id="today-workout-description"
-                    style="color:var(--muted);"
-                >
-                    Loading...
-                </span>
-
-            </div>
+        <h2 class="card-title">
+            Log Exercise
+        </h2>
 
 
-            <button
-                class="btn"
-                onclick="completeWorkout()"
-            >
-                ✅ Complete Workout
-            </button>
+        <form id="exercise-form">
 
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            Exercise Log
-        </h3>
-
-        <div id="exercise-list">
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            Add Exercise
-        </h3>
-
-        <form onsubmit="addCustomExercise(event)">
-
-            <div class="form-grid">
+            <div class="grid grid-2">
 
                 <div class="form-group">
 
@@ -1762,8 +1339,7 @@ textarea {
                     <input
                         id="exercise-name"
                         required
-                        placeholder="Bench Press"
-                    >
+                        placeholder="Bench Press">
 
                 </div>
 
@@ -1771,13 +1347,45 @@ textarea {
                 <div class="form-group">
 
                     <label>
-                        Sets × Reps
+                        Sets
                     </label>
 
                     <input
-                        id="exercise-target"
-                        placeholder="4 × 8"
-                    >
+                        id="exercise-sets"
+                        type="number"
+                        min="1"
+                        placeholder="3">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Reps
+                    </label>
+
+                    <input
+                        id="exercise-reps"
+                        type="number"
+                        min="1"
+                        placeholder="10">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Weight
+                    </label>
+
+                    <input
+                        id="exercise-weight"
+                        type="number"
+                        min="0"
+                        step="0.5"
+                        placeholder="135">
 
                 </div>
 
@@ -1786,12 +1394,45 @@ textarea {
 
             <button
                 class="btn"
-                type="submit"
-            >
+                type="submit">
+
                 Add Exercise
+
             </button>
 
         </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2 class="card-title">
+            Today's Exercises
+        </h2>
+
+        <ul
+            id="exercise-list"
+            class="list">
+
+            <li class="item-meta">
+                Nothing logged yet.
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <div class="card">
+
+        <button
+            id="complete-workout-btn"
+            class="primary-btn">
+
+            ✓ Complete Today's Workout
+
+        </button>
 
     </div>
 
@@ -1799,22 +1440,21 @@ textarea {
 
 
 <!-- =========================================================
-     NUTRITION
+     MEALS
 ========================================================= -->
 
 <section
-    id="tab-nutrition"
-    class="tab"
->
+    id="panel-meals"
+    class="panel">
 
-    <div class="section-title">
+    <div class="hero">
 
-        <h2>
-            🍽️ Nutrition
-        </h2>
+        <h1>
+            Meals
+        </h1>
 
         <p>
-            Everything you eat goes here. Yes, even the "little bite."
+            Track everything you eat.
         </p>
 
     </div>
@@ -1822,115 +1462,25 @@ textarea {
 
     <div class="card">
 
-        <div class="calorie-ring" id="nutrition-ring">
-
-            <div class="calorie-inner">
-
-                <div
-                    class="calorie-number"
-                    id="nutrition-calories"
-                >
-                    0
-                </div>
-
-                <div class="calorie-label">
-                    / <span id="nutrition-target">1600</span>
-                </div>
-
-            </div>
-
-        </div>
+        <h2 class="card-title">
+            Log Food
+        </h2>
 
 
-        <div class="progress">
+        <form id="meal-form">
 
-            <div
-                class="progress-bar"
-                id="calorie-progress"
-            >
-            </div>
-
-        </div>
-
-
-        <div
-            id="calorie-status"
-            style="
-                text-align:center;
-                color:var(--muted);
-                margin-top:8px;
-            "
-        >
-        </div>
-
-
-        <div class="macro-grid">
-
-            <div class="macro">
-
-                <strong id="protein-total">
-                    0g
-                </strong>
-
-                <span>
-                    Protein
-                </span>
-
-            </div>
-
-
-            <div class="macro">
-
-                <strong id="carbs-total">
-                    0g
-                </strong>
-
-                <span>
-                    Carbs
-                </span>
-
-            </div>
-
-
-            <div class="macro">
-
-                <strong id="fat-total">
-                    0g
-                </strong>
-
-                <span>
-                    Fat
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            ➕ Log Food
-        </h3>
-
-
-        <form onsubmit="addFood(event)">
-
-            <div class="form-grid">
+            <div class="grid grid-2">
 
                 <div class="form-group">
 
                     <label>
-                        Food / Meal
+                        Food
                     </label>
 
                     <input
-                        id="food-name"
+                        id="meal-name"
                         required
-                        placeholder="Chicken breast"
-                    >
+                        placeholder="Chicken breast">
 
                 </div>
 
@@ -1942,12 +1492,11 @@ textarea {
                     </label>
 
                     <input
-                        id="food-calories"
+                        id="meal-calories"
                         type="number"
                         min="0"
                         required
-                        placeholder="250"
-                    >
+                        placeholder="300">
 
                 </div>
 
@@ -1959,11 +1508,11 @@ textarea {
                     </label>
 
                     <input
-                        id="food-protein"
+                        id="meal-protein"
                         type="number"
                         min="0"
-                        value="0"
-                    >
+                        step=".1"
+                        value="0">
 
                 </div>
 
@@ -1975,11 +1524,11 @@ textarea {
                     </label>
 
                     <input
-                        id="food-carbs"
+                        id="meal-carbs"
                         type="number"
                         min="0"
-                        value="0"
-                    >
+                        step=".1"
+                        value="0">
 
                 </div>
 
@@ -1991,40 +1540,11 @@ textarea {
                     </label>
 
                     <input
-                        id="food-fat"
+                        id="meal-fat"
                         type="number"
                         min="0"
-                        value="0"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Meal
-                    </label>
-
-                    <select id="food-meal">
-
-                        <option>
-                            Breakfast
-                        </option>
-
-                        <option>
-                            Lunch
-                        </option>
-
-                        <option>
-                            Dinner
-                        </option>
-
-                        <option>
-                            Snack
-                        </option>
-
-                    </select>
+                        step=".1"
+                        value="0">
 
                 </div>
 
@@ -2033,9 +1553,10 @@ textarea {
 
             <button
                 class="btn"
-                type="submit"
-            >
-                Log Food
+                type="submit">
+
+                Add Meal
+
             </button>
 
         </form>
@@ -2045,125 +1566,19 @@ textarea {
 
     <div class="card">
 
-        <h3>
-            Today's Food Log
-        </h3>
-
-        <div id="food-log">
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            💧 Water
-        </h3>
-
-        <p
-            style="color:var(--muted);"
-        >
-            Tap a glass every time you drink one.
-        </p>
-
-        <div
-            class="water-grid"
-            id="water-grid"
-        >
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     RESTAURANTS
-========================================================= -->
-
-<section
-    id="tab-restaurants"
-    class="tab"
->
-
-    <div class="section-title">
-
-        <h2>
-            🍔 Restaurant Finder
+        <h2 class="card-title">
+            Today's Food
         </h2>
 
-        <p>
-            Search food and add nutrition to today's log.
-        </p>
+        <ul
+            id="meal-list"
+            class="list">
 
-    </div>
+            <li class="item-meta">
+                No meals logged.
+            </li>
 
-
-    <div class="card">
-
-        <div class="alert warning">
-
-            ⚠️ Restaurant nutrition requires a menu/nutrition
-            data provider. The interface is ready for your API.
-
-        </div>
-
-
-        <div class="search-row">
-
-            <input
-                id="restaurant-search"
-                placeholder="Search restaurant or menu item..."
-            >
-
-            <button
-                class="btn"
-                onclick="searchRestaurant()"
-            >
-                Search
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <div
-        class="card"
-        id="restaurant-results"
-    >
-
-        <div
-            class="empty-message"
-            style="color:var(--muted);"
-        >
-            Search for a restaurant or menu item.
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            How automatic calories will work
-        </h3>
-
-        <p
-            style="
-                color:var(--muted);
-                line-height:1.6;
-            "
-        >
-
-            Restaurant →
-            menu item →
-            nutrition data →
-            calories/macros →
-            one-click addition to today's food log.
-
-        </p>
+        </ul>
 
     </div>
 
@@ -2175,27 +1590,330 @@ textarea {
 ========================================================= -->
 
 <section
-    id="tab-recipes"
-    class="tab"
->
+    id="panel-recipes"
+    class="panel">
 
-    <div class="section-title">
+    <div class="hero">
 
-        <h2>
-            🥗 Healthy Recipes
-        </h2>
+        <h1>
+            Healthy Recipes
+        </h1>
 
         <p>
-            Quick meals that actually fit the plan.
+            Build your own recipe library.
         </p>
 
     </div>
 
 
-    <div
-        class="recipe-grid"
-        id="recipe-grid"
-    >
+    <div class="card">
+
+        <h2 class="card-title">
+            Add Recipe
+        </h2>
+
+
+        <form id="recipe-form">
+
+            <div class="form-group">
+
+                <label>
+                    Recipe Name
+                </label>
+
+                <input
+                    id="recipe-name"
+                    required
+                    placeholder="High-protein chicken bowl">
+
+            </div>
+
+
+            <div class="grid grid-3">
+
+                <div class="form-group">
+
+                    <label>
+                        Calories
+                    </label>
+
+                    <input
+                        id="recipe-calories"
+                        type="number"
+                        min="0">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Protein
+                    </label>
+
+                    <input
+                        id="recipe-protein"
+                        type="number"
+                        min="0">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Prep Time
+                    </label>
+
+                    <input
+                        id="recipe-time"
+                        placeholder="25 min">
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Ingredients / Instructions
+                </label>
+
+                <textarea
+                    id="recipe-body"
+                    rows="5"
+                    placeholder="Ingredients and instructions..."></textarea>
+
+            </div>
+
+
+            <button
+                class="btn"
+                type="submit">
+
+                Save Recipe
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2 class="card-title">
+            My Recipes
+        </h2>
+
+        <ul
+            id="recipe-list"
+            class="list">
+
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RESTAURANTS
+========================================================= -->
+
+<section
+    id="panel-restaurants"
+    class="panel">
+
+    <div class="hero">
+
+        <h1>
+            Restaurant Finder
+        </h1>
+
+        <p>
+            Look up a restaurant and log menu items.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2 class="card-title">
+            Restaurant Search
+        </h2>
+
+
+        <div class="form-group">
+
+            <label>
+                Restaurant
+            </label>
+
+            <input
+                id="restaurant-search"
+                placeholder="Search restaurant name">
+
+        </div>
+
+
+        <button
+            id="restaurant-search-btn"
+            class="btn">
+
+            Search
+
+        </button>
+
+
+        <div
+            id="restaurant-results"
+            style="margin-top:20px;">
+
+            <p class="item-meta">
+
+                Live restaurant/menu nutrition lookup requires a connected food/menu API.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2 class="card-title">
+            Quick Manual Menu Entry
+        </h2>
+
+
+        <p class="item-meta">
+
+            Until a menu API is connected, enter the menu item's nutrition manually.
+
+        </p>
+
+
+        <button
+            class="btn"
+            onclick="switchPanel('meals')">
+
+            Log Menu Item
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SCHEDULE
+========================================================= -->
+
+<section
+    id="panel-schedule"
+    class="panel">
+
+    <div class="hero">
+
+        <h1>
+            Workout Schedule
+        </h1>
+
+        <p>
+            Your weekly training plan.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="grid grid-2">
+
+            <div class="form-group">
+
+                <label>
+                    Day
+                </label>
+
+                <select id="schedule-day">
+
+                    <option value="Monday">
+                        Monday
+                    </option>
+
+                    <option value="Tuesday">
+                        Tuesday
+                    </option>
+
+                    <option value="Wednesday">
+                        Wednesday
+                    </option>
+
+                    <option value="Thursday">
+                        Thursday
+                    </option>
+
+                    <option value="Friday">
+                        Friday
+                    </option>
+
+                    <option value="Saturday">
+                        Saturday
+                    </option>
+
+                    <option value="Sunday">
+                        Sunday
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Workout
+                </label>
+
+                <input
+                    id="schedule-workout"
+                    placeholder="Push">
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="save-schedule-btn"
+            class="btn">
+
+            Save Workout Schedule
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2 class="card-title">
+            Weekly Split
+        </h2>
+
+        <ul
+            id="schedule-list"
+            class="list">
+
+        </ul>
+
     </div>
 
 </section>
@@ -2206,123 +1924,93 @@ textarea {
 ========================================================= -->
 
 <section
-    id="tab-coach"
-    class="tab"
->
+    id="panel-coach"
+    class="panel">
 
-    <div class="section-title">
+    <div class="hero">
 
-        <h2>
-            😈 Accountability Coach
-        </h2>
+        <h1>
+            Coach
+        </h1>
 
         <p>
-            You asked for motivation. You are getting motivation.
+            Accountability settings.
         </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div
+            id="notification-status"
+            class="notification-status">
+
+            Checking notification status...
+
+        </div>
+
+
+        <button
+            id="enable-notifications-btn"
+            class="primary-btn">
+
+            🔔 Enable Coach Notifications
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2 class="card-title">
+            Motivation Level
+        </h2>
+
+
+        <select id="motivation-level">
+
+            <option value="gentle">
+                Gentle
+            </option>
+
+            <option value="firm">
+                Firm
+            </option>
+
+            <option value="savage">
+                Savage
+            </option>
+
+        </select>
+
+
+        <button
+            id="save-motivation-btn"
+            class="btn"
+            style="margin-top:12px;">
+
+            Save Coach Style
+
+        </button>
 
     </div>
 
 
     <div class="coach-box">
 
-        <div class="coach-icon">
-            😈
+        <div class="coach-label">
+            Example
         </div>
 
         <div
-            class="coach-text"
-            id="coach-main-message"
-        >
-            Loading...
-        </div>
+            id="coach-preview"
+            class="coach-message">
 
-    </div>
-
-
-    <div
-        style="margin-top:16px;"
-        id="coach-alerts"
-    >
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            🔔 Notifications
-        </h3>
-
-        <p
-            style="color:var(--muted);"
-        >
-            Enable notifications so the coach can remind you
-            when you are ignoring your plan.
-        </p>
-
-
-        <button
-            class="btn"
-            onclick="requestNotifications()"
-        >
-            Enable Notifications
-        </button>
-
-
-        <div
-            id="notification-status"
-            style="
-                color:var(--muted);
-                margin-top:10px;
-                font-size:.8rem;
-            "
-        >
-            Notifications not enabled.
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            Coach Settings
-        </h3>
-
-
-        <div class="form-group">
-
-            <label>
-                Motivation Level
-            </label>
-
-            <select id="coach-level">
-
-                <option value="gentle">
-                    Gentle
-                </option>
-
-                <option
-                    value="direct"
-                    selected
-                >
-                    Direct
-                </option>
-
-                <option value="aggressive">
-                    Aggressive
-                </option>
-
-            </select>
+            You haven't logged your workout yet.
 
         </div>
-
-
-        <button
-            class="btn"
-            onclick="saveCoachSettings()"
-        >
-            Save Coach Style
-        </button>
 
     </div>
 
@@ -2334,18 +2022,17 @@ textarea {
 ========================================================= -->
 
 <section
-    id="tab-settings"
-    class="tab"
->
+    id="panel-settings"
+    class="panel">
 
-    <div class="section-title">
+    <div class="hero">
 
-        <h2>
-            ⚙️ Your Plan
-        </h2>
+        <h1>
+            Settings
+        </h1>
 
         <p>
-            Customize the targets the coach uses.
+            Configure your targets.
         </p>
 
     </div>
@@ -2353,14 +2040,19 @@ textarea {
 
     <div class="card">
 
-        <form onsubmit="saveSettings(event)">
+        <h2 class="card-title">
+            Nutrition Targets
+        </h2>
 
-            <div class="settings-grid">
+
+        <form id="settings-form">
+
+            <div class="grid grid-3">
 
                 <div class="form-group">
 
                     <label>
-                        Daily Calorie Target
+                        Daily Calories
                     </label>
 
                     <input
@@ -2368,9 +2060,7 @@ textarea {
                         type="number"
                         min="500"
                         max="10000"
-                        value="1600"
-                        required
-                    >
+                        value="1600">
 
                 </div>
 
@@ -2378,15 +2068,14 @@ textarea {
                 <div class="form-group">
 
                     <label>
-                        Protein Target (g)
+                        Protein (g)
                     </label>
 
                     <input
                         id="setting-protein"
                         type="number"
                         min="0"
-                        value="120"
-                    >
+                        value="120">
 
                 </div>
 
@@ -2394,56 +2083,14 @@ textarea {
                 <div class="form-group">
 
                     <label>
-                        Water Goal (glasses)
+                        Water (oz)
                     </label>
 
                     <input
                         id="setting-water"
                         type="number"
-                        min="1"
-                        value="8"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Today's Workout
-                    </label>
-
-                    <select id="setting-workout">
-
-                        <option value="Rest">
-                            Rest Day
-                        </option>
-
-                        <option value="Upper Body">
-                            Upper Body
-                        </option>
-
-                        <option value="Lower Body">
-                            Lower Body
-                        </option>
-
-                        <option value="Push">
-                            Push
-                        </option>
-
-                        <option value="Pull">
-                            Pull
-                        </option>
-
-                        <option value="Full Body">
-                            Full Body
-                        </option>
-
-                        <option value="Custom">
-                            Custom
-                        </option>
-
-                    </select>
+                        min="0"
+                        value="80">
 
                 </div>
 
@@ -2452,78 +2099,13 @@ textarea {
 
             <button
                 class="btn"
-                type="submit"
-            >
-                Save Plan
+                type="submit">
+
+                Save Targets
+
             </button>
 
         </form>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            🔔 Reminder Settings
-        </h3>
-
-        <div class="form-grid">
-
-            <div class="form-group">
-
-                <label>
-                    Workout Reminder Time
-                </label>
-
-                <input
-                    id="setting-workout-time"
-                    type="time"
-                    value="18:00"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Calorie Check Time
-                </label>
-
-                <input
-                    id="setting-calorie-time"
-                    type="time"
-                    value="20:00"
-                >
-
-            </div>
-
-        </div>
-
-
-        <button
-            class="btn"
-            onclick="saveReminderSettings()"
-        >
-            Save Reminder Times
-        </button>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            Account
-        </h3>
-
-        <button
-            class="btn btn-danger"
-            onclick="logout()"
-        >
-            Log Out
-        </button>
 
     </div>
 
@@ -2535,7 +2117,7 @@ textarea {
 </div>
 
 
-<div id="status"></div>
+<div id="toast"></div>
 
 
 <!-- =========================================================
@@ -2554,9 +2136,8 @@ import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    signOut,
     onAuthStateChanged,
-    updateProfile
+    signOut
 } from
 "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -2566,27 +2147,33 @@ import {
     collection,
     addDoc,
     deleteDoc,
-    updateDoc,
     doc,
-    query,
-    where,
-    orderBy,
-    onSnapshot,
-    getDocs,
     setDoc,
-    getDoc
+    getDoc,
+    getDocs,
+    query,
+    orderBy,
+    serverTimestamp
 } from
 "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
-/* =========================================================
-   FIREBASE CONFIG
-========================================================= */
+import {
+    getMessaging,
+    getToken,
+    isSupported
+} from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
+
+
+// =========================================================
+// FIREBASE CONFIG
+// =========================================================
 
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyAbkBGJnV6FHdd5GuvN-8RhQRQJkP1TfnA",
+        "AIzaSyAbNKJnV6FHdd5GuvN-8RhQRQJkP1TfnA",
 
     authDomain:
         "leansyncrim.firebaseapp.com",
@@ -2605,85 +2192,66 @@ const firebaseConfig = {
 };
 
 
+// =========================================================
+// VAPID PUBLIC KEY
+// =========================================================
+
+const VAPID_KEY =
+"BKvXjB9PETrcIpZLK3e0mPGhWBP3DzcXeMv-Rd1dS4HboQwq8z431enILaMmRB3KWNsihIcWO-zDQXCdX3TRE70";
+
+
+// =========================================================
+// INITIALIZE
+// =========================================================
+
 const app =
     initializeApp(firebaseConfig);
 
-
 const auth =
     getAuth(app);
-
 
 const db =
     getFirestore(app);
 
 
-/* =========================================================
-   GLOBAL STATE
-========================================================= */
+// =========================================================
+// STATE
+// =========================================================
 
 let currentUser = null;
 
-let currentSettings = {
+let dailyMeals = [];
+
+let dailyExercises = [];
+
+let schedule = {};
+
+let settings = {
 
     calories: 1600,
 
     protein: 120,
 
-    water: 8,
-
-    workout: "Rest",
-
-    workoutTime: "18:00",
-
-    calorieTime: "20:00",
-
-    coachLevel: "direct"
+    water: 80
 
 };
 
-
-let todayFood = [];
-
-let todayWorkoutCompleted = false;
-
-let todayWater = 0;
-
-let unsubscribeFunctions = [];
+let motivation =
+    "firm";
 
 
-/* =========================================================
-   HELPERS
-========================================================= */
+// =========================================================
+// HELPERS
+// =========================================================
 
 function todayKey() {
 
-    const d = new Date();
+    const date =
+        new Date();
 
-    return d.toISOString().split("T")[0];
-
-}
-
-
-function showStatus(message, error = false) {
-
-    const el =
-        document.getElementById("status");
-
-    el.textContent =
-        message;
-
-    el.classList.toggle(
-        "error",
-        error
-    );
-
-    el.classList.add("show");
-
-    setTimeout(() => {
-
-        el.classList.remove("show");
-
-    }, 4500);
+    return date
+        .toISOString()
+        .split("T")[0];
 
 }
 
@@ -2694,235 +2262,38 @@ function escapeHtml(value) {
         value === null ||
         value === undefined
     ) {
+
         return "";
+
     }
 
     return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
 
-/* =========================================================
-   AUTH UI
-========================================================= */
+function showToast(message) {
 
-let authMode = "login";
+    const toast =
+        document.getElementById("toast");
 
+    toast.textContent =
+        message;
 
-window.showAuth = function(mode) {
+    toast.classList.add("show");
 
-    authMode = mode;
-
-    document
-        .getElementById("login-tab")
-        .classList.toggle(
-            "active",
-            mode === "login"
-        );
-
-    document
-        .getElementById("signup-tab")
-        .classList.toggle(
-            "active",
-            mode === "signup"
-        );
-
-
-    document
-        .getElementById("name-group")
-        .style.display =
-            mode === "signup"
-                ? "block"
-                : "none";
-
-
-    document
-        .getElementById("auth-submit")
-        .textContent =
-            mode === "signup"
-                ? "Create Account"
-                : "Login";
-
-};
-
-
-window.handleAuth = async function(event) {
-
-    event.preventDefault();
-
-    const email =
-        document
-            .getElementById("auth-email")
-            .value
-            .trim();
-
-    const password =
-        document
-            .getElementById("auth-password")
-            .value;
-
-    try {
-
-        if (authMode === "signup") {
-
-            const name =
-                document
-                    .getElementById("auth-name")
-                    .value
-                    .trim();
-
-
-            const result =
-                await createUserWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-
-
-            if (name) {
-
-                await updateProfile(
-                    result.user,
-                    {
-                        displayName: name
-                    }
-                );
-
-            }
-
-            showStatus(
-                "Account created."
-            );
-
-        } else {
-
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
-            showStatus(
-                "Welcome back."
-            );
-
-        }
-
-    } catch(error) {
-
-        console.error(error);
-
-        showStatus(
-            friendlyAuthError(error),
-            true
-        );
-
-    }
-
-};
-
-
-function friendlyAuthError(error) {
-
-    if (
-        error.code ===
-        "auth/email-already-in-use"
-    ) {
-        return "That email already has an account.";
-    }
-
-    if (
-        error.code ===
-        "auth/invalid-credential"
-    ) {
-        return "Email or password is incorrect.";
-    }
-
-    if (
-        error.code ===
-        "auth/weak-password"
-    ) {
-        return "Password needs to be at least 6 characters.";
-    }
-
-    return error.message ||
-        "Authentication failed.";
+    setTimeout(
+        () => toast.classList.remove("show"),
+        3500
+    );
 
 }
 
-
-window.logout = async function() {
-
-    await signOut(auth);
-
-};
-
-
-/* =========================================================
-   AUTH STATE
-========================================================= */
-
-onAuthStateChanged(
-    auth,
-    async user => {
-
-        currentUser = user;
-
-        if (user) {
-
-            document
-                .getElementById("auth-screen")
-                .classList.add("hidden");
-
-            document
-                .getElementById("app")
-                .classList.remove("hidden");
-
-
-            document
-                .getElementById("user-email")
-                .textContent =
-                    user.displayName ||
-                    user.email;
-
-
-            await loadSettings();
-
-            setupRealtimeData();
-
-            renderDashboard();
-
-            loadRecipes();
-
-            startReminderEngine();
-
-        } else {
-
-            document
-                .getElementById("auth-screen")
-                .classList.remove("hidden");
-
-            document
-                .getElementById("app")
-                .classList.add("hidden");
-
-            cleanupListeners();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   USER PATH
-========================================================= */
 
 function userCollection(name) {
 
@@ -2936,287 +2307,312 @@ function userCollection(name) {
 }
 
 
-function userDoc(name, id) {
+function userDoc(name) {
 
     return doc(
         db,
         "users",
         currentUser.uid,
-        name,
-        id
+        "settings",
+        name
     );
 
 }
 
 
-/* =========================================================
-   SETTINGS
-========================================================= */
+// =========================================================
+// AUTH MODE
+// =========================================================
 
-async function loadSettings() {
+let createMode =
+    false;
 
-    try {
 
-        const ref =
-            doc(
-                db,
-                "users",
-                currentUser.uid,
-                "settings",
-                "profile"
+const authForm =
+    document.getElementById(
+        "auth-form"
+    );
+
+
+const authSubmit =
+    document.getElementById(
+        "auth-submit"
+    );
+
+
+const authSwitchButton =
+    document.getElementById(
+        "auth-switch-button"
+    );
+
+
+const authSwitchText =
+    document.getElementById(
+        "auth-switch-text"
+    );
+
+
+authSwitchButton.addEventListener(
+    "click",
+    function () {
+
+        createMode =
+            !createMode;
+
+        if (createMode) {
+
+            authSubmit.textContent =
+                "Create Account";
+
+            authSwitchText.textContent =
+                "Already have an account?";
+
+            authSwitchButton.textContent =
+                "Sign in";
+
+        } else {
+
+            authSubmit.textContent =
+                "Sign In";
+
+            authSwitchText.textContent =
+                "Don't have an account?";
+
+            authSwitchButton.textContent =
+                "Create one";
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// AUTH SUBMIT
+// =========================================================
+
+authForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        const email =
+            document
+                .getElementById("auth-email")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("auth-password")
+                .value;
+
+
+        const errorElement =
+            document.getElementById(
+                "error-message"
             );
 
 
-        const snapshot =
-            await getDoc(ref);
+        errorElement.classList.add(
+            "hidden"
+        );
 
 
-        if (snapshot.exists()) {
+        try {
 
-            currentSettings = {
-                ...currentSettings,
-                ...snapshot.data()
-            };
+            if (createMode) {
+
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+                showToast(
+                    "Account created."
+                );
+
+            } else {
+
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+            }
+
+        } catch(error) {
+
+            console.error(error);
+
+            errorElement.textContent =
+                friendlyAuthError(
+                    error
+                );
+
+            errorElement.classList.remove(
+                "hidden"
+            );
 
         }
 
+    }
+);
 
-        document
-            .getElementById("setting-calories")
-            .value =
-                currentSettings.calories;
 
-        document
-            .getElementById("setting-protein")
-            .value =
-                currentSettings.protein;
+// =========================================================
+// AUTH ERRORS
+// =========================================================
 
-        document
-            .getElementById("setting-water")
-            .value =
-                currentSettings.water;
+function friendlyAuthError(error) {
 
-        document
-            .getElementById("setting-workout")
-            .value =
-                currentSettings.workout;
+    switch(error.code) {
 
-        document
-            .getElementById("setting-workout-time")
-            .value =
-                currentSettings.workoutTime;
+        case "auth/invalid-credential":
+            return "Email or password is incorrect.";
 
-        document
-            .getElementById("setting-calorie-time")
-            .value =
-                currentSettings.calorieTime;
+        case "auth/email-already-in-use":
+            return "An account with this email already exists.";
 
-        document
-            .getElementById("coach-level")
-            .value =
-                currentSettings.coachLevel;
+        case "auth/weak-password":
+            return "Password must be at least 6 characters.";
 
-    } catch(error) {
+        case "auth/invalid-email":
+            return "Please enter a valid email.";
 
-        console.error(
-            "Settings error:",
-            error
-        );
+        default:
+            return error.message ||
+                "Authentication failed.";
 
     }
 
 }
 
 
-window.saveSettings = async function(event) {
+// =========================================================
+// AUTH STATE
+// =========================================================
 
-    event.preventDefault();
+onAuthStateChanged(
+    auth,
+    async function(user) {
 
-    currentSettings.calories =
-        Number(
+        if (user) {
+
+            currentUser =
+                user;
+
             document
-                .getElementById("setting-calories")
-                .value
-        );
+                .getElementById("auth-screen")
+                .classList.add("hidden");
 
-    currentSettings.protein =
-        Number(
             document
-                .getElementById("setting-protein")
-                .value
-        );
+                .getElementById("app")
+                .classList.remove("hidden");
 
-    currentSettings.water =
-        Number(
             document
-                .getElementById("setting-water")
-                .value
-        );
+                .getElementById("user-email")
+                .textContent =
+                user.email;
 
-    currentSettings.workout =
-        document
-            .getElementById("setting-workout")
-            .value;
+            await loadUserData();
 
+            updateDashboard();
 
-    await setDoc(
+            updateCoach();
 
-        doc(
-            db,
-            "users",
-            currentUser.uid,
-            "settings",
-            "profile"
-        ),
+        } else {
 
-        currentSettings,
+            currentUser =
+                null;
 
-        {
-            merge: true
+            document
+                .getElementById("auth-screen")
+                .classList.remove("hidden");
+
+            document
+                .getElementById("app")
+                .classList.add("hidden");
+
         }
 
-    );
-
-
-    renderDashboard();
-
-    showStatus(
-        "Plan saved."
-    );
-
-};
-
-
-window.saveReminderSettings = async function() {
-
-    currentSettings.workoutTime =
-        document
-            .getElementById("setting-workout-time")
-            .value;
-
-    currentSettings.calorieTime =
-        document
-            .getElementById("setting-calorie-time")
-            .value;
-
-
-    await setDoc(
-
-        doc(
-            db,
-            "users",
-            currentUser.uid,
-            "settings",
-            "profile"
-        ),
-
-        currentSettings,
-
-        {
-            merge: true
-        }
-
-    );
-
-
-    showStatus(
-        "Reminder settings saved."
-    );
-
-};
-
-
-window.saveCoachSettings = async function() {
-
-    currentSettings.coachLevel =
-        document
-            .getElementById("coach-level")
-            .value;
-
-
-    await setDoc(
-
-        doc(
-            db,
-            "users",
-            currentUser.uid,
-            "settings",
-            "profile"
-        ),
-
-        {
-            coachLevel:
-                currentSettings.coachLevel
-        },
-
-        {
-            merge: true
-        }
-
-    );
-
-
-    renderCoach();
-
-    showStatus(
-        "Coach settings saved."
-    );
-
-};
-
-
-/* =========================================================
-   TAB SYSTEM
-========================================================= */
-
-const validTabs = [
-    "dashboard",
-    "workout",
-    "nutrition",
-    "restaurants",
-    "recipes",
-    "coach",
-    "settings"
-];
-
-
-window.switchTab = function(tab) {
-
-    if (
-        !validTabs.includes(tab)
-    ) {
-        return;
     }
+);
 
 
-    document
-        .querySelectorAll(".tab")
-        .forEach(
-            el =>
-                el.classList.remove("active")
-        );
+// =========================================================
+// LOGOUT
+// =========================================================
 
+document
+    .getElementById("logout-btn")
+    .addEventListener(
+        "click",
+        async function() {
+
+            await signOut(auth);
+
+        }
+    );
+
+
+// =========================================================
+// TAB NAVIGATION
+// =========================================================
+
+document
+    .querySelectorAll(".nav-btn")
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    switchPanel(
+                        button.dataset.panel
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+window.switchPanel =
+function(panelName) {
 
     document
         .querySelectorAll(".nav-btn")
         .forEach(
-            el =>
-                el.classList.remove("active")
+            button => {
+
+                button.classList.toggle(
+                    "active",
+                    button.dataset.panel === panelName
+                );
+
+            }
         );
 
 
     document
-        .getElementById(
-            `tab-${tab}`
-        )
-        .classList.add("active");
+        .querySelectorAll(".panel")
+        .forEach(
+            panel => {
 
+                panel.classList.toggle(
+                    "active",
+                    panel.id ===
+                    "panel-" + panelName
+                );
 
-    document
-        .getElementById(
-            `nav-${tab}`
-        )
-        .classList.add("active");
+            }
+        );
 
 
     window.scrollTo({
@@ -3227,342 +2623,855 @@ window.switchTab = function(tab) {
 };
 
 
-/* =========================================================
-   REALTIME DATA
-========================================================= */
+// =========================================================
+// LOAD USER DATA
+// =========================================================
 
-function cleanupListeners() {
+async function loadUserData() {
 
-    unsubscribeFunctions.forEach(
-        unsubscribe =>
-            unsubscribe()
-    );
-
-    unsubscribeFunctions = [];
-
-}
+    if (!currentUser)
+        return;
 
 
-function setupRealtimeData() {
+    try {
 
-    cleanupListeners();
-
-
-    /* FOOD */
-
-    const foodQuery =
-        query(
-            userCollection("food"),
-            where(
-                "date",
-                "==",
-                todayKey()
-            )
-        );
+        const settingsSnap =
+            await getDoc(
+                userDoc("profile")
+            );
 
 
-    const foodUnsubscribe =
-        onSnapshot(
-            foodQuery,
-            snapshot => {
+        if (settingsSnap.exists()) {
 
-                todayFood =
-                    snapshot.docs.map(
-                        d => ({
-                            id: d.id,
-                            ...d.data()
-                        })
-                    );
+            const data =
+                settingsSnap.data();
 
-                renderNutrition();
+            settings =
+                {
+                    ...settings,
+                    ...data
+                };
 
-                renderDashboard();
-
-            }
-        );
-
-
-    unsubscribeFunctions.push(
-        foodUnsubscribe
-    );
-
-
-    /* WORKOUT */
-
-    const workoutQuery =
-        query(
-            userCollection("workouts"),
-            where(
-                "date",
-                "==",
-                todayKey()
-            )
-        );
-
-
-    const workoutUnsubscribe =
-        onSnapshot(
-            workoutQuery,
-            snapshot => {
-
-                todayWorkoutCompleted =
-                    snapshot.docs.some(
-                        d =>
-                            d.data().completed === true
-                    );
-
-                renderWorkout();
-
-                renderDashboard();
-
-            }
-        );
-
-
-    unsubscribeFunctions.push(
-        workoutUnsubscribe
-    );
-
-
-    /* WATER */
-
-    const waterRef =
-        doc(
-            db,
-            "users",
-            currentUser.uid,
-            "water",
-            todayKey()
-        );
-
-
-    const waterUnsubscribe =
-        onSnapshot(
-            waterRef,
-            snapshot => {
-
-                todayWater =
-                    snapshot.exists()
-                        ? Number(
-                            snapshot.data().glasses || 0
-                        )
-                        : 0;
-
-                renderWater();
-
-                renderDashboard();
-
-            }
-        );
-
-
-    unsubscribeFunctions.push(
-        waterUnsubscribe
-    );
-
-}
-
-
-/* =========================================================
-   NUTRITION
-========================================================= */
-
-window.addFood = async function(event) {
-
-    event.preventDefault();
-
-
-    const name =
-        document
-            .getElementById("food-name")
-            .value
-            .trim();
-
-    const calories =
-        Number(
-            document
-                .getElementById("food-calories")
-                .value
-        );
-
-    const protein =
-        Number(
-            document
-                .getElementById("food-protein")
-                .value
-        );
-
-    const carbs =
-        Number(
-            document
-                .getElementById("food-carbs")
-                .value
-        );
-
-    const fat =
-        Number(
-            document
-                .getElementById("food-fat")
-                .value
-        );
-
-    const meal =
-        document
-            .getElementById("food-meal")
-            .value;
-
-
-    await addDoc(
-
-        userCollection("food"),
-
-        {
-            name,
-            calories,
-            protein,
-            carbs,
-            fat,
-            meal,
-            date: todayKey(),
-            timestamp: Date.now()
         }
 
+
+        const motivationSnap =
+            await getDoc(
+                userDoc("motivation")
+            );
+
+
+        if (
+            motivationSnap.exists()
+        ) {
+
+            motivation =
+                motivationSnap
+                    .data()
+                    .level ||
+                    "firm";
+
+        }
+
+
+        await loadMeals();
+
+        await loadExercises();
+
+        await loadRecipes();
+
+        await loadSchedule();
+
+        populateSettings();
+
+        updateMotivationUI();
+
+    } catch(error) {
+
+        console.error(
+            "Failed loading user data:",
+            error
+        );
+
+        showToast(
+            "Could not load some data."
+        );
+
+    }
+
+}
+
+
+// =========================================================
+// MEALS
+// =========================================================
+
+async function loadMeals() {
+
+    dailyMeals = [];
+
+    const q =
+        query(
+            userCollection("meals"),
+            orderBy(
+                "createdAt",
+                "desc"
+            )
+        );
+
+
+    const snapshot =
+        await getDocs(q);
+
+
+    snapshot.forEach(
+        item => {
+
+            const data =
+                item.data();
+
+            if (
+                data.date ===
+                todayKey()
+            ) {
+
+                dailyMeals.push({
+                    id: item.id,
+                    ...data
+                });
+
+            }
+
+        }
     );
 
 
-    document
-        .getElementById("food-name")
-        .value = "";
+    renderMeals();
 
-    document
-        .getElementById("food-calories")
-        .value = "";
+    updateDashboard();
 
-    document
-        .getElementById("food-protein")
-        .value = "0";
-
-    document
-        .getElementById("food-carbs")
-        .value = "0";
-
-    document
-        .getElementById("food-fat")
-        .value = "0";
+}
 
 
-    showStatus(
-        "Food logged."
+document
+    .getElementById("meal-form")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const meal = {
+
+                name:
+                    document
+                        .getElementById("meal-name")
+                        .value
+                        .trim(),
+
+                calories:
+                    Number(
+                        document
+                            .getElementById("meal-calories")
+                            .value
+                    ),
+
+                protein:
+                    Number(
+                        document
+                            .getElementById("meal-protein")
+                            .value
+                    ),
+
+                carbs:
+                    Number(
+                        document
+                            .getElementById("meal-carbs")
+                            .value
+                    ),
+
+                fat:
+                    Number(
+                        document
+                            .getElementById("meal-fat")
+                            .value
+                    ),
+
+                date:
+                    todayKey(),
+
+                createdAt:
+                    serverTimestamp()
+
+            };
+
+
+            try {
+
+                const ref =
+                    await addDoc(
+                        userCollection("meals"),
+                        meal
+                    );
+
+
+                dailyMeals.unshift({
+                    id: ref.id,
+                    ...meal
+                });
+
+
+                event.target.reset();
+
+                document
+                    .getElementById(
+                        "meal-protein"
+                    )
+                    .value = 0;
+
+                document
+                    .getElementById(
+                        "meal-carbs"
+                    )
+                    .value = 0;
+
+                document
+                    .getElementById(
+                        "meal-fat"
+                    )
+                    .value = 0;
+
+
+                renderMeals();
+
+                updateDashboard();
+
+                showToast(
+                    "Meal logged."
+                );
+
+            } catch(error) {
+
+                console.error(error);
+
+                showToast(
+                    "Could not save meal."
+                );
+
+            }
+
+        }
     );
 
-};
+
+// =========================================================
+// RENDER MEALS
+// =========================================================
+
+function renderMeals() {
+
+    const list =
+        document.getElementById(
+            "meal-list"
+        );
+
+    const dashboard =
+        document.getElementById(
+            "dashboard-meals"
+        );
 
 
-window.deleteFood = async function(id) {
+    list.innerHTML = "";
+
+    dashboard.innerHTML = "";
+
 
     if (
-        !confirm(
-            "Delete this food entry?"
-        )
+        dailyMeals.length === 0
     ) {
+
+        list.innerHTML =
+            `<li class="item-meta">
+                No meals logged.
+            </li>`;
+
+        dashboard.innerHTML =
+            `<li class="item-meta">
+                No meals logged yet.
+            </li>`;
+
         return;
+
     }
 
 
-    await deleteDoc(
-        userDoc(
-            "food",
-            id
-        )
+    dailyMeals.forEach(
+        meal => {
+
+            const html = `
+
+                <li class="list-item">
+
+                    <div class="item-info">
+
+                        <div class="item-name">
+                            ${escapeHtml(meal.name)}
+                        </div>
+
+                        <div class="item-meta">
+                            ${meal.calories} kcal
+                            · ${meal.protein || 0}g protein
+                            · ${meal.carbs || 0}g carbs
+                            · ${meal.fat || 0}g fat
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="delete"
+                        onclick="deleteMeal('${meal.id}')">
+
+                        🗑️
+
+                    </button>
+
+                </li>
+            `;
+
+
+            list.innerHTML +=
+                html;
+
+
+            dashboard.innerHTML +=
+                html;
+
+        }
     );
+
+}
+
+
+// =========================================================
+// DELETE MEAL
+// =========================================================
+
+window.deleteMeal =
+async function(id) {
+
+    try {
+
+        await deleteDoc(
+            doc(
+                db,
+                "users",
+                currentUser.uid,
+                "meals",
+                id
+            )
+        );
+
+
+        dailyMeals =
+            dailyMeals.filter(
+                meal =>
+                    meal.id !== id
+            );
+
+
+        renderMeals();
+
+        updateDashboard();
+
+        showToast(
+            "Meal removed."
+        );
+
+    } catch(error) {
+
+        console.error(error);
+
+        showToast(
+            "Could not delete meal."
+        );
+
+    }
 
 };
 
 
-function renderNutrition() {
+// =========================================================
+// WORKOUTS
+// =========================================================
 
-    const calories =
-        todayFood.reduce(
-            (sum, item) =>
-                sum + Number(item.calories || 0),
+async function loadExercises() {
+
+    dailyExercises = [];
+
+    const q =
+        query(
+            userCollection("exercises"),
+            orderBy(
+                "createdAt",
+                "desc"
+            )
+        );
+
+
+    const snapshot =
+        await getDocs(q);
+
+
+    snapshot.forEach(
+        item => {
+
+            const data =
+                item.data();
+
+            if (
+                data.date ===
+                todayKey()
+            ) {
+
+                dailyExercises.push({
+                    id: item.id,
+                    ...data
+                });
+
+            }
+
+        }
+    );
+
+
+    renderExercises();
+
+}
+
+
+document
+    .getElementById("exercise-form")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const exercise = {
+
+                name:
+                    document
+                        .getElementById(
+                            "exercise-name"
+                        )
+                        .value
+                        .trim(),
+
+                sets:
+                    Number(
+                        document
+                            .getElementById(
+                                "exercise-sets"
+                            )
+                            .value
+                    ),
+
+                reps:
+                    Number(
+                        document
+                            .getElementById(
+                                "exercise-reps"
+                            )
+                            .value
+                    ),
+
+                weight:
+                    Number(
+                        document
+                            .getElementById(
+                                "exercise-weight"
+                            )
+                            .value
+                    ),
+
+                date:
+                    todayKey(),
+
+                createdAt:
+                    serverTimestamp()
+
+            };
+
+
+            try {
+
+                const ref =
+                    await addDoc(
+                        userCollection(
+                            "exercises"
+                        ),
+                        exercise
+                    );
+
+
+                dailyExercises.unshift({
+                    id: ref.id,
+                    ...exercise
+                });
+
+
+                event.target.reset();
+
+                renderExercises();
+
+                updateDashboard();
+
+                showToast(
+                    "Exercise logged."
+                );
+
+            } catch(error) {
+
+                console.error(error);
+
+                showToast(
+                    "Could not save exercise."
+                );
+
+            }
+
+        }
+    );
+
+
+// =========================================================
+// RENDER EXERCISES
+// =========================================================
+
+function renderExercises() {
+
+    const list =
+        document.getElementById(
+            "exercise-list"
+        );
+
+
+    list.innerHTML = "";
+
+
+    if (
+        dailyExercises.length === 0
+    ) {
+
+        list.innerHTML =
+            `<li class="item-meta">
+                Nothing logged yet.
+            </li>`;
+
+        return;
+
+    }
+
+
+    dailyExercises.forEach(
+        exercise => {
+
+            list.innerHTML += `
+
+                <li class="list-item">
+
+                    <div class="item-info">
+
+                        <div class="item-name">
+
+                            ${escapeHtml(
+                                exercise.name
+                            )}
+
+                        </div>
+
+                        <div class="item-meta">
+
+                            ${exercise.sets || 0}
+                            sets ×
+
+                            ${exercise.reps || 0}
+                            reps
+
+                            ·
+
+                            ${exercise.weight || 0}
+                            lb
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="delete"
+                        onclick="deleteExercise('${exercise.id}')">
+
+                        🗑️
+
+                    </button>
+
+                </li>
+
+            `;
+
+        }
+    );
+
+}
+
+
+// =========================================================
+// DELETE EXERCISE
+// =========================================================
+
+window.deleteExercise =
+async function(id) {
+
+    try {
+
+        await deleteDoc(
+            doc(
+                db,
+                "users",
+                currentUser.uid,
+                "exercises",
+                id
+            )
+        );
+
+
+        dailyExercises =
+            dailyExercises.filter(
+                exercise =>
+                    exercise.id !== id
+            );
+
+
+        renderExercises();
+
+        updateDashboard();
+
+    } catch(error) {
+
+        console.error(error);
+
+        showToast(
+            "Could not delete exercise."
+        );
+
+    }
+
+};
+
+
+// =========================================================
+// COMPLETE WORKOUT
+// =========================================================
+
+document
+    .getElementById(
+        "complete-workout-btn"
+    )
+    .addEventListener(
+        "click",
+        async function() {
+
+            try {
+
+                await setDoc(
+                    userDoc(
+                        "workout-" +
+                        todayKey()
+                    ),
+                    {
+
+                        completed: true,
+
+                        completedAt:
+                            serverTimestamp(),
+
+                        date:
+                            todayKey()
+
+                    }
+                );
+
+
+                updateDashboard();
+
+                updateCoach();
+
+                showToast(
+                    "Workout completed. Good work."
+                );
+
+            } catch(error) {
+
+                console.error(error);
+
+                showToast(
+                    "Could not save workout status."
+                );
+
+            }
+
+        }
+    );
+
+
+// =========================================================
+// WORKOUT STATUS
+// =========================================================
+
+async function workoutCompletedToday() {
+
+    if (!currentUser)
+        return false;
+
+
+    const snapshot =
+        await getDoc(
+            userDoc(
+                "workout-" +
+                todayKey()
+            )
+        );
+
+
+    return snapshot.exists() &&
+        snapshot.data().completed === true;
+
+}
+
+
+// =========================================================
+// DASHBOARD
+// =========================================================
+
+async function updateDashboard() {
+
+    const totalCalories =
+        dailyMeals.reduce(
+            (
+                total,
+                meal
+            ) =>
+                total +
+                Number(
+                    meal.calories || 0
+                ),
             0
         );
 
 
     const protein =
-        todayFood.reduce(
-            (sum, item) =>
-                sum + Number(item.protein || 0),
+        dailyMeals.reduce(
+            (
+                total,
+                meal
+            ) =>
+                total +
+                Number(
+                    meal.protein || 0
+                ),
             0
         );
 
 
     const carbs =
-        todayFood.reduce(
-            (sum, item) =>
-                sum + Number(item.carbs || 0),
+        dailyMeals.reduce(
+            (
+                total,
+                meal
+            ) =>
+                total +
+                Number(
+                    meal.carbs || 0
+                ),
             0
         );
 
 
     const fat =
-        todayFood.reduce(
-            (sum, item) =>
-                sum + Number(item.fat || 0),
+        dailyMeals.reduce(
+            (
+                total,
+                meal
+            ) =>
+                total +
+                Number(
+                    meal.fat || 0
+                ),
             0
         );
 
 
-    const target =
-        Number(
-            currentSettings.calories
-        );
+    document
+        .getElementById(
+            "calories-total"
+        )
+        .textContent =
+        Math.round(totalCalories);
+
+
+    document
+        .getElementById(
+            "protein-total"
+        )
+        .textContent =
+        Math.round(protein);
+
+
+    document
+        .getElementById(
+            "carbs-total"
+        )
+        .textContent =
+        Math.round(carbs);
+
+
+    document
+        .getElementById(
+            "fat-total"
+        )
+        .textContent =
+        Math.round(fat);
+
+
+    document
+        .getElementById(
+            "calorie-target-display"
+        )
+        .textContent =
+        settings.calories;
 
 
     const percentage =
         Math.min(
             100,
-            (calories / target) * 100
+            (
+                totalCalories /
+                settings.calories
+            ) * 100
         );
 
 
-    document
-        .getElementById("nutrition-calories")
-        .textContent =
-            calories;
-
-
-    document
-        .getElementById("nutrition-target")
-        .textContent =
-            target;
-
-
-    document
-        .getElementById("protein-total")
-        .textContent =
-            `${Math.round(protein)}g`;
-
-
-    document
-        .getElementById("carbs-total")
-        .textContent =
-            `${Math.round(carbs)}g`;
-
-
-    document
-        .getElementById("fat-total")
-        .textContent =
-            `${Math.round(fat)}g`;
-
-
     const progress =
-        document
-            .getElementById("calorie-progress");
+        document.getElementById(
+            "calorie-progress"
+        );
 
 
     progress.style.width =
-        `${percentage}%`;
+        percentage + "%";
 
 
     progress.classList.remove(
@@ -3572,7 +3481,8 @@ function renderNutrition() {
 
 
     if (
-        calories >= target
+        totalCalories >=
+        settings.calories
     ) {
 
         progress.classList.add(
@@ -3580,7 +3490,8 @@ function renderNutrition() {
         );
 
     } else if (
-        calories >= target * .85
+        totalCalories >=
+        settings.calories * .85
     ) {
 
         progress.classList.add(
@@ -3590,1136 +3501,731 @@ function renderNutrition() {
     }
 
 
-    document
-        .getElementById("nutrition-ring")
-        .style.setProperty(
-            "--calorie-progress",
-            `${percentage}%`
+    const remaining =
+        settings.calories -
+        totalCalories;
+
+
+    const remainingElement =
+        document.getElementById(
+            "calorie-remaining"
         );
 
 
-    let status = "";
+    if (remaining >= 0) {
 
-
-    if (
-        calories > target
-    ) {
-
-        status =
-            `🚨 ${calories - target} calories over target.`;
+        remainingElement.textContent =
+            `${Math.round(
+                remaining
+            )} calories remaining.`;
 
     } else {
 
-        status =
-            `${target - calories} calories remaining.`;
+        remainingElement.textContent =
+            `${Math.abs(
+                Math.round(remaining)
+            )} calories over target.`;
 
     }
 
 
-    document
-        .getElementById("calorie-status")
-        .textContent =
-            status;
+    const completed =
+        await workoutCompletedToday();
 
 
-    const foodLog =
-        document
-            .getElementById("food-log");
+    const workoutStatus =
+        document.getElementById(
+            "workout-status"
+        );
 
 
-    if (
-        todayFood.length === 0
-    ) {
+    if (completed) {
 
-        foodLog.innerHTML =
-            `<p style="color:var(--muted);">
-                Nothing logged yet.
-            </p>`;
+        workoutStatus.textContent =
+            "✓ Complete";
 
-        return;
+        workoutStatus.style.color =
+            "var(--green)";
+
+    } else {
+
+        workoutStatus.textContent =
+            "Not logged";
+
+        workoutStatus.style.color =
+            "var(--red)";
 
     }
 
+}
 
-    foodLog.innerHTML =
-        todayFood
-            .sort(
-                (a,b) =>
-                    (b.timestamp || 0) -
-                    (a.timestamp || 0)
-            )
-            .map(
-                item => `
 
-                    <div class="food-item">
+// =========================================================
+// RECIPES
+// =========================================================
 
-                        <div>
+async function loadRecipes() {
 
-                            <div class="food-name">
-                                ${escapeHtml(item.name)}
-                            </div>
+    const list =
+        document.getElementById(
+            "recipe-list"
+        );
 
-                            <div class="food-meta">
-                                ${escapeHtml(item.meal)}
-                                ·
-                                ${item.protein || 0}g protein
-                                ·
-                                ${item.carbs || 0}g carbs
-                                ·
-                                ${item.fat || 0}g fat
-                            </div>
+
+    list.innerHTML = "";
+
+
+    const snapshot =
+        await getDocs(
+            userCollection("recipes")
+        );
+
+
+    snapshot.forEach(
+        item => {
+
+            const recipe =
+                item.data();
+
+
+            list.innerHTML += `
+
+                <li class="list-item">
+
+                    <div class="item-info">
+
+                        <div class="item-name">
+
+                            ${escapeHtml(
+                                recipe.name
+                            )}
 
                         </div>
 
-                        <div>
+                        <div class="item-meta">
 
-                            <div class="food-calories">
-                                ${item.calories} kcal
-                            </div>
+                            ${recipe.calories || 0}
+                            kcal ·
 
-                            <button
-                                class="btn btn-danger"
-                                style="
-                                    padding:5px 8px;
-                                    margin-top:5px;
-                                "
-                                onclick="deleteFood('${item.id}')"
-                            >
-                                🗑️
-                            </button>
+                            ${recipe.protein || 0}
+                            g protein
+
+                            ${
+                                recipe.time
+                                    ? " · " +
+                                      escapeHtml(
+                                          recipe.time
+                                      )
+                                    : ""
+                            }
+
+                        </div>
+
+                        <div
+                            class="item-meta"
+                            style="
+                                white-space:pre-wrap;
+                                margin-top:10px;
+                            ">
+
+                            ${escapeHtml(
+                                recipe.body || ""
+                            )}
 
                         </div>
 
                     </div>
 
-                `
-            )
-            .join("");
 
-}
+                    <button
+                        class="delete"
+                        onclick="deleteRecipe('${item.id}')">
 
+                        🗑️
 
-/* =========================================================
-   WATER
-========================================================= */
+                    </button>
 
-function renderWater() {
+                </li>
 
-    const container =
-        document
-            .getElementById("water-grid");
+            `;
 
-
-    const goal =
-        Number(
-            currentSettings.water
-        );
-
-
-    const count =
-        Math.max(
-            8,
-            goal
-        );
-
-
-    container.innerHTML = "";
-
-
-    for (
-        let i = 1;
-        i <= count;
-        i++
-    ) {
-
-        container.innerHTML += `
-
-            <button
-                class="water-btn ${i <= todayWater ? "active" : ""}"
-                onclick="setWater(${i})"
-                title="${i} glasses"
-            >
-                💧
-            </button>
-
-        `;
-
-    }
-
-}
-
-
-window.setWater = async function(value) {
-
-    todayWater =
-        value;
-
-
-    await setDoc(
-
-        doc(
-            db,
-            "users",
-            currentUser.uid,
-            "water",
-            todayKey()
-        ),
-
-        {
-            glasses:
-                value,
-
-            date:
-                todayKey(),
-
-            timestamp:
-                Date.now()
         }
-
     );
-
-};
-
-
-/* =========================================================
-   WORKOUT
-========================================================= */
-
-const defaultExercises = {
-
-    "Upper Body": [
-        ["Bench Press","4 × 8"],
-        ["Rows","4 × 10"],
-        ["Shoulder Press","3 × 10"],
-        ["Lat Pulldown","3 × 10"]
-    ],
-
-    "Lower Body": [
-        ["Squat","4 × 8"],
-        ["Romanian Deadlift","3 × 10"],
-        ["Leg Press","3 × 12"],
-        ["Calf Raises","4 × 15"]
-    ],
-
-    "Push": [
-        ["Bench Press","4 × 8"],
-        ["Incline Press","3 × 10"],
-        ["Shoulder Press","3 × 10"],
-        ["Triceps Pushdown","3 × 12"]
-    ],
-
-    "Pull": [
-        ["Deadlift","3 × 5"],
-        ["Pull Ups","3 × 8"],
-        ["Rows","3 × 10"],
-        ["Curls","3 × 12"]
-    ],
-
-    "Full Body": [
-        ["Squat","3 × 8"],
-        ["Bench Press","3 × 8"],
-        ["Rows","3 × 10"],
-        ["Romanian Deadlift","3 × 10"]
-    ],
-
-    "Rest": [],
-
-    "Custom": []
-
-};
-
-
-function renderWorkout() {
-
-    const workout =
-        currentSettings.workout;
-
-
-    document
-        .getElementById("today-workout-name")
-        .textContent =
-            workout === "Rest"
-                ? "😴 Rest Day"
-                : workout;
-
-
-    document
-        .getElementById("today-workout-description")
-        .textContent =
-            workout === "Rest"
-                ? "Recovery is part of the plan."
-                : "Log your work. Then earn your dinner.";
-
-
-    const exercises =
-        defaultExercises[workout] ||
-        [];
-
-
-    const container =
-        document
-            .getElementById("exercise-list");
-
-
-    if (
-        exercises.length === 0
-    ) {
-
-        container.innerHTML =
-            `<div class="alert success">
-                No scheduled exercises today.
-            </div>`;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        exercises
-            .map(
-                ([name,target],index) => `
-
-                    <div class="exercise">
-
-                        <div class="exercise-header">
-
-                            <div>
-
-                                <div class="exercise-name">
-                                    ${escapeHtml(name)}
-                                </div>
-
-                                <div class="exercise-target">
-                                    Target: ${escapeHtml(target)}
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="exercise-fields">
-
-                            <input
-                                type="number"
-                                min="0"
-                                placeholder="Weight"
-                                id="ex-weight-${index}"
-                            >
-
-                            <input
-                                type="number"
-                                min="0"
-                                placeholder="Reps"
-                                id="ex-reps-${index}"
-                            >
-
-                            <input
-                                type="number"
-                                min="0"
-                                placeholder="Sets"
-                                id="ex-sets-${index}"
-                            >
-
-                        </div>
-
-                    </div>
-
-                `
-            )
-            .join("");
 
 }
 
 
-window.addCustomExercise = function(event) {
+document
+    .getElementById(
+        "recipe-form"
+    )
+    .addEventListener(
+        "submit",
+        async function(event) {
 
-    event.preventDefault();
+            event.preventDefault();
 
 
-    const name =
-        document
-            .getElementById("exercise-name")
-            .value
-            .trim();
+            try {
 
-
-    const target =
-        document
-            .getElementById("exercise-target")
-            .value
-            .trim();
-
-
-    if (
-        !name
-    ) {
-        return;
-    }
-
-
-    if (
-        !defaultExercises.Custom
-    ) {
-        defaultExercises.Custom = [];
-    }
-
-
-    defaultExercises.Custom.push(
-        [
-            name,
-            target || "Custom"
-        ]
-    );
-
-
-    currentSettings.workout =
-        "Custom";
-
-
-    document
-        .getElementById("exercise-name")
-        .value = "";
-
-    document
-        .getElementById("exercise-target")
-        .value = "";
-
-
-    renderWorkout();
-
-
-    showStatus(
-        "Exercise added."
-    );
-
-};
-
-
-window.completeWorkout = async function() {
-
-    if (
-        currentSettings.workout ===
-        "Rest"
-    ) {
-
-        showStatus(
-            "It's a rest day. Recover.",
-        );
-
-        return;
-
-    }
-
-
-    await addDoc(
-
-        userCollection("workouts"),
-
-        {
-            date:
-                todayKey(),
-
-            workout:
-                currentSettings.workout,
-
-            completed:
-                true,
-
-            timestamp:
-                Date.now()
-        }
-
-    );
-
-
-    todayWorkoutCompleted =
-        true;
-
-
-    renderDashboard();
-
-    renderCoach();
-
-    showStatus(
-        "Workout logged. Good."
-    );
-
-
-    notify(
-        "Workout Complete 💪",
-        "You actually did it. Respect."
-    );
-
-};
-
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-function renderDashboard() {
-
-    const calories =
-        todayFood.reduce(
-            (sum,item) =>
-                sum + Number(item.calories || 0),
-            0
-        );
-
-
-    const protein =
-        todayFood.reduce(
-            (sum,item) =>
-                sum + Number(item.protein || 0),
-            0
-        );
-
-
-    const target =
-        Number(
-            currentSettings.calories
-        );
-
-
-    const percentage =
-        Math.min(
-            100,
-            (calories / target) * 100
-        );
-
-
-    document
-        .getElementById("dashboard-calories")
-        .textContent =
-            calories;
-
-
-    document
-        .getElementById("dashboard-target")
-        .textContent =
-            target;
-
-
-    document
-        .getElementById("dashboard-ring")
-        .style.setProperty(
-            "--calorie-progress",
-            `${percentage}%`
-        );
-
-
-    document
-        .getElementById("stat-calories")
-        .textContent =
-            calories;
-
-
-    document
-        .getElementById("stat-protein")
-        .textContent =
-            `${Math.round(protein)}g`;
-
-
-    document
-        .getElementById("stat-water")
-        .textContent =
-            `${todayWater}/${currentSettings.water}`;
-
-
-    document
-        .getElementById("stat-workout")
-        .textContent =
-            todayWorkoutCompleted
-                ? "✅"
-                : "❌";
-
-
-    document
-        .getElementById("dashboard-date")
-        .textContent =
-            new Date()
-                .toLocaleDateString(
-                    undefined,
+                await addDoc(
+                    userCollection("recipes"),
                     {
-                        weekday:"long",
-                        month:"long",
-                        day:"numeric"
+
+                        name:
+                            document
+                                .getElementById(
+                                    "recipe-name"
+                                )
+                                .value
+                                .trim(),
+
+                        calories:
+                            Number(
+                                document
+                                    .getElementById(
+                                        "recipe-calories"
+                                    )
+                                    .value
+                            ),
+
+                        protein:
+                            Number(
+                                document
+                                    .getElementById(
+                                        "recipe-protein"
+                                    )
+                                    .value
+                            ),
+
+                        time:
+                            document
+                                .getElementById(
+                                    "recipe-time"
+                                )
+                                .value
+                                .trim(),
+
+                        body:
+                            document
+                                .getElementById(
+                                    "recipe-body"
+                                )
+                                .value
+                                .trim(),
+
+                        createdAt:
+                            serverTimestamp()
+
                     }
                 );
 
 
-    renderDashboardAlerts();
+                event.target.reset();
 
-    renderCoach();
+                await loadRecipes();
 
-}
+                showToast(
+                    "Recipe saved."
+                );
 
+            } catch(error) {
 
-/* =========================================================
-   DASHBOARD ALERTS
-========================================================= */
+                console.error(error);
 
-function renderDashboardAlerts() {
+                showToast(
+                    "Could not save recipe."
+                );
 
-    const container =
-        document
-            .getElementById("dashboard-alerts");
-
-
-    const calories =
-        todayFood.reduce(
-            (sum,item) =>
-                sum + Number(item.calories || 0),
-            0
-        );
-
-
-    const target =
-        Number(
-            currentSettings.calories
-        );
-
-
-    let html = "";
-
-
-    if (
-        calories > target
-    ) {
-
-        html += `
-
-            <div class="alert danger">
-
-                🚨 You are
-                ${calories - target}
-                calories over target.
-
-                Log everything honestly.
-
-            </div>
-
-        `;
-
-    } else if (
-        calories >= target * .9
-    ) {
-
-        html += `
-
-            <div class="alert warning">
-
-                ⚠️ You are at
-                ${Math.round(
-                    (calories / target) * 100
-                )}%
-                of your calorie target.
-
-                Choose the rest of today's food carefully.
-
-            </div>
-
-        `;
-
-    }
-
-
-    if (
-        currentSettings.workout !== "Rest" &&
-        !todayWorkoutCompleted
-    ) {
-
-        html += `
-
-            <div class="alert warning">
-
-                🏋️ Today's workout is still incomplete.
-
-                You know what you need to do.
-
-            </div>
-
-        `;
-
-    }
-
-
-    if (
-        todayWater <
-        currentSettings.water
-    ) {
-
-        html += `
-
-            <div class="alert warning">
-
-                💧 You still have
-                ${currentSettings.water - todayWater}
-                glasses of water to go.
-
-            </div>
-
-        `;
-
-    }
-
-
-    if (!html) {
-
-        html =
-            `<div class="alert success">
-                🔥 You're on track. Keep going.
-            </div>`;
-
-    }
-
-
-    container.innerHTML =
-        html;
-
-}
-
-
-/* =========================================================
-   COACH
-========================================================= */
-
-function renderCoach() {
-
-    const message =
-        generateCoachMessage();
-
-
-    document
-        .getElementById("dashboard-message")
-        .textContent =
-            message;
-
-
-    document
-        .getElementById("coach-main-message")
-        .textContent =
-            message;
-
-
-    const alerts =
-        document
-            .getElementById("coach-alerts");
-
-
-    let html = "";
-
-
-    const calories =
-        todayFood.reduce(
-            (sum,item) =>
-                sum + Number(item.calories || 0),
-            0
-        );
-
-
-    if (
-        calories >
-        currentSettings.calories
-    ) {
-
-        html += `
-
-            <div class="alert danger">
-
-                🍔 CALORIE ALERT:
-                You went over your target.
-                Log it. Own it. Move on.
-
-            </div>
-
-        `;
-
-    }
-
-
-    if (
-        currentSettings.workout !== "Rest" &&
-        !todayWorkoutCompleted
-    ) {
-
-        html += `
-
-            <div class="alert warning">
-
-                😈 WORKOUT ALERT:
-                You haven't completed today's workout.
-
-                Stop negotiating with yourself.
-
-            </div>
-
-        `;
-
-    }
-
-
-    if (
-        todayWater <
-        currentSettings.water
-    ) {
-
-        html += `
-
-            <div class="alert warning">
-
-                💧 WATER ALERT:
-                Drink some water.
-
-            </div>
-
-        `;
-
-    }
-
-
-    alerts.innerHTML =
-        html;
-
-}
-
-
-function generateCoachMessage() {
-
-    const level =
-        currentSettings.coachLevel;
-
-
-    if (
-        currentSettings.workout !== "Rest" &&
-        !todayWorkoutCompleted
-    ) {
-
-        if (
-            level === "gentle"
-        ) {
-
-            return "Your workout is waiting. You have plenty of time to get it done.";
+            }
 
         }
+    );
 
 
-        if (
-            level === "aggressive"
-        ) {
+window.deleteRecipe =
+async function(id) {
 
-            return "You scheduled the workout. Now do the damn workout. Stop negotiating.";
+    try {
 
-        }
+        await deleteDoc(
+            doc(
+                db,
+                "users",
+                currentUser.uid,
+                "recipes",
+                id
+            )
+        );
 
 
-        return "You scheduled a workout. Go train.";
+        await loadRecipes();
+
+    } catch(error) {
+
+        console.error(error);
 
     }
 
+};
 
-    const calories =
-        todayFood.reduce(
-            (sum,item) =>
-                sum + Number(item.calories || 0),
-            0
+
+// =========================================================
+// SCHEDULE
+// =========================================================
+
+async function loadSchedule() {
+
+    const snapshot =
+        await getDoc(
+            userDoc("schedule")
         );
 
 
     if (
-        calories >
-        currentSettings.calories
+        snapshot.exists()
     ) {
 
-        return "You went over your calorie target. Don't panic. Log it accurately and get back on plan.";
+        schedule =
+            snapshot.data();
 
     }
 
 
-    if (
-        todayWorkoutCompleted
-    ) {
+    renderSchedule();
 
-        return "Workout complete. Good. Now keep the nutrition under control.";
-
-    }
-
-
-    return "You've got a plan. Follow it.";
+    updateTodayWorkout();
 
 }
 
 
-/* =========================================================
-   RECIPES
-========================================================= */
+function renderSchedule() {
 
-function loadRecipes() {
-
-    const recipes = [
-
-        {
-            name:
-                "High-Protein Chicken Bowl",
-
-            calories:
-                450,
-
-            protein:
-                48,
-
-            description:
-                "Chicken breast, rice, vegetables and Greek yogurt sauce."
-        },
+    const list =
+        document.getElementById(
+            "schedule-list"
+        );
 
 
-        {
-            name:
-                "Egg & Potato Breakfast",
-
-            calories:
-                380,
-
-            protein:
-                25,
-
-            description:
-                "Eggs, roasted potato and vegetables."
-        },
+    list.innerHTML = "";
 
 
-        {
-            name:
-                "Greek Yogurt Berry Bowl",
+    const days = [
 
-            calories:
-                280,
-
-            protein:
-                28,
-
-            description:
-                "Greek yogurt, berries and a small amount of chia."
-        },
-
-
-        {
-            name:
-                "Spicy Chicken Wrap",
-
-            calories:
-                420,
-
-            protein:
-                42,
-
-            description:
-                "Grilled chicken, vegetables and a light spicy sauce."
-        },
-
-
-        {
-            name:
-                "Tuna Potato Bowl",
-
-            calories:
-                400,
-
-            protein:
-                38,
-
-            description:
-                "Tuna, potato, cucumber, tomato and yogurt dressing."
-        },
-
-
-        {
-            name:
-                "Protein Smoothie",
-
-            calories:
-                300,
-
-            protein:
-                35,
-
-            description:
-                "Protein shake, frozen berries and Greek yogurt."
-        }
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
 
     ];
 
 
-    document
-        .getElementById("recipe-grid")
-        .innerHTML =
+    days.forEach(
+        day => {
 
-        recipes
-            .map(
-                recipe => `
+            const workout =
+                schedule[day] ||
+                "Rest Day";
 
-                    <div class="recipe">
 
-                        <h4>
-                            ${escapeHtml(recipe.name)}
-                        </h4>
+            list.innerHTML += `
 
-                        <div class="recipe-calories">
-                            ${recipe.calories} kcal
+                <li class="list-item">
+
+                    <div class="item-info">
+
+                        <div class="item-name">
+
+                            ${day}
+
                         </div>
 
-                        <p>
-                            ${escapeHtml(recipe.description)}
-                        </p>
+                        <div class="item-meta">
 
-                        <small>
-                            ${recipe.protein}g protein
-                        </small>
+                            ${escapeHtml(
+                                workout
+                            )}
 
-                        <br><br>
-
-                        <button
-                            class="btn"
-                            onclick='addRecipeToFood(${JSON.stringify(recipe)})'
-                        >
-                            Add to Food Log
-                        </button>
+                        </div>
 
                     </div>
 
-                `
-            )
-            .join("");
+                </li>
+
+            `;
+
+        }
+    );
 
 }
 
 
-window.addRecipeToFood = async function(recipe) {
+function updateTodayWorkout() {
 
-    await addDoc(
+    const day =
+        new Date()
+            .toLocaleDateString(
+                "en-US",
+                {
+                    weekday: "long"
+                }
+            );
 
-        userCollection("food"),
 
-        {
-            name:
-                recipe.name,
+    document
+        .getElementById(
+            "today-workout-name"
+        )
+        .textContent =
+        schedule[day] ||
+        "Rest Day";
 
-            calories:
-                recipe.calories,
+}
 
-            protein:
-                recipe.protein,
 
-            carbs:
-                0,
+document
+    .getElementById(
+        "save-schedule-btn"
+    )
+    .addEventListener(
+        "click",
+        async function() {
 
-            fat:
-                0,
+            const day =
+                document
+                    .getElementById(
+                        "schedule-day"
+                    )
+                    .value;
 
-            meal:
-                "Recipe",
 
-            date:
-                todayKey(),
+            const workout =
+                document
+                    .getElementById(
+                        "schedule-workout"
+                    )
+                    .value
+                    .trim();
 
-            timestamp:
-                Date.now()
+
+            if (!workout) {
+
+                showToast(
+                    "Enter a workout."
+                );
+
+                return;
+
+            }
+
+
+            schedule[day] =
+                workout;
+
+
+            try {
+
+                await setDoc(
+                    userDoc("schedule"),
+                    schedule
+                );
+
+
+                renderSchedule();
+
+                updateTodayWorkout();
+
+                showToast(
+                    "Schedule updated."
+                );
+
+            } catch(error) {
+
+                console.error(error);
+
+                showToast(
+                    "Could not save schedule."
+                );
+
+            }
+
+        }
+    );
+
+
+// =========================================================
+// SETTINGS
+// =========================================================
+
+function populateSettings() {
+
+    document
+        .getElementById(
+            "setting-calories"
+        )
+        .value =
+        settings.calories;
+
+
+    document
+        .getElementById(
+            "setting-protein"
+        )
+        .value =
+        settings.protein;
+
+
+    document
+        .getElementById(
+            "setting-water"
+        )
+        .value =
+        settings.water;
+
+}
+
+
+document
+    .getElementById(
+        "settings-form"
+    )
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            settings = {
+
+                calories:
+                    Number(
+                        document
+                            .getElementById(
+                                "setting-calories"
+                            )
+                            .value
+                    ),
+
+                protein:
+                    Number(
+                        document
+                            .getElementById(
+                                "setting-protein"
+                            )
+                            .value
+                    ),
+
+                water:
+                    Number(
+                        document
+                            .getElementById(
+                                "setting-water"
+                            )
+                            .value
+                    )
+
+            };
+
+
+            try {
+
+                await setDoc(
+                    userDoc("profile"),
+                    settings
+                );
+
+
+                updateDashboard();
+
+                showToast(
+                    "Targets saved."
+                );
+
+            } catch(error) {
+
+                console.error(error);
+
+                showToast(
+                    "Could not save targets."
+                );
+
+            }
+
+        }
+    );
+
+
+// =========================================================
+// COACH
+// =========================================================
+
+function updateCoach() {
+
+    const level =
+        motivation;
+
+
+    const calories =
+        dailyMeals.reduce(
+            (
+                total,
+                meal
+            ) =>
+                total +
+                Number(
+                    meal.calories || 0
+                ),
+            0
+        );
+
+
+    let message;
+
+
+    if (
+        calories >
+        settings.calories
+    ) {
+
+        if (
+            level === "savage"
+        ) {
+
+            message =
+                "You blew past your calorie target. Log it honestly and get back on track.";
+
+        } else if (
+            level === "firm"
+        ) {
+
+            message =
+                "You're over target. Stop pretending those calories didn't happen and make the next choice better.";
+
+        } else {
+
+            message =
+                "You're over today's target. Don't panic — just get back on plan.";
+
         }
 
-    );
+    } else {
 
-
-    showStatus(
-        `${recipe.name} added.`
-    );
-
-};
-
-
-/* =========================================================
-   RESTAURANT SEARCH
-========================================================= */
-
-window.searchRestaurant = function() {
-
-    const query =
-        document
-            .getElementById("restaurant-search")
-            .value
-            .trim();
-
-
-    const results =
-        document
-            .getElementById("restaurant-results");
-
-
-    if (!query) {
-
-        results.innerHTML =
-            `<div class="alert warning">
-                Enter a restaurant or food item.
-            </div>`;
-
-        return;
+        message =
+            level === "savage"
+                ? "Get moving. The plan doesn't care how many excuses you have."
+                : level === "firm"
+                    ? "Stay consistent. Today's choices become tomorrow's results."
+                    : "Keep going. You're building consistency one day at a time.";
 
     }
 
 
-    /*
-     * This is intentionally not pretending to have
-     * restaurant menu nutrition data without an API.
-     *
-     * Connect a menu/nutrition API here.
-     */
+    document
+        .getElementById(
+            "coach-message"
+        )
+        .textContent =
+        message;
 
 
-    results.innerHTML = `
+    document
+        .getElementById(
+            "coach-preview"
+        )
+        .textContent =
+        message;
 
-        <div class="restaurant-result">
-
-            <strong>
-                🔎 ${escapeHtml(query)}
-            </strong>
-
-            <small>
-                Restaurant/menu API connection required
-                for automatic nutrition lookup.
-            </small>
-
-        </div>
+}
 
 
-        <div class="alert warning">
+function updateMotivationUI() {
 
-            To make this automatically retrieve
-            restaurant menu items and calories,
-            connect a restaurant/menu nutrition API
-            to this search function.
+    document
+        .getElementById(
+            "motivation-level"
+        )
+        .value =
+        motivation;
 
-        </div>
+    updateCoach();
 
-    `;
-
-};
+}
 
 
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
+document
+    .getElementById(
+        "save-motivation-btn"
+    )
+    .addEventListener(
+        "click",
+        async function() {
 
-window.requestNotifications = async function() {
+            motivation =
+                document
+                    .getElementById(
+                        "motivation-level"
+                    )
+                    .value;
+
+
+            await setDoc(
+                userDoc("motivation"),
+                {
+                    level: motivation
+                }
+            );
+
+
+            updateCoach();
+
+            showToast(
+                "Coach style updated."
+            );
+
+        }
+    );
+
+
+// =========================================================
+// NOTIFICATIONS
+// =========================================================
+
+async function registerNotifications() {
+
+    const status =
+        document.getElementById(
+            "notification-status"
+        );
+
 
     if (
         !("Notification" in window)
     ) {
 
-        showStatus(
-            "This browser does not support notifications.",
-            true
-        );
+        status.innerHTML =
+            `<span class="status-bad">
+                This browser does not support notifications.
+            </span>`;
+
+        return;
+
+    }
+
+
+    const supported =
+        await isSupported();
+
+
+    if (!supported) {
+
+        status.innerHTML =
+            `<span class="status-bad">
+                Firebase Messaging is not supported here.
+            </span>`;
 
         return;
 
@@ -4733,254 +4239,259 @@ window.requestNotifications = async function() {
 
 
         if (
-            permission === "granted"
+            permission !==
+            "granted"
         ) {
 
-            document
-                .getElementById("notification-status")
-                .textContent =
-                    "🔔 Notifications enabled.";
+            status.innerHTML =
+                `<span class="status-bad">
+                    Notifications are blocked.
+                </span>`;
 
-
-            notify(
-                "LeanSyncRim Activated",
-                "Your coach is watching."
-            );
-
-
-            showStatus(
-                "Notifications enabled."
-            );
-
-        } else {
-
-            document
-                .getElementById("notification-status")
-                .textContent =
-                    "Notifications were not allowed.";
+            return;
 
         }
+
+
+        const registration =
+            await navigator
+                .serviceWorker
+                .register(
+                    "./firebase-messaging-sw.js"
+                );
+
+
+        const messaging =
+            getMessaging(app);
+
+
+        const token =
+            await getToken(
+                messaging,
+                {
+
+                    vapidKey:
+                        VAPID_KEY,
+
+                    serviceWorkerRegistration:
+                        registration
+
+                }
+            );
+
+
+        if (!token) {
+
+            throw new Error(
+                "No FCM registration token."
+            );
+
+        }
+
+
+        await setDoc(
+            doc(
+                db,
+                "users",
+                currentUser.uid,
+                "devices",
+                token
+            ),
+            {
+
+                token: token,
+
+                createdAt:
+                    serverTimestamp(),
+
+                userAgent:
+                    navigator.userAgent
+
+            }
+        );
+
+
+        status.innerHTML =
+            `<span class="status-good">
+                ✓ Coach notifications are enabled.
+            </span>`;
+
+
+        showToast(
+            "Notifications enabled."
+        );
+
 
     } catch(error) {
 
-        console.error(error);
-
-    }
-
-};
-
-
-function notify(title, body) {
-
-    if (
-        !("Notification" in window)
-    ) {
-        return;
-    }
-
-
-    if (
-        Notification.permission !==
-        "granted"
-    ) {
-        return;
-    }
-
-
-    new Notification(
-        title,
-        {
-            body,
-            icon:
-                "./icon-192.png"
-        }
-    );
-
-}
-
-
-/* =========================================================
-   REMINDER ENGINE
-========================================================= */
-
-let lastReminderDate = "";
-
-
-function startReminderEngine() {
-
-    checkReminders();
-
-    setInterval(
-        checkReminders,
-        60000
-    );
-
-}
-
-
-function checkReminders() {
-
-    if (!currentUser) {
-        return;
-    }
-
-
-    const now =
-        new Date();
-
-
-    const hour =
-        String(
-            now.getHours()
-        ).padStart(2,"0");
-
-
-    const minute =
-        String(
-            now.getMinutes()
-        ).padStart(2,"0");
-
-
-    const currentTime =
-        `${hour}:${minute}`;
-
-
-    const key =
-        `${todayKey()}-${currentTime}`;
-
-
-    if (
-        lastReminderDate === key
-    ) {
-        return;
-    }
-
-
-    if (
-        currentSettings.workout !== "Rest" &&
-        !todayWorkoutCompleted &&
-        currentTime ===
-            currentSettings.workoutTime
-    ) {
-
-        notify(
-            "🏋️ Workout Reminder",
-            getWorkoutReminder()
-        );
-
-        lastReminderDate =
-            key;
-
-        return;
-
-    }
-
-
-    const calories =
-        todayFood.reduce(
-            (sum,item) =>
-                sum + Number(item.calories || 0),
-            0
+        console.error(
+            "Notification setup failed:",
+            error
         );
 
 
-    if (
-        currentTime ===
-            currentSettings.calorieTime
-    ) {
-
-        if (
-            calories >
-            currentSettings.calories
-        ) {
-
-            notify(
-                "🚨 Calorie Alert",
-                `You're ${calories - currentSettings.calories} calories over target.`
-            );
-
-        } else {
-
-            notify(
-                "🍽️ Calorie Check",
-                `${calories} calories logged. ${currentSettings.calories - calories} remaining.`
-            );
-
-        }
-
-
-        lastReminderDate =
-            key;
+        status.innerHTML =
+            `<span class="status-bad">
+                Could not enable notifications.
+            </span>`;
 
     }
 
 }
 
 
-function getWorkoutReminder() {
-
-    if (
-        currentSettings.coachLevel ===
-        "aggressive"
-    ) {
-
-        return "You scheduled this workout. Stop finding excuses and go train.";
-
-    }
+document
+    .getElementById(
+        "enable-notifications-btn"
+    )
+    .addEventListener(
+        "click",
+        registerNotifications
+    );
 
 
-    if (
-        currentSettings.coachLevel ===
-        "gentle"
-    ) {
+// =========================================================
+// RESTAURANT SEARCH PLACEHOLDER
+// =========================================================
 
-        return "Your workout is ready whenever you are. You've got this.";
+document
+    .getElementById(
+        "restaurant-search-btn"
+    )
+    .addEventListener(
+        "click",
+        function() {
 
-    }
+            const query =
+                document
+                    .getElementById(
+                        "restaurant-search"
+                    )
+                    .value
+                    .trim();
 
 
-    return "You scheduled a workout. Time to train.";
+            if (!query) {
 
-}
-
-
-/* =========================================================
-   SERVICE WORKER REGISTRATION
-========================================================= */
-
-if (
-    "serviceWorker" in navigator
-) {
-
-    window.addEventListener(
-        "load",
-        async () => {
-
-            try {
-
-                await navigator
-                    .serviceWorker
-                    .register(
-                        "./firebase-messaging-sw.js"
-                    );
-
-                console.log(
-                    "Notification service worker registered."
+                showToast(
+                    "Enter a restaurant name."
                 );
 
-            } catch(error) {
-
-                console.warn(
-                    "Service worker registration failed.",
-                    error
-                );
+                return;
 
             }
 
+
+            document
+                .getElementById(
+                    "restaurant-results"
+                )
+                .innerHTML = `
+
+                    <div class="list-item">
+
+                        <div class="item-info">
+
+                            <div class="item-name">
+
+                                ${escapeHtml(
+                                    query
+                                )}
+
+                            </div>
+
+                            <div class="item-meta">
+
+                                Restaurant/menu API connection
+                                needs to be added here.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `;
+
         }
     );
 
+
+// =========================================================
+// TODAY
+// =========================================================
+
+document
+    .getElementById(
+        "today-display"
+    )
+    .textContent =
+    new Date()
+        .toLocaleDateString(
+            "en-US",
+            {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            }
+        );
+
+
+// =========================================================
+// INITIAL DEFAULT SCHEDULE
+// =========================================================
+
+if (
+    Object.keys(schedule).length === 0
+) {
+
+    schedule = {
+
+        Monday:
+            "Heavy Lower + Bench",
+
+        Tuesday:
+            "Push + Bench",
+
+        Wednesday:
+            "Pull + Lower + Bench",
+
+        Thursday:
+            "Push + Bench",
+
+        Friday:
+            "Heavy Lower + Bench",
+
+        Saturday:
+            "Rest",
+
+        Sunday:
+            "Rest"
+
+    };
+
 }
+
+
+// =========================================================
+// PERIODIC COACH REFRESH
+// =========================================================
+
+setInterval(
+    function() {
+
+        if (currentUser) {
+
+            updateDashboard();
+
+            updateCoach();
+
+        }
+
+    },
+    60000
+);
 
 </script>
 
